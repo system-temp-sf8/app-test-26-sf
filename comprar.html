@@ -62,46 +62,41 @@
                 contenedor.innerHTML = '';
 
                 data.forEach((prop) => {
-                    // MAPEO BASADO EN TU FORMULARIO VENDER.HTML:
-                    // prop[3] = estado_pub (Revision / Aprobado)
-                    // prop[4] = fotoUrl (Principal)
-                    // prop[1] = id (DV-XXXX)
-                    // prop[12] = operacion (Venta / Alquiler)
-                    // prop[13] = tipo (Casa / Depto)
-                    // prop[14] = precio (USD)
-                    // prop[19] = localidad
-                    // prop[20] = barrio
-                    // prop[21] = dormitorios
+                    // 1. Limpieza y Captura de datos clave
+                    const estado = String(prop[3]).trim();    // Columna D (Estado)
+                    const operacion = String(prop[12]).trim(); // Columna M (Operación)
 
-                    if (prop[3] !== "Aprobado") return;
+                    // 2. FILTRO DOBLE: Solo si es "Aprobado" Y es "Venta"
+                    if (estado === "Aprobado" && operacion === "Venta") {
 
-                    const card = `
-                        <div class="col-4 col-12-medium">
-                            <article class="property-card">
-                                <span class="image fit">
-                                    <img src="${prop[4]}" alt="Propiedad" onerror="this.src='images/placeholder.jpg'">
-                                </span>
-                                <div class="property-info">
-                                    <span class="badge-tipo">${prop[12]} | ${prop[13]}</span>
-                                    <h3 style="font-size: 1em; margin: 0;">${prop[20] || 'Centro'}, ${prop[19]}</h3>
-                                    <p class="price-tag">${prop[12] === 'Venta' ? 'USD ' + prop[14] : '$ ' + prop[15]}</p>
-                                    <p style="font-size: 0.8em; margin-bottom: 1em;">
-                                        <strong>${prop[16]} m²</strong> | <strong>${prop[21]} Dorm.</strong>
-                                    </p>
-                                    <ul class="actions stacked" style="margin-top: auto;">
-                                        <li>
-                                            <a href="https://wa.me/5493534293301?text=Hola! Me interesa la propiedad ${prop[13]} en ${prop[20]} (ID: ${prop[1]}) que vi en tu web." 
-                                               target="_blank" class="button primary fit" 
-                                               style="background-color: #25D366 !important; text-transform: none; height: 3em; line-height: 3em;">
-                                                Consultar WhatsApp
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </article>
-                        </div>
-                    `;
-                    contenedor.innerHTML += card;
+                        const card = `
+                            <div class="col-4 col-12-medium">
+                                <article class="property-card">
+                                    <span class="image fit">
+                                        <img src="${prop[4]}" alt="Propiedad" onerror="this.src='images/placeholder.jpg'">
+                                    </span>
+                                    <div class="property-info">
+                                        <span class="badge-tipo">${prop[12]} | ${prop[13]}</span>
+                                        <h3 style="font-size: 1em; margin: 0;">${prop[20] || 'Centro'}, ${prop[19]}</h3>
+                                        <p class="price-tag">${prop[12] === 'Venta' ? 'USD ' + prop[14] : '$ ' + prop[15]}</p>
+                                        <p style="font-size: 0.8em; margin-bottom: 1em;">
+                                            <strong>${prop[16]} m²</strong> | <strong>${prop[21]} Dorm.</strong>
+                                        </p>
+                                        <ul class="actions stacked" style="margin-top: auto;">
+                                            <li>
+                                                <a href="https://wa.me/5493534293301?text=Hola! Me interesa la propiedad ${prop[13]} en ${prop[20]} (ID: ${prop[1]}) que vi en tu web." 
+                                                   target="_blank" class="button primary fit" 
+                                                   style="background-color: #25D366 !important; text-transform: none; height: 3em; line-height: 3em;">
+                                                    Consultar WhatsApp
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </article>
+                            </div>
+                        `;
+                        contenedor.innerHTML += card;
+                    }
                 });
 
                 if (contenedor.innerHTML === '') {
