@@ -73,7 +73,7 @@
                     // prop[20] = barrio
                     // prop[21] = dormitorios
 
-                    if (prop[3] !== "Aprobado") return;
+                    if (prop[3] === "Aprobado" && prop[12] === "Venta") return;
 
                     const card = `
                         <div class="col-4 col-12-medium">
