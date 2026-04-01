@@ -6,41 +6,168 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="assets/css/main.css" />
     <style>
-        /* Diseño de tarjetas */
+        /* 1. Sincronización de fondo total */
+        body, #page-wrapper, .wrapper.style5, #main { 
+            background-color: #212534 !important; 
+        }
+
+        /* 2. ENCABEZADO ULTRA-COMPACTO (Efecto Cinta) */
+        #main > header {
+            padding: 0 !important; 
+            margin: 0 !important;
+            min-height: 2.2em !important; 
+            height: 2.2em !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            background-color: #212534 !important; 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+            background-image: none !important;
+        }
+
+        #main > header:before { display: none !important; }
+
+        #main > header h2 {
+            font-size: 0.85em !important; 
+            font-weight: 400 !important;
+            margin: 0 !important;
+            color: rgba(255, 255, 255, 0.7) !important;
+            text-transform: uppercase !important;
+            letter-spacing: 3px !important;
+        }
+
+        .wrapper.style5 { padding-top: 1.5em !important; }
+
+        /* 3. RESALTADO AL PASAR EL CURSOR (Hover effect) */
         .property-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            margin-bottom: 2em;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 6px;
+            margin-bottom: 1.2em; 
             border: 1px solid rgba(255, 255, 255, 0.1);
             overflow: hidden;
-            transition: transform 0.3s;
             display: flex;
             flex-direction: column;
             height: 100%;
+            transition: all 0.3s ease; /* Transición suave */
         }
-        .property-card:hover { transform: translateY(-5px); background: rgba(255, 255, 255, 0.08); }
-        .image.fit img { height: 220px; object-fit: cover; width: 100%; display: block; }
-        .property-info { padding: 1.2em; flex-grow: 1; display: flex; flex-direction: column; }
-        .price-tag { font-size: 1.4em; color: #2ecc71; font-weight: bold; margin: 0.3em 0; }
-        .badge-tipo { background: #D4A261; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.7em; text-transform: uppercase; margin-bottom: 5px; display: inline-block; }
+
+        /* El efecto que mencionaste que se había ido */
+        .property-card:hover { 
+            transform: translateY(-5px) !important; 
+            background: rgba(255, 255, 255, 0.08) !important;
+            border-color: #D4A261 !important; 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4) !important;
+        }
+
+        .property-info { padding: 0.8em 1em 0.4em 1em !important; }
+
+        /* 4. CONTRASTE DEL BARRIO (Blanco brillante) */
+        #contenedor-propiedades .property-card .property-info h3 { 
+            color: #ffffff !important; 
+            opacity: 1 !important;
+            font-size: 1.1em !important; 
+            margin-bottom: 0.3em !important; 
+            line-height: 1.2 !important;
+            font-weight: 700 !important; 
+            text-transform: none !important;
+            letter-spacing: 0.5px !important;
+            background: none !important;
+        }
+
+        /* Aseguramos que el texto dentro del h3 también sea blanco */
+        #contenedor-propiedades .property-card .property-info h3 strong {
+            color: #ffffff !important;
+        }
+
+        .property-details {
+            font-size: 0.85em !important; 
+            margin-bottom: 0.8em !important; 
+            color: #f0f0f0 !important; 
+        }
+
+        .property-details strong { color: #D4A261 !important; }
+        .price-tag { font-size: 1.3em; color: #2ecc71 !important; font-weight: 700; margin: 0.2em 0; }
+
+        .image.fit { position: relative; margin: 0 !important; }
+        .image.fit img { height: 160px; object-fit: cover; width: 100%; display: block; filter: brightness(0.85); }
+        .badge-tipo { position: absolute; top: 10px; left: 10px; background: rgba(212, 162, 97, 0.9); color: white !important; padding: 2px 8px; border-radius: 3px; font-size: 0.65em; text-transform: uppercase; font-weight: 700; z-index: 10; }
+        
+        .button.primary.fit { height: 2.5em !important; line-height: 2.5em !important; font-size: 0.7em !important; }
+    
+        /* 7. ESTILO DE LA BARRA DE FILTROS */
+        .filter-bar {
+            background-color: #212534;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            flex-wrap: wrap; /* Para que en móviles no se rompa */
+        }
+
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.05) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            color: rgba(255, 255, 255, 0.6) !important;
+            padding: 0 12px !important;
+            height: 2em !important;
+            line-height: 2em !important;
+            font-size: 0.65em !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1px !important;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: none !important;
+        }
+
+        .filter-btn:hover {
+            background: rgba(255, 255, 255, 0.1) !important;
+            color: #fff !important;
+        }
+
+        /* Clase para el botón presionado/activo */
+        .filter-btn.active {
+            background: #D4A261 !important; /* Dorado Spectral */
+            color: #ffffff !important;
+            border-color: #D4A261 !important;
+            font-weight: 700 !important;
+        }
+    
     </style>
 </head>
 <body class="is-preload">
     <div id="page-wrapper">
         <header id="header">
             <h1><a href="index.html">Dueño Vende</a></h1>
-            <nav id="nav"><ul><li><a href="index.html">Inicio</a></li></ul></nav>
+            <nav id="nav">
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="vender.html">Publicar</a></li>
+                </ul>
+            </nav>
         </header>
 
         <article id="main">
-            <header style="padding: 3em 0; background-color: #212534;">
-                <h2>Propiedades Disponibles</h2>
-                <p>Ventas y Alquileres directos en Villa María y zona.</p>
+            <header>
+                <h2>Catálogo de Ventas</h2>
             </header>
+
+<div class="filter-bar">
+                <button class="filter-btn active" onclick="filtrarPropiedades('Todos', this)">Todos</button>
+                <button class="filter-btn" onclick="filtrarPropiedades('Casa', this)">Casas</button>
+                <button class="filter-btn" onclick="filtrarPropiedades('Depto', this)">Deptos</button>
+                <button class="filter-btn" onclick="filtrarPropiedades('Terreno', this)">Terrenos</button>
+                <button class="filter-btn" onclick="filtrarPropiedades('Comercial', this)">Propiedad Comercial</button>
+            </div>
+
+            <section class="wrapper style5">
+
+
+            
             <section class="wrapper style5">
                 <div class="inner">
                     <div class="row" id="contenedor-propiedades">
-                        <div class="col-12"><p style="text-align: center;">Cargando catálogo...</p></div>
+                        <div class="col-12"><p style="text-align: center;">Buscando propiedades...</p></div>
                     </div>
                 </div>
             </section>
@@ -51,62 +178,151 @@
     <script src="assets/js/main.js"></script>
 
     <script>
-        // USAMOS EL MISMO SCRIPT URL QUE EN VENDER.HTML
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwklod03hncuhwPqNTRywST272_e60xe3Ear9QShDvAn0JM8Y8Xz9dQ23w2WQwtOCMn/exec'; 
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwklod03hncuhwPqNTRywST272_e60xe3Ear9QShDvAn0JM8Y8Xz9dQ23w2WQwtOCMn/exec'; 
+    
+    let todasLasPropiedades = []; 
+    let propiedadesFiltradas = [];
+    let paginaActual = 1;
+    const porPagina = 10;
+    let filtroActual = 'Todos';
 
-        async function cargarPropiedades() {
-            const contenedor = document.getElementById('contenedor-propiedades');
-            try {
-                const response = await fetch(SCRIPT_URL + '?read=true');
-                const data = await response.json();
-                contenedor.innerHTML = '';
+    async function cargarPropiedades() {
+        const contenedor = document.getElementById('contenedor-propiedades');
+        try {
+            const response = await fetch(SCRIPT_URL + '?read=true');
+            const data = await response.json();
+            
+            // 1. FILTRADO INICIAL: Solo Aprobado y Venta
+            // Usamos .includes para evitar errores por espacios extras en el Sheet
+            todasLasPropiedades = data.filter(prop => {
+                if (!prop || prop.length < 13) return false; // Ignora filas vacías
+                const estado = String(prop[3] || "");
+                const operacion = String(prop[12] || "");
+                return estado.includes("Aprobado") && operacion.includes("Venta");
+            });
 
-                data.forEach((prop) => {
-                    // 1. Limpieza y Captura de datos clave
-                    const estado = String(prop[3]).trim();    // Columna D (Estado)
-                    const operacion = String(prop[12]).trim(); // Columna M (Operación)
+            // 2. BUSCAR EL BOTÓN "TODOS" PARA ACTIVARLO
+            const btnTodos = Array.from(document.querySelectorAll('.filter-btn'))
+                                  .find(el => el.textContent.trim() === 'Todos');
+            
+            // 3. CARGAR TODO POR DEFECTO
+            filtrarPropiedades('Todos', btnTodos);
 
-                    // 2. FILTRO DOBLE: Solo si es "Aprobado" Y es "Venta"
-                    if (estado === "Aprobado" && operacion === "Venta") {
-
-                        const card = `
-                            <div class="col-4 col-12-medium">
-                                <article class="property-card">
-                                    <span class="image fit">
-                                        <img src="${prop[4]}" alt="Propiedad" onerror="this.src='images/placeholder.jpg'">
-                                    </span>
-                                    <div class="property-info">
-                                        <span class="badge-tipo">${prop[12]} | ${prop[13]}</span>
-                                        <h3 style="font-size: 1em; margin: 0;">${prop[20] || 'Centro'}, ${prop[19]}</h3>
-                                        <p class="price-tag">${prop[12] === 'Venta' ? 'USD ' + prop[14] : '$ ' + prop[15]}</p>
-                                        <p style="font-size: 0.8em; margin-bottom: 1em;">
-                                            <strong>${prop[16]} m²</strong> | <strong>${prop[21]} Dorm.</strong>
-                                        </p>
-                                        <ul class="actions stacked" style="margin-top: auto;">
-                                            <li>
-                                                <a href="https://wa.me/5493534293301?text=Hola! Me interesa la propiedad ${prop[13]} en ${prop[20]} (ID: ${prop[1]}) que vi en tu web." 
-                                                   target="_blank" class="button primary fit" 
-                                                   style="background-color: #25D366 !important; text-transform: none; height: 3em; line-height: 3em;">
-                                                    Consultar WhatsApp
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </article>
-                            </div>
-                        `;
-                        contenedor.innerHTML += card;
-                    }
-                });
-
-                if (contenedor.innerHTML === '') {
-                    contenedor.innerHTML = '<div class="col-12"><p style="text-align:center;">No hay propiedades aprobadas por el momento.</p></div>';
-                }
-            } catch (error) {
-                contenedor.innerHTML = '<div class="col-12"><p style="text-align:center;">Error al conectar con la base de datos.</p></div>';
-            }
+        } catch (error) {
+            console.error("Error en la carga:", error);
+            contenedor.innerHTML = '<div class="col-12"><p style="text-align:center; padding: 2em;">Error al conectar con la base de datos de propiedades.</p></div>';
         }
-        document.addEventListener('DOMContentLoaded', cargarPropiedades);
-    </script>
+    }
+
+    function filtrarPropiedades(tipo, btn) {
+        filtroActual = tipo;
+        paginaActual = 1; // Siempre volvemos a la página 1 al filtrar
+
+        // Manejo visual de botones
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        if(btn) btn.classList.add('active');
+
+        // LÓGICA DE FILTRADO
+        if (tipo === 'Todos' || tipo === '') {
+            propiedadesFiltradas = todasLasPropiedades;
+        } else {
+            // Filtramos por el Tipo (Columna N / índice 13)
+            propiedadesFiltradas = todasLasPropiedades.filter(prop => {
+                const tipoProp = String(prop[13] || "");
+                return tipoProp.toLowerCase().includes(tipo.toLowerCase());
+            });
+        }
+
+        renderizar();
+    }
+
+    function renderizar() {
+        const contenedor = document.getElementById('contenedor-propiedades');
+        contenedor.innerHTML = '';
+
+        // Calcular el recorte para la paginación (10 por página)
+        const inicio = (paginaActual - 1) * porPagina;
+        const fin = inicio + porPagina;
+        const loteActual = propiedadesFiltradas.slice(inicio, fin);
+
+        loteActual.forEach((prop) => {
+            const idProp = String(prop[1] || "0");
+            const barrio = String(prop[20] || "").trim();
+            const localidad = String(prop[19] || "").trim();
+            const tipoInmueble = String(prop[13] || "");
+            
+            // Título: Barrio en blanco brillante
+            const ubicacionHTML = (barrio && barrio !== "-") 
+                ? `<span style="color: #ffffff !important;">${barrio}</span>, ${localidad}` 
+                : `${localidad}`;
+
+            // Detalles técnicos
+            const superficie = (prop[16] && prop[16] !== "-" && prop[16] !== "0") ? `<strong>${prop[16]} m²</strong>` : "";
+            const dormValue = String(prop[21] || "").trim();
+            const dormitorios = (dormValue && dormValue !== "-" && dormValue !== "0") ? `${superficie ? ' | ' : ''}<strong>${dormValue} Dorm.</strong>` : "";
+            const detallesHTML = (superficie || dormitorios) ? `<p class="property-details">${superficie}${dormitorios}</p>` : "";
+            
+            const textoWhatsApp = (barrio && barrio !== "-") ? `${barrio} en ${localidad}` : localidad;
+
+            const card = `
+                <div class="col-4 col-12-medium">
+                    <article class="property-card">
+                        <span class="image fit">
+                            <span class="badge-tipo">Venta | ${tipoInmueble}</span>
+                            <img src="${prop[4]}" alt="Propiedad" onerror="this.src='images/placeholder.jpg'">
+                        </span>
+                        <div class="property-info">
+                            <h3 style="color: #ffffff !important;">${ubicacionHTML}</h3>
+                            <p class="price-tag">USD ${prop[14]}</p>
+                            ${detallesHTML} 
+                            <ul class="actions stacked" style="margin-top: auto; margin-bottom: 0;">
+                                <li>
+                                    <a href="https://wa.me/5493534293301?text=Hola! Me interesa la propiedad ${tipoInmueble} en ${textoWhatsApp} (ID: ${idProp})" 
+                                       target="_blank" class="button primary fit" style="background-color: #25D366 !important; border: none;">
+                                        WhatsApp
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </article>
+                </div>`;
+            contenedor.innerHTML += card;
+        });
+
+        // Mensaje si no hay resultados
+        if (propiedadesFiltradas.length === 0) {
+            contenedor.innerHTML = '<div class="col-12"><p style="text-align:center; padding: 3em; opacity: 0.5;">No hay propiedades disponibles que coincidan con este filtro.</p></div>';
+        }
+
+        renderizarPaginacion();
+    }
+
+    function renderizarPaginacion() {
+        const totalPaginas = Math.ceil(propiedadesFiltradas.length / porPagina);
+        if (totalPaginas <= 1) return; 
+
+        const navHTML = `
+            <div class="col-12" style="text-align: center; margin-top: 3em; padding-bottom: 3em;">
+                <hr style="border-color: rgba(255,255,255,0.05); margin-bottom: 2em;">
+                <ul class="actions" style="justify-content: center; align-items: center; list-style: none; display: flex; gap: 15px;">
+                    <li><button class="button small" ${paginaActual === 1 ? 'disabled' : ''} onclick="cambiarPagina(-1)">← Anterior</button></li>
+                    <li style="font-size: 0.85em; color: rgba(255,255,255,0.5); min-width: 120px;">Página ${paginaActual} de ${totalPaginas}</li>
+                    <li><button class="button small" ${paginaActual === totalPaginas ? 'disabled' : ''} onclick="cambiarPagina(1)">Siguiente →</button></li>
+                </ul>
+            </div>`;
+        document.getElementById('contenedor-propiedades').innerHTML += navHTML;
+    }
+
+    function cambiarPagina(paso) {
+        paginaActual += paso;
+        // Scroll suave hacia la zona del catálogo
+        const posicionDestino = document.getElementById('main').offsetTop - 30;
+        window.scrollTo({ top: posicionDestino, behavior: 'smooth' });
+        renderizar();
+    }
+
+    // Iniciar carga al abrir la página
+    document.addEventListener('DOMContentLoaded', cargarPropiedades);
+</script>
 </body>
 </html>
