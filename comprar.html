@@ -133,6 +133,49 @@
             font-weight: 700 !important;
         }
     
+        /* Botones de paginación Minimalistas */
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin: 4em 0;
+            width: 100%;
+            clear: both;
+        }
+
+        .page-btn {
+            height: 2.5em !important;
+            line-height: 2.5em !important;
+            padding: 0 1em !important;
+            font-size: 0.65em !important; /* Letra bien chica */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background-color: transparent !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+            color: #ffffff !important;
+            min-width: auto !important; /* Evita que sean gigantes */
+        }
+
+        .page-btn:hover:not([disabled]) {
+            border-color: #D4A261 !important;
+            color: #D4A261 !important;
+        }
+
+        .page-btn[disabled] {
+            opacity: 0.2;
+            cursor: not-allowed;
+            border-color: rgba(255, 255, 255, 0.05) !important;
+        }
+
+        .page-info {
+            font-size: 0.7em;
+            color: rgba(255, 255, 255, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0 10px;
+        }
+
     </style>
 </head>
 <body class="is-preload">
@@ -183,7 +226,7 @@
     let todasLasPropiedades = []; 
     let propiedadesFiltradas = [];
     let paginaActual = 1;
-    const porPagina = 10;
+    const porPagina = 6; // BAJAMOS A 6 PARA PROBAR LA PAGINACIÓN
     let filtroActual = 'Todos';
 
     async function cargarPropiedades() {
@@ -192,47 +235,38 @@
             const response = await fetch(SCRIPT_URL + '?read=true');
             const data = await response.json();
             
-            // 1. FILTRADO INICIAL: Solo Aprobado y Venta
-            // Usamos .includes para evitar errores por espacios extras en el Sheet
             todasLasPropiedades = data.filter(prop => {
-                if (!prop || prop.length < 13) return false; // Ignora filas vacías
+                if (!prop || prop.length < 13) return false;
                 const estado = String(prop[3] || "");
                 const operacion = String(prop[12] || "");
                 return estado.includes("Aprobado") && operacion.includes("Venta");
             });
 
-            // 2. BUSCAR EL BOTÓN "TODOS" PARA ACTIVARLO
             const btnTodos = Array.from(document.querySelectorAll('.filter-btn'))
                                   .find(el => el.textContent.trim() === 'Todos');
             
-            // 3. CARGAR TODO POR DEFECTO
             filtrarPropiedades('Todos', btnTodos);
 
         } catch (error) {
-            console.error("Error en la carga:", error);
-            contenedor.innerHTML = '<div class="col-12"><p style="text-align:center; padding: 2em;">Error al conectar con la base de datos de propiedades.</p></div>';
+            contenedor.innerHTML = '<div class="col-12"><p style="text-align:center;">Error al conectar.</p></div>';
         }
     }
 
     function filtrarPropiedades(tipo, btn) {
         filtroActual = tipo;
-        paginaActual = 1; // Siempre volvemos a la página 1 al filtrar
+        paginaActual = 1;
 
-        // Manejo visual de botones
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         if(btn) btn.classList.add('active');
 
-        // LÓGICA DE FILTRADO
         if (tipo === 'Todos' || tipo === '') {
             propiedadesFiltradas = todasLasPropiedades;
         } else {
-            // Filtramos por el Tipo (Columna N / índice 13)
             propiedadesFiltradas = todasLasPropiedades.filter(prop => {
                 const tipoProp = String(prop[13] || "");
                 return tipoProp.toLowerCase().includes(tipo.toLowerCase());
             });
         }
-
         renderizar();
     }
 
@@ -240,29 +274,22 @@
         const contenedor = document.getElementById('contenedor-propiedades');
         contenedor.innerHTML = '';
 
-        // Calcular el recorte para la paginación (10 por página)
         const inicio = (paginaActual - 1) * porPagina;
         const fin = inicio + porPagina;
         const loteActual = propiedadesFiltradas.slice(inicio, fin);
 
         loteActual.forEach((prop) => {
-            const idProp = String(prop[1] || "0");
             const barrio = String(prop[20] || "").trim();
             const localidad = String(prop[19] || "").trim();
             const tipoInmueble = String(prop[13] || "");
-            
-            // Título: Barrio en blanco brillante
             const ubicacionHTML = (barrio && barrio !== "-") 
                 ? `<span style="color: #ffffff !important;">${barrio}</span>, ${localidad}` 
                 : `${localidad}`;
 
-            // Detalles técnicos
             const superficie = (prop[16] && prop[16] !== "-" && prop[16] !== "0") ? `<strong>${prop[16]} m²</strong>` : "";
             const dormValue = String(prop[21] || "").trim();
             const dormitorios = (dormValue && dormValue !== "-" && dormValue !== "0") ? `${superficie ? ' | ' : ''}<strong>${dormValue} Dorm.</strong>` : "";
             const detallesHTML = (superficie || dormitorios) ? `<p class="property-details">${superficie}${dormitorios}</p>` : "";
-            
-            const textoWhatsApp = (barrio && barrio !== "-") ? `${barrio} en ${localidad}` : localidad;
 
             const card = `
                 <div class="col-4 col-12-medium">
@@ -277,10 +304,7 @@
                             ${detallesHTML} 
                             <ul class="actions stacked" style="margin-top: auto; margin-bottom: 0;">
                                 <li>
-                                    <a href="https://wa.me/5493534293301?text=Hola! Me interesa la propiedad ${tipoInmueble} en ${textoWhatsApp} (ID: ${idProp})" 
-                                       target="_blank" class="button primary fit" style="background-color: #25D366 !important; border: none;">
-                                        WhatsApp
-                                    </a>
+                                    <a href="https://wa.me/5493534293301?text=Hola!" target="_blank" class="button primary fit" style="background-color: #25D366 !important; border: none;">WhatsApp</a>
                                 </li>
                             </ul>
                         </div>
@@ -289,39 +313,40 @@
             contenedor.innerHTML += card;
         });
 
-        // Mensaje si no hay resultados
-        if (propiedadesFiltradas.length === 0) {
-            contenedor.innerHTML = '<div class="col-12"><p style="text-align:center; padding: 3em; opacity: 0.5;">No hay propiedades disponibles que coincidan con este filtro.</p></div>';
-        }
-
+        // IMPORTANTE: Llamamos a la paginación después de cargar las tarjetas
         renderizarPaginacion();
     }
 
     function renderizarPaginacion() {
         const totalPaginas = Math.ceil(propiedadesFiltradas.length / porPagina);
+        const contenedor = document.getElementById('contenedor-propiedades');
+        
         if (totalPaginas <= 1) return; 
 
         const navHTML = `
-            <div class="col-12" style="text-align: center; margin-top: 3em; padding-bottom: 3em;">
-                <hr style="border-color: rgba(255,255,255,0.05); margin-bottom: 2em;">
-                <ul class="actions" style="justify-content: center; align-items: center; list-style: none; display: flex; gap: 15px;">
-                    <li><button class="button small" ${paginaActual === 1 ? 'disabled' : ''} onclick="cambiarPagina(-1)">← Anterior</button></li>
-                    <li style="font-size: 0.85em; color: rgba(255,255,255,0.5); min-width: 120px;">Página ${paginaActual} de ${totalPaginas}</li>
-                    <li><button class="button small" ${paginaActual === totalPaginas ? 'disabled' : ''} onclick="cambiarPagina(1)">Siguiente →</button></li>
-                </ul>
+            <div class="col-12 pagination-container">
+                <button class="button small page-btn" ${paginaActual === 1 ? 'disabled' : ''} onclick="cambiarPagina(-1)">
+                    ‹ Ant.
+                </button>
+                
+                <span class="page-info">${paginaActual} / ${totalPaginas}</span>
+                
+                <button class="button small page-btn" ${paginaActual === totalPaginas ? 'disabled' : ''} onclick="cambiarPagina(1)">
+                    Sig. ›
+                </button>
             </div>`;
-        document.getElementById('contenedor-propiedades').innerHTML += navHTML;
+        
+        // Lo agregamos al final del contenedor
+        contenedor.insertAdjacentHTML('beforeend', navHTML);
     }
 
     function cambiarPagina(paso) {
         paginaActual += paso;
-        // Scroll suave hacia la zona del catálogo
-        const posicionDestino = document.getElementById('main').offsetTop - 30;
-        window.scrollTo({ top: posicionDestino, behavior: 'smooth' });
+        const mainElement = document.getElementById('main');
+        window.scrollTo({ top: mainElement.offsetTop - 50, behavior: 'smooth' });
         renderizar();
     }
 
-    // Iniciar carga al abrir la página
     document.addEventListener('DOMContentLoaded', cargarPropiedades);
 </script>
 </body>
