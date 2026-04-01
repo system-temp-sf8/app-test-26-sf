@@ -176,6 +176,136 @@
             margin: 0 10px;
         }
 
+        /* Estilos del Modal */
+        .modal-custom {
+    display: none; /* Esto es vital para que no bloquee clics */
+    position: fixed;
+    z-index: 9999; /* Que esté bien arriba de todo */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.85);
+    overflow: hidden; /* El bloqueo de scroll queda contenido aquí */
+}
+
+.modal-content {
+    background-color: #212534;
+    margin: 5vh auto;
+    padding: 25px;
+    width: 90%;
+    max-width: 800px;
+    border-radius: 8px;
+    position: relative;
+    max-height: 85vh; /* Evita que el modal sea más largo que la pantalla */
+    overflow-y: auto; /* Permite scroll SOLO dentro del modal si el texto es largo */
+}
+        /* Diseño del contenido del Modal */
+        .modal-data-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .info-section h4 {
+            color: #D4A261;
+            text-transform: uppercase;
+            font-size: 0.8em;
+            letter-spacing: 1px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+        }
+
+        .info-list { list-style: none; padding: 0; font-size: 0.9em; }
+        .info-list li { margin-bottom: 5px; color: rgba(255,255,255,0.8); }
+        .info-list strong { color: #fff; }
+
+        /* Grilla de Fotos */
+        .modal-gallery {
+    display: grid;
+    /* Evita que se estiren de más si hay pocas */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 300px)); 
+    gap: 15px;
+    margin-top: 20px;
+    justify-content: center; 
+}
+
+.modal-gallery img {
+    width: 100%;
+    height: 220px; 
+    object-fit: cover; 
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.modal-gallery img:hover { 
+    transform: scale(1.03); 
+    border-color: #D4A261;
+}
+
+/* El ajuste para móviles (Media Query) */
+@media screen and (max-width: 480px) {
+    .modal-gallery {
+        grid-template-columns: 1fr; 
+    }
+    .modal-gallery img {
+        height: 180px;
+    }
+}
+/* Fin Diseño del contenido del Modal */
+        .close-modal {
+            position: absolute;
+            right: 20px; top: 10px;
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .close-modal:hover { color: #D4A261; }
+
+        .modal-grid { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 20px; }
+        .modal-img { width: 100%; max-height: 400px; object-fit: cover; border-radius: 4px; }
+        .modal-text { flex: 1; min-width: 300px; }
+        .modal-text h2 { color: #fff; margin-bottom: 10px; border-bottom: 1px solid #D4A261; padding-bottom: 10px; }
+
+
+        /* Botón Ver Detalles - Estilo Fino */
+        .btn-detalles {
+            height: 2.2em !important;
+            line-height: 2.2em !important;
+            padding: 0 1em !important;
+            font-size: 0.65em !important;
+            text-transform: uppercase !important;
+            letter-spacing: 2px !important;
+            background-color: transparent !important;
+            border: 1px solid rgba(255, 255, 255, 0.3) !important;
+            color: #ffffff !important; /* Texto blanco puro */
+            margin-bottom: 8px !important;
+            transition: all 0.3s ease;
+        }
+
+        .btn-detalles:hover {
+            border-color: #D4A261 !important;
+            color: #D4A261 !important;
+            background-color: rgba(212, 162, 97, 0.1) !important;
+        }
+
+        body.modal-open {
+    overflow: hidden !important;
+}
+
+/* El modal debe permitir scroll interno si el texto es largo */
+.modal-content {
+    overflow-y: auto !important;
+    max-height: 90vh;
+}
+
     </style>
 </head>
 <body class="is-preload">
@@ -215,6 +345,17 @@
                 </div>
             </section>
         </article>
+
+        <!-- Modal de Vista Ampliada -->
+<div id="modal-propiedad" class="modal-custom">
+    <div class="modal-content">
+        <span class="close-modal" onclick="cerrarModal()">&times;</span>
+        <div id="modal-detalle-body">
+            <!-- Aquí se inyecta la info dinámicamente -->
+        </div>
+    </div>
+</div>
+
     </div>
 
     <script src="assets/js/jquery.min.js"></script>
@@ -279,9 +420,12 @@
         const loteActual = propiedadesFiltradas.slice(inicio, fin);
 
         loteActual.forEach((prop) => {
+            const idProp = String(prop[1] || "0"); // El ID de la columna B
             const barrio = String(prop[20] || "").trim();
             const localidad = String(prop[19] || "").trim();
             const tipoInmueble = String(prop[13] || "");
+            const precio = String(prop[14] || "Consultar");
+            
             const ubicacionHTML = (barrio && barrio !== "-") 
                 ? `<span style="color: #ffffff !important;">${barrio}</span>, ${localidad}` 
                 : `${localidad}`;
@@ -294,17 +438,27 @@
             const card = `
                 <div class="col-4 col-12-medium">
                     <article class="property-card">
-                        <span class="image fit">
+                        <span class="image fit" style="cursor: pointer;" onclick="abrirModal('${idProp}')">
                             <span class="badge-tipo">Venta | ${tipoInmueble}</span>
                             <img src="${prop[4]}" alt="Propiedad" onerror="this.src='images/placeholder.jpg'">
                         </span>
                         <div class="property-info">
                             <h3 style="color: #ffffff !important;">${ubicacionHTML}</h3>
-                            <p class="price-tag">USD ${prop[14]}</p>
+                            <p class="price-tag">USD ${precio}</p>
                             ${detallesHTML} 
+                            
                             <ul class="actions stacked" style="margin-top: auto; margin-bottom: 0;">
                                 <li>
-                                    <a href="https://wa.me/5493534293301?text=Hola!" target="_blank" class="button primary fit" style="background-color: #25D366 !important; border: none;">WhatsApp</a>
+                                    <!-- BOTÓN DE DETALLES (NUEVO) -->
+                                    <button class="button small fit btn-detalles" onclick="abrirModal('${idProp}')">
+        Ver Detalles
+    </button>
+                                </li>
+                                <li>
+                                    <a href="https://wa.me/5493534293301?text=Hola! Me interesa la propiedad ID: ${idProp}" 
+                                       target="_blank" class="button primary fit" style="background-color: #25D366 !important; border: none;">
+                                        WhatsApp
+                                    </a>
                                 </li>
                             </ul>
                         </div>
@@ -313,7 +467,6 @@
             contenedor.innerHTML += card;
         });
 
-        // IMPORTANTE: Llamamos a la paginación después de cargar las tarjetas
         renderizarPaginacion();
     }
 
@@ -348,6 +501,149 @@
     }
 
     document.addEventListener('DOMContentLoaded', cargarPropiedades);
+
+    function abrirModal(id) {
+    const prop = todasLasPropiedades.find(p => p[1] == id);
+    if (!prop) return;
+
+    const body = document.getElementById('modal-detalle-body');
+    
+    // Función para validar si un campo tiene contenido real
+    const tieneDato = (val) => {
+        if (!val) return false;
+        const v = String(val).trim().toLowerCase();
+        return v !== "" && v !== "-" && v !== "0" && v !== "no" && v !== "n/a";
+    };
+
+    // --- PROCESAR COMODIDADES (Solo las que "tiene") ---
+    const listaComodidades = [];
+    if (tieneDato(prop[21])) listaComodidades.push(`<li><strong>Dormitorios:</strong> ${prop[21]}</li>`);
+    if (tieneDato(prop[22])) listaComodidades.push(`<li><strong>Baños:</strong> ${prop[22]}</li>`);
+    if (tieneDato(prop[23])) listaComodidades.push(`<li><strong>Garage:</strong> Si</li>`);
+    if (tieneDato(prop[24])) listaComodidades.push(`<li><strong>Asador:</strong> Si</li>`);
+    if (tieneDato(prop[25])) listaComodidades.push(`<li><strong>Piscina:</strong> Si</li>`);
+    if (tieneDato(prop[26])) listaComodidades.push(`<li><strong>Balcón:</strong> Si</li>`);
+
+    // --- PROCESAR SERVICIOS (Solo los que "tiene") ---
+    const serviciosActivos = [];
+    if (tieneDato(prop[27])) serviciosActivos.push("Electricidad");
+    if (tieneDato(prop[28])) serviciosActivos.push("Gas Natural");
+    if (tieneDato(prop[29])) serviciosActivos.push("Agua Corriente");
+    if (tieneDato(prop[30])) serviciosActivos.push("Cloacas");
+    if (tieneDato(prop[31])) serviciosActivos.push("Pavimento");
+
+    // --- PROCESAR FOTOS ---
+    let fotosHTML = '';
+    [4, 5, 6, 7].forEach(idx => {
+        if (prop[idx] && String(prop[idx]).includes('http')) {
+            fotosHTML += `<img src="${prop[idx]}" alt="Foto" onclick="window.open(this.src, '_blank')">`;
+        }
+    });
+
+    body.innerHTML = `
+        <h2 style="margin-bottom:5px; color:#fff;">${prop[13]} en ${prop[12]}</h2>
+        <p style="color:#D4A261; font-size: 1.8em; font-weight: bold; margin-bottom:20px;">USD ${prop[14]}</p>
+
+        <div class="modal-data-grid">
+            <div class="info-section">
+                <h4>Ubicación y Medidas</h4>
+                <ul class="info-list">
+                    <li><strong>Barrio:</strong> ${prop[20] || '-'}</li>
+                    <li><strong>Localidad:</strong> ${prop[19]}</li>
+                    <li><strong>Provincia:</strong> ${prop[18]}</li>
+                    ${tieneDato(prop[16]) ? `<li><strong>Sup. Total:</strong> ${prop[16]} m²</li>` : ''}
+                    ${tieneDato(prop[17]) ? `<li><strong>Sup. Cubierta:</strong> ${prop[17]} m²</li>` : ''}
+                    ${tieneDato(prop[32]) ? `<li><strong>Estado Legal:</strong> ${prop[32]}</li>` : ''}
+                </ul>
+            </div>
+
+            <div class="info-section">
+                ${listaComodidades.length > 0 ? `
+                    <h4>Comodidades</h4>
+                    <ul class="info-list">${listaComodidades.join('')}</ul>
+                ` : ''}
+            </div>
+        </div>
+
+        ${serviciosActivos.length > 0 ? `
+            <div class="info-section">
+                <h4>Servicios</h4>
+                <p style="font-size: 0.9em; color: rgba(255,255,255,0.8); letter-spacing: 0.5px;">
+                    ${serviciosActivos.join(' • ')}
+                </p>
+            </div>
+        ` : ''}
+
+        <div class="info-section" style="margin-top:20px;">
+            <h4>Descripción</h4>
+            <p style="font-size: 0.95em; line-height:1.6; white-space: pre-line;">${prop[34] || 'Consulte para más detalles.'}</p>
+        </div>
+
+        <div class="info-section">
+            <h4>Galería de Fotos</h4>
+            <div class="modal-gallery">
+                ${fotosHTML}
+            </div>
+        </div>
+    `;
+    
+    document.getElementById('modal-propiedad').style.display = "block";
+    document.body.style.overflow = "hidden";
+}
+
+function cerrarModal() {
+    const modal = document.getElementById('modal-propiedad');
+    if (modal) {
+        modal.style.display = "none";
+    }
+    
+    // Forzamos el scroll en todos los contenedores posibles
+    document.body.style.overflow = "visible";
+    document.body.style.position = "static";
+    document.documentElement.style.overflow = "visible";
+    
+    // Quitamos cualquier clase de bloqueo que hayamos probado antes
+    document.body.classList.remove('modal-open');
+}
+
+// Actualizamos el clic fuera del modal para que use la misma lógica
+window.addEventListener('click', function(event) {
+    const modal = document.getElementById('modal-propiedad');
+    if (event.target === modal) {
+        cerrarModal();
+    }
+});
+
+// Por seguridad, al cargar la página nos aseguramos que el scroll esté activo
+document.addEventListener('DOMContentLoaded', () => {
+    document.body.style.overflow = "visible";
+    document.documentElement.style.overflow = "visible";
+});
+
+// También actualizamos el cierre al hacer clic afuera
+window.onclick = function(event) {
+    const modal = document.getElementById('modal-propiedad');
+    if (event.target == modal) {
+        cerrarModal(); // Usamos la función de arriba para que limpie el scroll
+    }
+}
+
+// Bonus: Cerrar con la tecla Esc
+document.addEventListener('keydown', function(event) {
+    if (event.key === "Escape") {
+        cerrarModal();
+    }
+});
+
+// Cerrar si hace clic afuera del contenido
+window.onclick = function(event) {
+    const modal = document.getElementById('modal-propiedad');
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+
 </script>
 </body>
 </html>
