@@ -1,0 +1,117 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Comprar - Dueño Vende</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <style>
+        /* Diseño de tarjetas */
+        .property-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            margin-bottom: 2em;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .property-card:hover { transform: translateY(-5px); background: rgba(255, 255, 255, 0.08); }
+        .image.fit img { height: 220px; object-fit: cover; width: 100%; display: block; }
+        .property-info { padding: 1.2em; flex-grow: 1; display: flex; flex-direction: column; }
+        .price-tag { font-size: 1.4em; color: #2ecc71; font-weight: bold; margin: 0.3em 0; }
+        .badge-tipo { background: #D4A261; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.7em; text-transform: uppercase; margin-bottom: 5px; display: inline-block; }
+    </style>
+</head>
+<body class="is-preload">
+    <div id="page-wrapper">
+        <header id="header">
+            <h1><a href="index.html">Dueño Vende</a></h1>
+            <nav id="nav"><ul><li><a href="index.html">Inicio</a></li></ul></nav>
+        </header>
+
+        <article id="main">
+            <header style="padding: 3em 0; background-color: #212534;">
+                <h2>Propiedades Disponibles</h2>
+                <p>Ventas y Alquileres directos en Villa María y zona.</p>
+            </header>
+            <section class="wrapper style5">
+                <div class="inner">
+                    <div class="row" id="contenedor-propiedades">
+                        <div class="col-12"><p style="text-align: center;">Cargando catálogo...</p></div>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </div>
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/main.js"></script>
+
+    <script>
+        // USAMOS EL MISMO SCRIPT URL QUE EN VENDER.HTML
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwklod03hncuhwPqNTRywST272_e60xe3Ear9QShDvAn0JM8Y8Xz9dQ23w2WQwtOCMn/exec'; 
+
+        async function cargarPropiedades() {
+            const contenedor = document.getElementById('contenedor-propiedades');
+            try {
+                const response = await fetch(SCRIPT_URL + '?read=true');
+                const data = await response.json();
+                contenedor.innerHTML = '';
+
+                data.forEach((prop) => {
+                    // MAPEO BASADO EN TU FORMULARIO VENDER.HTML:
+                    // prop[3] = estado_pub (Revision / Aprobado)
+                    // prop[4] = fotoUrl (Principal)
+                    // prop[1] = id (DV-XXXX)
+                    // prop[12] = operacion (Venta / Alquiler)
+                    // prop[13] = tipo (Casa / Depto)
+                    // prop[14] = precio (USD)
+                    // prop[19] = localidad
+                    // prop[20] = barrio
+                    // prop[21] = dormitorios
+
+                    if (prop[3] !== "Aprobado") return;
+
+                    const card = `
+                        <div class="col-4 col-12-medium">
+                            <article class="property-card">
+                                <span class="image fit">
+                                    <img src="${prop[4]}" alt="Propiedad" onerror="this.src='images/placeholder.jpg'">
+                                </span>
+                                <div class="property-info">
+                                    <span class="badge-tipo">${prop[12]} | ${prop[13]}</span>
+                                    <h3 style="font-size: 1em; margin: 0;">${prop[20] || 'Centro'}, ${prop[19]}</h3>
+                                    <p class="price-tag">${prop[12] === 'Venta' ? 'USD ' + prop[14] : '$ ' + prop[15]}</p>
+                                    <p style="font-size: 0.8em; margin-bottom: 1em;">
+                                        <strong>${prop[16]} m²</strong> | <strong>${prop[21]} Dorm.</strong>
+                                    </p>
+                                    <ul class="actions stacked" style="margin-top: auto;">
+                                        <li>
+                                            <a href="https://wa.me/5493534293301?text=Hola! Me interesa la propiedad ${prop[13]} en ${prop[20]} (ID: ${prop[1]}) que vi en tu web." 
+                                               target="_blank" class="button primary fit" 
+                                               style="background-color: #25D366 !important; text-transform: none; height: 3em; line-height: 3em;">
+                                                Consultar WhatsApp
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </article>
+                        </div>
+                    `;
+                    contenedor.innerHTML += card;
+                });
+
+                if (contenedor.innerHTML === '') {
+                    contenedor.innerHTML = '<div class="col-12"><p style="text-align:center;">No hay propiedades aprobadas por el momento.</p></div>';
+                }
+            } catch (error) {
+                contenedor.innerHTML = '<div class="col-12"><p style="text-align:center;">Error al conectar con la base de datos.</p></div>';
+            }
+        }
+        document.addEventListener('DOMContentLoaded', cargarPropiedades);
+    </script>
+</body>
+</html>

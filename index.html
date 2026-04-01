@@ -1,0 +1,475 @@
+<!DOCTYPE HTML>
+<!--
+	QUIEROINMUEBLES.COM by SANTIAGO FERRARI
+-->
+<html>
+	<head>
+		<title>quieroinmuebles.com by SF</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<style>
+        .link-login {
+    /* --- UBICACIÓN FIJA --- */
+    position: fixed !important;
+    top: 10px !important;       /* Usamos px para más precisión */
+    right: 20px !important;     /* Lo alejamos del borde derecho */
+    z-index: 10001 !important;  /* Al frente de todo */
+    
+    /* --- EVITAR QUE SE ESTIRE O SE SUBRAYE --- */
+    display: inline-block !important;
+    width: auto !important;
+    text-decoration: none !important; /* Quita la línea de abajo */
+    border-bottom: none !important;   /* Quita bordes que pone la plantilla */
+
+    /* --- ESTÉTICA --- */
+    font-weight: bold !important;
+    color: #f1c40f !important;
+    transition: all 0.3s ease;
+    line-height: 1 !important;   /* Para que no ocupe espacio extra arriba/abajo */
+}
+
+        .link-login:hover {
+            color: #ffffff!important;
+            text-shadow: 0 0 10px #f1c40f;
+            cursor: pointer;
+        }
+		.link-login:active {
+    		color: #f1c40f;
+    		background-color: rgba(241, 196, 15, 0.2); /* Se pone un fondo suave al tocarlo */
+    		border-radius: 4px;}
+
+/* --- BAJAR 'DUEÑO VENDE' SIN TOCAR EL TAMAÑO DEL HEADER --- */
+#header h1 {
+    /* Quitamos cualquier posición absoluta que traiga la plantilla */
+    position: relative !important; 
+    top: auto !important;
+    
+    /* Le damos el empujón hacia abajo (ajustá el 10px a tu gusto) */
+    margin-top: 12px !important; 
+    
+    /* Ajuste de alineación lateral */
+    padding-left: 0.8em !important;
+    display: inline-block !important;
+}
+
+/* Ajuste extra por si el menú de la derecha se desalinea */
+#header nav {
+    top: 0 !important;
+}
+
+			/* Cambia el fondo de la sección ONE al verde del logo */
+		.wrapper.style1 {
+   			 background-color: #5D9B6E !important;
+		}
+
+			/* Opcional: Ajusta los iconos para que resalten */
+		.wrapper.style1 .icon.major {
+   			color: #5D9B6E !important;
+    		background-color: #ffffff !important;
+		}
+/* --- IGUALAR EL COLOR DEL HEADER CON EL BANNER --- */
+#header {
+    background-color: #212534 !important; /* El azul exacto del banner */
+    background-image: none !important;    /* Quitamos cualquier degradado */
+    box-shadow: none !important;          /* Quitamos sombras que hagan bulto */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Una línea casi invisible para separar del contenido al scrollear */
+}
+
+/* Para que cuando la página esté arriba de todo (clase .alt) también sea azul */
+#header.alt {
+    background-color: #212534 !important;
+    background-image: none !important;
+}
+
+		/* --- INICIO OPTIMIZACIÓN DE VELOCIDAD DE CARGA --- */
+
+/* 1. Muestra el banner principal sin esperar al JavaScript */
+#banner {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* 2. Quita el efecto de "subida" y transparencia del contenedor interno */
+#banner .inner {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+}
+
+/* 3. Fuerza a que el logo, las líneas y el texto aparezcan de golpe */
+#banner .inner > * {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+}
+
+/* 4. Hace que el botón "Saber más" y el Header sean instantáneos */
+#header, .scrolly {
+    transition: none !important;
+    animation: none !important;
+    opacity: 1 !important;
+}
+
+/* --- FIN OPTIMIZACIÓN --- */
+
+/* --- LIBERAR EL RESTO DE LAS SECCIONES --- */
+
+/* 1. Evita que las secciones esperen al scroll para aparecer */
+section.wrapper {
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+    transition: none !important;
+}
+
+/* 2. Muestra el contenido interno de las secciones (fotos, textos laterales) */
+section.wrapper .inner {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+}
+
+/* 3. Si tenés elementos con la clase 'spotlight', esto los activa ya */
+.spotlight {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+}
+
+.spotlight .image, .spotlight .content {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+}
+
+/* 4. El footer (la parte de abajo de todo) */
+#footer {
+    opacity: 1 !important;
+    transition: none !important;
+}
+
+/* ANULACIÓN TOTAL DE ANIMACIONES DE ENTRADA */
+
+/* 1. Mata las animaciones de logo, líneas y texto del banner */
+#banner .inner > *, 
+#banner .inner::before, 
+#banner .inner::after {
+    animation: none !important;      /* Quita la "película" */
+    opacity: 1 !important;           /* Fuerza visibilidad */
+    transform: none !important;      /* Fuerza posición final */
+    transition: none !important;     /* Quita el retraso de movimiento */
+}
+
+/* 2. Específicamente para las líneas que rodean el título */
+#banner .inner::before, 
+#banner .inner::after {
+    display: block !important;
+    width: 100% !important;          /* O el ancho que tengan por defecto */
+    opacity: 1 !important;
+}
+
+/* 3. El logo y los botones del header */
+#header .logo, #header nav {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+}
+
+/* Fuerza visibilidad inmediata del contenedor del logo */
+#banner .inner div {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+}
+
+#banner h2, #banner p, #banner .actions {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+}
+
+.firma-santi {
+    text-align: left;
+    /* Ajustamos el ancho para que coincida con el bloque de botones */
+    max-width: 25em; 
+    margin: 0 auto 0.3em auto !important; 
+    
+    /* COLOR: Gris plata sutil (un tono menos que el título) */
+    color: #a6a6a6 !important; 
+    
+    font-size: 0.75em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 3px; /* Más espacio entre letras para que se vea premium */
+    opacity: 0.8;
+}
+
+/* Ajuste para que en el móvil no se pegue al borde de la pantalla */
+@media screen and (max-width: 736px) {
+    .firma-santi {
+        max-width: 90%;
+        margin-left: 5% !important;
+        font-size: 0.7em;
+    }
+}
+/* --- COLOR DE FONDO DEL MENÚ LATERAL --- */
+#menu {
+    background-color: #5D9B6E !important; /* El verde de la sección ONE */
+}
+
+/* --- COLOR DE LOS ENLACES DENTRO DEL MENÚ --- */
+#menu ul li a {
+    color: #ffffff !important; /* Texto blanco para que resalte */
+    border-bottom: 0 !important; /* Quitamos líneas feas */
+    font-weight: 500;
+}
+
+/* --- EFECTO AL PASAR EL MOUSE (Hover) --- */
+#menu ul li a:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important; /* Un brillo sutil */
+    color: #f1c40f !important; /* El amarillo de tu login para resaltar */
+}
+
+/* --- EL BOTÓN DE CERRAR (La X) --- */
+#menu .close {
+    color: #ffffff !important;
+}
+
+    	</style>
+	</head>
+	<body>
+
+		<!-- Page Wrapper -->
+			<div id="page-wrapper">
+
+				<!-- Header -->
+					<header id="header" class="alt">
+						<h1><a href="index.html">DueñoVende</a></h1>
+						<a href="#" 
+ 						class="link-login" 
+ 						style="position: absolute; 
+ 						left: 2.5em !important; 
+ 						top: 1.2em !important; 
+ 						font-size: 0.7em !important; 
+ 						line-height:1!important; 
+ 						border-bottom: 1px solid #f1c40f;">INICIAR SESIÓN</a></p>
+						<nav id="nav">
+							<ul>
+								<li class="special">
+									<a href="#menu" class="menuToggle"><span>Menu</span></a>
+									<div id="menu">
+										<ul>
+											<li><a href="index.html">Inicio</a></li>
+											<li><a href="vender.html?modo=venta">Vender</a></li>
+											<li><a href="comprar.html">Comprar</a></li>
+											<li><a href="vender.html?modo=alquiler">Alquilar</a></li>
+											<li><a href="#">Asesoramiento</a></li>
+											<li><a href="#">Iniciar Sesión</a></li>
+										</ul>
+									</div>
+								</li>
+							</ul>
+						</nav>
+					</header>
+
+				<!-- Banner -->
+					<section id="banner" style="background-image: none !important; background-color:#212534 !important;">
+    <div class="inner">
+        <div style="display: flex; justify-content: center; margin-bottom: 50px; margin-top: -60px;">
+    <img src="images/logo.png" alt="Logo Dueño Vende" style="width: 40px; height: auto;">
+</div>
+
+        <h2>DueñoVende.com</h2>
+        
+        <p>Donde Encontrás.. o Publicas tu Propiedad</p>
+
+        <p class="firma-santi">QUIERO..!</p>
+
+        <ul class="actions special">
+            <li><a href="vender.html?modo=venta" class="button primary">VENDER</a></li>
+            <li><a href="comprar.html" class="button">COMPRAR</a></li>
+            <li><a href="vender.html?modo=alquiler" class="button">ALQUILAR</a></li>
+        </ul>
+    </div>
+    <a href="#one" class="more scrolly">Saber más</a>
+</section>
+
+				<!-- One -->
+					<section id="one" class="wrapper style1 special">
+						<div class="inner">
+							<header class="major">
+								<h2>DUEÑOVENDE.COM ...<br />
+								</h2>
+								<p>Es el Mejor Lugar Para Promocionar tu Propiedad..<br /> <br/>
+								Podes Buscar en el Sitio o Publicar... <br />para Estar Visible en el Mercado</p>
+							</header>
+
+							<ul class="icons major">
+ 							<li>
+   							<span class="icon solid fa-home major style1">
+      						<span class="label">Propiedades</span>
+    						</span>
+  							</li>
+ 							<li>
+    						<span class="icon solid fa-handshake major style2">
+     						<span class="label">Transparencia</span>
+    						</span>
+  							</li>
+  							<li>
+    						<span class="icon solid fa-chart-line major style3">
+      						<span class="label">Valoración</span>
+    						</span>
+  							</li>
+							</ul>
+							
+						</div>
+					</section>
+
+
+					
+				<!-- Two
+					<section id="two" class="wrapper alt style2">
+    <section class="spotlight">
+        <div class="image" style="background-color: #212534 !important; display: flex; align-items: center; justify-content: center; min-height: 20em;">
+            <img src="images/logdor.png" alt="Logo El Camino" style="width: 45%; height: auto;">
+        </div>
+        <div class="content" style="background-color: #212534 !important;">
+            <h2 style="color: white !important; border-bottom-color: rgba(255,255,255,0.1) !important;">
+                grupo inmobiliario el camino<br />
+                -asesoramiento profesional-
+            </h2>
+            <p>En Dueñovende.com podés acceder al apoyo de profesionales inmobiliarios para tu operación.</p>
+        </div>
+    </section>
+            
+    <section class="spotlight">
+        <div class="image"><img src="images/pic02.jpg" alt="" /></div>
+        <div class="content">
+            <h2>Gestión de Ventas</h2>
+            <p>Asesoramiento en cada etapa del proceso de compra-venta de tu propiedad.</p>
+        </div>
+    </section>
+
+    <section class="spotlight">
+        <div class="image"><img src="images/pic03.jpg" alt="" /></div>
+        <div class="content">
+            <h2>Tasaciones Técnicas</h2>
+            <p>Valoraciones reales de mercado basadas en análisis comparativos y técnicos.</p>
+        </div>
+    </section>
+</section>  -->
+
+
+
+				<!-- Three -->
+					<section id="three" class="wrapper style3 special" style="background-color: #212534 !important;">
+    <div class="inner">
+        <header class="major" style="margin-bottom: 2em !important;">
+            <h2 style="border: none !important;">asesoramiento profesional</h2>
+            <p>En Dueñovende.com podés acceder al apoyo de profesionales inmobiliarios para tu operación.</p>
+        </header>
+        
+        <ul class="features" style="margin: 0 !important; padding: 0 !important;">
+            <li style="background: transparent !important; border: none !important; margin: 0 auto; max-width: 800px; float: none !important; display: block; text-align: center; padding: 0 !important;">
+                
+                <div style="margin-bottom: 1em;">
+                    <img src="images/logdor.png" alt="Logo" style="width: 80%; height: auto; margin-bottom: 0.5em;">
+                    
+                </div>
+                
+                <div style="display: flex; gap: 1em; justify-content: center; margin-top: 2em; flex-wrap: wrap;">
+                    
+                    <a href="elcamino.html" class="button special icon fa-paper-plane" style="border-radius: 4px; padding: 0 2em;">
+                        Más Información
+                    </a>
+                    
+                    <a href="https://wa.me/XXXXXXXXXXX?text=Hola,%20quisiera%20consultar%20por%20asesoramiento%20profesional" 
+                       target="_blank" 
+                       class="button icon fa-whatsapp" 
+                       style="background-color: #25D366 !important; color: white !important; border-radius: 4px; box-shadow: none !important; white-space: nowrap; padding: 0 2em;">
+                        Contactar por WhatsApp
+                    </a>
+                    
+                </div>
+            </li>
+        </ul>
+    </div>
+</section>
+
+				<!-- CTA 
+					<section id="cta" class="wrapper style4">
+						<div class="inner">
+							<header>
+								<h2>grupo inmobiliario el camino</h2>
+								<p>Aliquam ut ex ut augue consectetur interdum endrerit imperdiet amet eleifend fringilla.</p>
+							</header>
+							<ul class="actions stacked">
+								<li><a href="#" class="button fit primary">Activate</a></li>
+								<li><a href="#" class="button fit">Learn More</a></li>
+							</ul>
+						</div>
+					</section> -->
+
+                    <!-- One-Plus -->
+<section id="one-plus" class="wrapper style1 special" style="background-color: #212534 !important; border-top: 1px solid rgba(255,255,255,0.05);">
+    <div class="inner">
+        <header class="major">
+            <h2>¿Quienes Somos?<br />
+            </h2>
+            <p>Dueñovende.com es una plataforma independiente,<br/>
+				que cuenta con el Asesoramiento de Profesionales Matriculados,<br/>
+				CPI - Colegio Profesional de Corredores Públicos Inmobiliarios<br />
+            	MP: 7384 - 8134 - 7419 - 7458</p>
+        </header>
+<!-- 
+        <ul class="icons major">
+            <li>
+                <span class="icon solid fa-file-signature major style1" style="background-color: #5D9B6E !important; color: #ffffff !important;">
+                    <span class="label">Contratos</span>
+                </span>
+            </li>
+            <li>
+                <span class="icon solid fa-search-location major style2" style="background-color: #5D9B6E !important; color: #ffffff !important;">
+                    <span class="label">Títulos</span>
+                </span>
+            </li>
+            <li>
+                <span class="icon solid fa-users major style3" style="background-color: #5D9B6E !important; color: #ffffff !important;">
+                    <span class="label">Mediación</span>
+                </span>
+            </li>
+        </ul> -->
+    </div>
+</section>
+				<!-- Footer -->
+					<footer id="footer" style="background-color: #212534 !important; padding: 4em 0 !important; border-top: 1px solid rgba(255, 255, 255, 0.05);">
+    <ul class="icons">
+        <li><a href="#" class="icon brands fa-twitter" style="color: rgba(255,255,255,0.5) !important;"><span class="label">Twitter</span></a></li>
+        <li><a href="#" class="icon brands fa-facebook-f" style="color: rgba(255,255,255,0.5) !important;"><span class="label">Facebook</span></a></li>
+        <li><a href="#" class="icon brands fa-instagram" style="color: rgba(255,255,255,0.5) !important;"><span class="label">Instagram</span></a></li>
+        <li><a href="#" class="icon brands fa-dribbble" style="color: rgba(255,255,255,0.5) !important;"><span class="label">Dribbble</span></a></li>
+        <li><a href="#" class="icon solid fa-envelope" style="color: rgba(255,255,255,0.5) !important;"><span class="label">Email</span></a></li>
+    </ul>
+    <ul class="copyright" style="color: rgba(255,255,255,0.3) !important; font-size: 0.8em; letter-spacing: 1px;">
+        <li>&copy; dueñovende.com</li>
+        <li>Design: <a href="http://html5up.net" style="color: rgba(255,255,255,0.4) !important; border-bottom: none !important;">SF</a></li>
+    </ul>
+</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

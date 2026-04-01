@@ -1,0 +1,276 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Publicar - Dueño Vende</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <style>
+        .seccion-titulo { margin-top: 1.5em; border-bottom: 2px solid #efefef; padding-bottom: 0.5em; font-weight: 700; }
+        .obligatorio { color: #e74c3c; font-weight: bold; } /* Rojo para resaltar lo necesario */
+        .campo-opcional { color: #888; font-size: 0.9em; }
+        #vista-previa { display:none; width: 100%; max-width: 250px; margin-top: 10px; border-radius: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .hidden { display: none; } /* Para ocultar campos dinámicamente */
+    </style>
+</head>
+<body class="is-preload">
+    <div id="page-wrapper">
+        <header id="header">
+            <h1><a href="index.html">Dueño Vende</a></h1>
+        </header>
+
+        <article id="main">
+            <header>
+                <h2 id="titulo-pagina">Publicar Propiedad</h2>
+                <p>Completá los datos para que tu propiedad entre en revisión.</p>
+            </header>
+            <section class="wrapper style5">
+                <div class="inner">
+                    <form id="formulario-vender" method="post" action="#">
+                        <div class="row gtr-uniform">
+                            
+                            <div class="col-12"><h3 class="seccion-titulo">1. Fotos de la Propiedad</h3></div>
+<div class="col-12">
+    <label for="foto"><span class="obligatorio">*</span> Foto Principal (Obligatoria):</label>
+    <input type="file" id="foto" accept="image/*" required>
+    <img id="vista-previa" src="#" alt="Vista previa" style="display:none; width: 200px; margin-bottom: 20px;">
+    
+    <p style="margin-top: 20px; margin-bottom: 5px;"><strong>Fotos adicionales (Opcionales - Máximo 3):</strong></p>
+    <div class="row">
+        <div class="col-4 col-12-xsmall">
+            <input type="file" id="foto2" accept="image/*">
+            <img id="prev2" src="#" style="display:none; width: 100%; margin-top:5px; border-radius:4px;">
+        </div>
+        <div class="col-4 col-12-xsmall">
+            <input type="file" id="foto3" accept="image/*">
+            <img id="prev3" src="#" style="display:none; width: 100%; margin-top:5px; border-radius:4px;">
+        </div>
+        <div class="col-4 col-12-xsmall">
+            <input type="file" id="foto4" accept="image/*">
+            <img id="prev4" src="#" style="display:none; width: 100%; margin-top:5px; border-radius:4px;">
+        </div>
+    </div>
+</div>
+
+
+
+                            <div class="col-12"><h3 class="seccion-titulo">Datos del Vendedor</h3></div>
+                            <div class="col-6 col-12-xsmall"><label><span class="obligatorio">*</span> Nombre</label><input type="text" id="nombre" required /></div>
+                            <div class="col-6 col-12-xsmall"><label><span class="obligatorio">*</span> Apellido</label><input type="text" id="apellido" required /></div>
+                            <div class="col-6 col-12-xsmall"><label><span class="obligatorio">*</span> Email</label><input type="email" id="email" required /></div>
+                            <div class="col-6 col-12-xsmall"><label><span class="obligatorio">*</span> Teléfono / WhatsApp</label><input type="text" id="telefono" required /></div>
+
+                            <div class="col-12"><h3 class="seccion-titulo">Detalles de la Propiedad</h3></div>
+                            <div class="col-12">
+                                <label><span class="obligatorio">*</span> Tipo de Propiedad</label>
+                                <select id="tipo" required>
+                                    <option value="">Seleccione una opción...</option>
+                                    <option value="Casa">Casa</option>
+                                    <option value="Depto">Departamento</option>
+                                    <option value="Terreno">Terreno</option>
+                                    <option value="Comercial">Propiedad Comercial</option>
+                                </select>
+                            </div>
+
+                            <div class="col-6 col-12-xsmall seccion-venta">
+                                <label><span class="obligatorio">*</span> Precio USD</label>
+                                <input type="text" id="precio" placeholder="Ej: 85000" />
+                            </div>
+                            
+
+                            <div class="col-6 col-12-xsmall seccion-alquiler hidden">
+                                <label><span class="obligatorio">*</span> Precio Inicial Pesos ($)</label>
+                                <input type="text" id="precio_pesos" placeholder="Ej: 250000" />
+                            </div>
+                            <div class="col-6 col-12-xsmall seccion-alquiler hidden">
+                                <label><span class="obligatorio">*</span> Duración Contrato (Meses)</label>
+                                <input type="text" id="contrato" placeholder="Ej: 24" />
+                            </div>
+
+                            <div class="col-4 col-12-xsmall"><label><span class="obligatorio">*</span> Provincia</label><input type="text" id="provincia" value="Córdoba" required /></div>
+                            <div class="col-4 col-12-xsmall"><label><span class="obligatorio">*</span> Localidad</label><input type="text" id="localidad" value="Villa María" required /></div>
+                            <div class="col-4 col-12-xsmall"><label>Barrio</label><input type="text" id="barrio" placeholder="Opcional" /></div>
+
+                            <div class="col-3 col-6-xsmall"><label>Sup. Total m2</label><input type="text" id="sup_total" /></div>
+                            <div class="col-3 col-6-xsmall"><label>Sup. Cubierta m2</label><input type="text" id="sup_cubierta" /></div>
+                            <div class="col-3 col-6-xsmall"><label>Dormitorios</label><input type="text" id="dormitorios" /></div>
+                            <div class="col-3 col-6-xsmall"><label>Baños</label><input type="text" id="baños" /></div>
+
+                            <div class="col-12"><h3 class="seccion-titulo">Servicios y Comodidades <span class="campo-opcional">(Opcionales)</span></h3></div>
+                            <div class="col-3 col-6-small"><label>Garaje</label><select id="garaje"><option value="No">No</option><option value="Si">Si</option></select></div>
+                            <div class="col-3 col-6-small"><label>Asador</label><select id="asador"><option value="No">No</option><option value="Si">Si</option></select></div>
+                            <div class="col-3 col-6-small"><label>Piscina</label><select id="piscina"><option value="No">No</option><option value="Si">Si</option></select></div>
+                            <div class="col-3 col-6-small"><label>Balcón</label><select id="balcon"><option value="No">No</option><option value="Si">Si</option></select></div>
+                            
+                            <div class="col-2 col-4-small"><label>Luz</label><select id="electricidad"><option value="Si">Si</option><option value="No">No</option></select></div>
+                            <div class="col-2 col-4-small"><label>Gas</label><select id="gas"><option value="No">No</option><option value="Si">Si</option></select></div>
+                            <div class="col-2 col-4-small"><label>Agua</label><select id="agua"><option value="Si">Si</option><option value="No">No</option></select></div>
+                            <div class="col-2 col-4-small"><label>Sanitarios</label><select id="sanitarios"><option value="No">No</option><option value="Si">Si</option></select></div>
+                            <div class="col-4 col-12-small"><label>Pavimento</label><select id="pavimento"><option value="No">No</option><option value="Si">Si</option></select></div>
+
+                            <div class="col-6 col-12-xsmall seccion-venta">
+                                <label><span class="campo-opcional">Estado Legal</span></label>
+                                <select id="estado_legal">
+                                    <option value="-">Seleccione...</option>
+                                    <option value="Escritura">Escritura</option>
+                                    <option value="Boleto">Boleto</option>
+                                    <option value="Posesión">Posesión</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12">
+                                <label>Descripción Básica</label>
+                                <textarea id="descripcion" placeholder="Contanos más detalles..." rows="4"></textarea>
+                            </div>
+
+                            <div class="col-12">
+                                <ul class="actions">
+                                    <li><button type="submit" class="primary" id="btn-enviar">Publicar</button></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </article>
+    </div>
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/main.js"></script>
+
+    <script>
+        const CLOUD_NAME = 'dovfhdfar'; 
+        const UPLOAD_PRESET = 'web_inmobiliaria'; 
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwklod03hncuhwPqNTRywST272_e60xe3Ear9QShDvAn0JM8Y8Xz9dQ23w2WQwtOCMn/exec'; 
+
+        // 1. DETECTAR SI ES VENTA O ALQUILER AL CARGAR
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const modo = params.get('modo'); 
+            
+            if (modo === 'alquiler') {
+                document.getElementById('titulo-pagina').innerText = "Publicar Alquiler";
+                document.querySelectorAll('.seccion-venta').forEach(el => el.classList.add('hidden'));
+                document.querySelectorAll('.seccion-alquiler').forEach(el => el.classList.remove('hidden'));
+                window.tipoOperacion = "Alquiler";
+            } else {
+                document.getElementById('titulo-pagina').innerText = "Publicar Venta";
+                window.tipoOperacion = "Venta";
+            }
+        });
+
+        // 2. LÓGICA DE VISTA PREVIA PARA LAS 4 FOTOS
+        function configurarVistaPrevia(inputId, imgId) {
+            const el = document.getElementById(inputId);
+            if (el) {
+                el.addEventListener('change', function(e) {
+                    const reader = new FileReader();
+                    reader.onload = function() {
+                        const preview = document.getElementById(imgId);
+                        preview.src = reader.result;
+                        preview.style.display = 'block';
+                    }
+                    if(e.target.files[0]) reader.readAsDataURL(e.target.files[0]);
+                });
+            }
+        }
+        configurarVistaPrevia('foto', 'vista-previa');
+        configurarVistaPrevia('foto2', 'prev2');
+        configurarVistaPrevia('foto3', 'prev3');
+        configurarVistaPrevia('foto4', 'prev4');
+
+        // 3. FUNCIÓN DE ENVÍO REFORMADA PARA 4 FOTOS
+        document.getElementById('formulario-vender').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btn-enviar');
+            btn.innerText = "Subiendo fotos...";
+            btn.disabled = true;
+
+            try {
+                // Función interna para subir a Cloudinary
+                const subirFoto = async (idInput) => {
+                    const file = document.getElementById(idInput).files[0];
+                    if (!file) return "-"; 
+                    
+                    const formData = new FormData();
+                    formData.append('file', file);
+                    formData.append('upload_preset', UPLOAD_PRESET);
+                    
+                    const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
+                        method: 'POST',
+                        body: formData
+                    });
+                    const data = await res.json();
+                    return data.secure_url;
+                };
+
+                // Subimos las 4 fotos en paralelo
+                const [url1, url2, url3, url4] = await Promise.all([
+                    subirFoto('foto'),
+                    subirFoto('foto2'),
+                    subirFoto('foto3'),
+                    subirFoto('foto4')
+                ]);
+
+                btn.innerText = "Guardando datos...";
+
+                const getVal = (id) => document.getElementById(id) ? document.getElementById(id).value : "-";
+
+                const datos = {
+                    fecha: new Date().toLocaleDateString('es-AR'),
+                    id: "DV-" + Math.floor(1000 + Math.random() * 9000),
+                    rol: "cliente",
+                    estado_pub: "Revision",
+                    fotoUrl: url1,  // Columna E
+                    foto2: url2,    // Columna F
+                    foto3: url3,    // Columna G
+                    foto4: url4,    // Columna H
+                    nombre: getVal('nombre'),
+                    apellido: getVal('apellido'),
+                    email: getVal('email'),
+                    telefono: getVal('telefono'),
+                    operacion: window.tipoOperacion,
+                    tipo: getVal('tipo'),
+                    precio: getVal('precio'),
+                    precio_pesos: getVal('precio_pesos'),
+                    sup_total: getVal('sup_total'),
+                    sup_cubierta: getVal('sup_cubierta'),
+                    provincia: getVal('provincia'),
+                    localidad: getVal('localidad'),
+                    barrio: getVal('barrio'),
+                    dormitorios: getVal('dormitorios'),
+                    baños: getVal('baños'),
+                    garaje: getVal('garaje'),
+                    asador: getVal('asador'),
+                    piscina: getVal('piscina'),
+                    balcon: getVal('balcon'),
+                    electricidad: getVal('electricidad'),
+                    gas: getVal('gas'),
+                    agua: getVal('agua'),
+                    sanitarios: getVal('sanitarios'),
+                    pavimento: getVal('pavimento'),
+                    estado_legal: getVal('estado_legal'),
+                    contrato: getVal('contrato'),
+                    descripcion: getVal('descripcion')
+                };
+
+                await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'text/plain' },
+                    body: JSON.stringify(datos)
+                });
+
+                alert("¡Publicado con éxito! Estará visible tras la revisión.");
+                window.location.href = "index.html";
+
+            } catch (err) {
+                alert("Error al publicar: " + err.message);
+                btn.disabled = false;
+                btn.innerText = "Publicar";
+            }
+        });
+    </script>
+</body>
+</html>
