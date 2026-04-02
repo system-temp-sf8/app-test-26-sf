@@ -94,43 +94,68 @@
         
         .button.primary.fit { height: 2.5em !important; line-height: 2.5em !important; font-size: 0.7em !important; }
     
-        /* 7. ESTILO DE LA BARRA DE FILTROS */
+        /* 7. ESTILO DE LA BARRA DE FILTROS ACTUALIZADO */
         .filter-bar {
             background-color: #212534;
             display: flex;
             justify-content: center;
-            gap: 8px;
-            padding: 10px 0;
+            align-items: center;
+            gap: 12px; /* Más espacio entre botones */
+            padding: 25px 10px; /* Más aire arriba y abajo */
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            flex-wrap: wrap; /* Para que en móviles no se rompa */
+            flex-wrap: wrap; 
         }
 
         .filter-btn {
             background: rgba(255, 255, 255, 0.05) !important;
-            border: 1px solid rgba(255, 255, 255, 0.1) !important;
-            color: rgba(255, 255, 255, 0.6) !important;
-            padding: 0 12px !important;
-            height: 2em !important;
-            line-height: 2em !important;
-            font-size: 0.65em !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+            color: rgba(255, 255, 255, 0.8) !important; /* Texto más claro/blanco */
+            
+            /* Tamaño de botón más robusto */
+            padding: 0 25px !important; 
+            height: 3.2em !important;
+            line-height: 3.2em !important;
+            
+            /* Tipografía más legible */
+            font-size: 0.85em !important; 
             text-transform: uppercase !important;
-            letter-spacing: 1px !important;
+            letter-spacing: 2px !important;
+            font-weight: 600 !important;
+            
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: none !important;
+            border-radius: 4px; /* Bordes levemente redondeados para estilo moderno */
         }
 
         .filter-btn:hover {
-            background: rgba(255, 255, 255, 0.1) !important;
-            color: #fff !important;
+            background: rgba(212, 162, 97, 0.1) !important; /* Un toque de dorado al pasar */
+            color: #D4A261 !important;
+            border-color: #D4A261 !important;
         }
 
         /* Clase para el botón presionado/activo */
         .filter-btn.active {
-            background: #D4A261 !important; /* Dorado Spectral */
+            background: #D4A261 !important; 
             color: #ffffff !important;
             border-color: #D4A261 !important;
             font-weight: 700 !important;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4) !important; /* Sombra para resaltar */
+        }
+
+        /* Ajuste para móviles: para que no queden gigantes en pantallas chicas */
+        @media screen and (max-width: 736px) {
+            .filter-bar {
+                padding: 15px 5px;
+                gap: 8px;
+            }
+            .filter-btn {
+                font-size: 0.75em !important;
+                padding: 0 15px !important;
+                height: 2.8em !important;
+                line-height: 2.8em !important;
+                flex-grow: 1; /* Hace que se estiren para completar el ancho en celu */
+            }
         }
     
         /* Botones de paginación Minimalistas */
@@ -209,18 +234,33 @@
         }
 
         .info-section h4 {
-            color: #D4A261;
-            text-transform: uppercase;
-            font-size: 0.8em;
-            letter-spacing: 1px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            margin-bottom: 10px;
-            padding-bottom: 5px;
-        }
+    color: #D4A261;
+    text-transform: uppercase;
+    font-size: 0.95em; /* Antes 0.8em - Ahora más presente */
+    letter-spacing: 1.5px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+}
+.info-list { 
+    list-style: none; 
+    padding: 0; 
+    font-size: 1.05em; /* Antes 0.9em - Tamaño estándar de lectura */
+}
 
-        .info-list { list-style: none; padding: 0; font-size: 0.9em; }
-        .info-list li { margin-bottom: 5px; color: rgba(255,255,255,0.8); }
-        .info-list strong { color: #fff; }
+.info-list li { 
+    margin-bottom: 8px; /* Un poquito más de espacio entre líneas */
+    color: rgba(255,255,255,0.85);        
+ }
+ .info-list strong { 
+    color: #fff; 
+    font-weight: 600;
+}
+  .info-section p {
+    font-size: 1em;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.9);
+}      
 
         /* Grilla de Fotos */
         .modal-gallery {

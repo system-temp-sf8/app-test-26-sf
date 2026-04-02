@@ -1,46 +1,86 @@
 <!DOCTYPE HTML>
 <!--
-	QUIEROINMUEBLES.COM by SANTIAGO FERRARI
+	QUIEROINMUEBLES.AR by SANTIAGO FERRARI
 -->
 <html>
 	<head>
-		<title>quieroinmuebles.com by SF</title>
+		<title>quieroinmuebles.ar by SF</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 		<style>
-        .link-login {
-    /* --- UBICACIÓN FIJA --- */
-    position: fixed !important;
-    top: 10px !important;       /* Usamos px para más precisión */
-    right: 20px !important;     /* Lo alejamos del borde derecho */
-    z-index: 10001 !important;  /* Al frente de todo */
-    
-    /* --- EVITAR QUE SE ESTIRE O SE SUBRAYE --- */
-    display: inline-block !important;
-    width: auto !important;
-    text-decoration: none !important; /* Quita la línea de abajo */
-    border-bottom: none !important;   /* Quita bordes que pone la plantilla */
 
-    /* --- ESTÉTICA --- */
-    font-weight: bold !important;
-    color: #f1c40f !important;
-    transition: all 0.3s ease;
-    line-height: 1 !important;   /* Para que no ocupe espacio extra arriba/abajo */
+            .logo-banner {
+    width: 95px; /* Ajustá este número a tu gusto */
+    height: auto;
+    margin-bottom: 20px; /* Espacio con el título QUIEROINMUEBLES.AR */
+    filter: drop-shadow(0 0 10px rgba(0,0,0,0.5)); /* Le da un poquito de relieve */
+    transition: transform 0.3s ease;
 }
 
-        .link-login:hover {
-            color: #ffffff!important;
-            text-shadow: 0 0 10px #f1c40f;
-            cursor: pointer;
-        }
-		.link-login:active {
-    		color: #f1c40f;
-    		background-color: rgba(241, 196, 15, 0.2); /* Se pone un fondo suave al tocarlo */
-    		border-radius: 4px;}
+.logo-banner:hover {
+    transform: scale(1.1); /* Efecto sutil al pasar el mouse */
+}
 
-/* --- BAJAR 'DUEÑO VENDE' SIN TOCAR EL TAMAÑO DEL HEADER --- */
+/* Ajuste para que en el celu no quede gigante */
+@media screen and (max-width: 736px) {
+    .logo-banner {
+        width: 55px;
+    }
+}
+
+        .link-login {
+    /* --- UBICACIÓN --- */
+    position: fixed !important;
+    top: 15px !important; 
+    right: 20px !important; 
+    z-index: 10001 !important; 
+
+    /* --- LIMPIEZA TOTAL DE LÍNEAS --- */
+    display: inline-block !important;
+    width: auto !important;
+    text-decoration: none !important; /* Quita subrayado estándar */
+    border: none !important;          /* Quita cualquier borde manual */
+    outline: none !important;         /* Quita el recuadro de selección */
+    background: transparent !important;
+
+    /* --- ESTÉTICA --- */
+    font-weight: 800 !important;      /* Más grosor para compensar la falta de línea */
+    color: #f1c40f !important;
+    font-size: 0.75em !important; 
+    letter-spacing: 1.5px !important;
+    transition: all 0.3s ease;
+    line-height: 1 !important;
+    cursor: pointer !important;
+}
+
+/* --- MATAMOS EL "DESTELLO" O LÍNEA FANTASMA --- */
+.link-login::before, 
+.link-login::after {
+    display: none !important;
+    content: none !important;
+}
+
+.link-login:hover {
+    color: #ffffff !important;
+    text-shadow: 0 0 10px #f1c40f;
+    cursor: pointer;
+    border-bottom-color: #ffffff !important;
+}
+
+.link-login:active {
+    color: #f1c40f;
+    background-color: rgba(241, 196, 15, 0.2);
+    border-radius: 4px;
+}
+
+/* --- ASEGURAMOS QUE EL MENÚ TENGA PRIORIDAD DE CLIC --- */
+.menuToggle {
+    z-index: 9999 !important; /* El menú siempre arriba de todo */
+}
+
+/* --- BAJAR 'QUIEROINMUEBLES.AR' SIN TOCAR EL TAMAÑO DEL HEADER --- */
 #header h1 {
     /* Quitamos cualquier posición absoluta que traiga la plantilla */
     position: relative !important; 
@@ -196,18 +236,16 @@ section.wrapper .inner {
 
 .firma-santi {
     text-align: left;
-    /* Ajustamos el ancho para que coincida con el bloque de botones */
     max-width: 25em; 
-    margin: 0 auto 0.3em auto !important; 
     
-    /* COLOR: Gris plata sutil (un tono menos que el título) */
-    color: #a6a6a6 !important; 
-    
-    font-size: 0.75em;
-    font-weight: 600;
+    /* CAMBIOS PARA RESALTARLO */
+    margin: 0 auto 0.1em auto !important; /* Achicamos más el margen inferior para pegarlo a los botones */
+    color: #dfdfdf !important;           /* Un gris mucho más claro, casi blanco, para que resalte */
+    font-size: 0.9em;                    /* Antes 0.75em - Aumentamos el tamaño */
+    font-weight: 800;                    /* Antes 600 - Mucho más grueso (negrita intensa) */
     text-transform: uppercase;
-    letter-spacing: 3px; /* Más espacio entre letras para que se vea premium */
-    opacity: 0.8;
+    letter-spacing: 3px;                 /* Mantenemos el espaciado premium */
+    opacity: 0.9;                        /* Subimos la opacidad para que se vea más nítido */
 }
 
 /* Ajuste para que en el móvil no se pegue al borde de la pantalla */
@@ -215,7 +253,7 @@ section.wrapper .inner {
     .firma-santi {
         max-width: 90%;
         margin-left: 5% !important;
-        font-size: 0.7em;
+        font-size: 0.8em; /* Un poquito más chico en celu, pero sigue siendo más grande que antes */
     }
 }
 /* --- COLOR DE FONDO DEL MENÚ LATERAL --- */
@@ -241,6 +279,92 @@ section.wrapper .inner {
     color: #ffffff !important;
 }
 
+/* --- AJUSTE FINO: SOLO AGRANDAR LETRA DE BOTONES --- */
+#banner .actions.special .button {
+    /* 1. Agrandamos la fuente */
+    font-size: 1.15em !important; 
+    font-weight: 800 !important;
+    
+    /* 2. Estilo de espaciado para que se vea premium */
+    letter-spacing: 3px !important;
+    text-transform: uppercase !important;
+
+    /* 3. Ajustamos el aire interno sin agrandar el botón exageradamente */
+    padding: 0 2.5em !important; 
+    height: auto !important;
+    line-height: 2.8em !important; /* Esto controla el alto real del botón */
+    
+    transition: all 0.2s ease-in-out !important;
+}
+
+/* Efecto sutil al pasar el mouse */
+#banner .actions.special .button:hover {
+    color: #f1c40f !important; /* El amarillo de tu login */
+    border-color: #f1c40f !important;
+    background-color: rgba(241, 196, 15, 0.05) !important;
+}
+
+/* Ajuste para que en móviles no rompa la pantalla */
+@media screen and (max-width: 736px) {
+    #banner .actions.special .button {
+        font-size: 0.9em !important;
+        line-height: 3em !important;
+        width: 100% !important;
+        margin-bottom: 10px;
+    }
+}
+/* MEJORA DE LEGIBILIDAD EN SECCIÓN ONE */
+#one .inner header.major p {
+    color: #ffffff !important;         /* Blanco puro para máximo contraste */
+    font-size: 1.25em !important;      /* Un 25% más grande que el estándar */
+    font-weight: 500 !important;       /* Un poco más de grosor (semi-bold) */
+    line-height: 1.6 !important;       /* Más espacio entre líneas para que no se amontone el texto */
+    max-width: 800px;                  /* Evita que las líneas sean infinitas y cansen la vista */
+    margin: 0 auto !important;         /* Centrado perfecto */
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1); /* Sombra casi invisible para dar profundidad */
+    opacity: 1 !important;             /* Aseguramos que no tenga transparencias */
+}
+
+
+
+/* Ajuste para móviles */
+@media screen and (max-width: 736px) {
+    #one .inner header.major p {
+        font-size: 1.1em !important;
+        line-height: 1.5 !important;
+    }
+}
+
+/* MEJORA DE LEGIBILIDAD EN SECCIÓN THREE */
+#three .inner header.major p {
+    color: #ffffff !important;         /* Blanco puro para que resalte en el fondo azul */
+    font-size: 1.2em !important;       /* Un poco más grande para que sea legible */
+    font-weight: 400 !important;       /* Peso medio para que no se vea tosco */
+    line-height: 1.7 !important;       /* Más aire entre líneas */
+    max-width: 750px !important;       /* Acortamos el ancho para que el ojo no viaje tanto */
+    margin: 0 auto 2.5em auto !important; /* Centrado y con espacio antes de los botones */
+    opacity: 0.9 !important;           /* Un toque mínimo de transparencia para que se vea moderno */
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3); /* Sombra para despegar la letra del fondo oscuro */
+}
+
+/* Ajuste del título en Sección Three */
+#three .inner header.major h2 {
+    color: #ffffff !important;
+    font-weight: 800 !important;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 0.8em !important;
+}
+
+/* Ajuste para que en móviles no quede gigante */
+@media screen and (max-width: 736px) {
+    #three .inner header.major p {
+        font-size: 1.05em !important;
+        line-height: 1.6 !important;
+        margin-bottom: 2em !important;
+    }
+}
+
     	</style>
 	</head>
 	<body>
@@ -250,7 +374,7 @@ section.wrapper .inner {
 
 				<!-- Header -->
 					<header id="header" class="alt">
-						<h1><a href="index.html">DueñoVende</a></h1>
+						<h1><a href="index.html">QuieroInmuebles</a></h1>
 						<a href="#" 
  						class="link-login" 
  						style="position: absolute; 
@@ -281,11 +405,12 @@ section.wrapper .inner {
 				<!-- Banner -->
 					<section id="banner" style="background-image: none !important; background-color:#212534 !important;">
     <div class="inner">
-        <div style="display: flex; justify-content: center; margin-bottom: 50px; margin-top: -60px;">
-    <img src="images/logo.png" alt="Logo Dueño Vende" style="width: 40px; height: auto;">
+        <div style="display: flex; justify-content: center; margin-bottom: 10px; margin-top: -60px;">
+    <img src="images/logo.png" alt="Logo Dueño Vende" class="logo-banner">
 </div>
+        
 
-        <h2>DueñoVende.com</h2>
+        <h2>QuieroInmuebles.ar</h2>
         
         <p>Donde Encontrás.. o Publicas tu Propiedad</p>
 
@@ -304,10 +429,10 @@ section.wrapper .inner {
 					<section id="one" class="wrapper style1 special">
 						<div class="inner">
 							<header class="major">
-								<h2>DUEÑOVENDE.COM ...<br />
+								<h2>QUIEROINMUEBLES.AR...<br />
 								</h2>
 								<p>Es el Mejor Lugar Para Promocionar tu Propiedad..<br /> <br/>
-								Podes Buscar en el Sitio o Publicar... <br />para Estar Visible en el Mercado</p>
+								Podes Buscar o Publicar en el Sitio... <br />para Estar Visible en el Mercado</p>
 							</header>
 
 							<ul class="icons major">
@@ -372,33 +497,37 @@ section.wrapper .inner {
     <div class="inner">
         <header class="major" style="margin-bottom: 2em !important;">
             <h2 style="border: none !important;">asesoramiento profesional</h2>
-            <p>En Dueñovende.com podés acceder al apoyo de profesionales inmobiliarios para tu operación.</p>
+            <p>En QuieroInmuebles.ar también podés acceder al apoyo de profesionales inmobiliarios para tu operación.</p>
         </header>
         
         <ul class="features" style="margin: 0 !important; padding: 0 !important;">
-            <li style="background: transparent !important; border: none !important; margin: 0 auto; max-width: 800px; float: none !important; display: block; text-align: center; padding: 0 !important;">
-                
-                <div style="margin-bottom: 1em;">
-                    <img src="images/logdor.png" alt="Logo" style="width: 80%; height: auto; margin-bottom: 0.5em;">
-                    
-                </div>
-                
-                <div style="display: flex; gap: 1em; justify-content: center; margin-top: 2em; flex-wrap: wrap;">
-                    
-                    <a href="elcamino.html" class="button special icon fa-paper-plane" style="border-radius: 4px; padding: 0 2em;">
-                        Más Información
-                    </a>
-                    
-                    <a href="https://wa.me/XXXXXXXXXXX?text=Hola,%20quisiera%20consultar%20por%20asesoramiento%20profesional" 
-                       target="_blank" 
-                       class="button icon fa-whatsapp" 
-                       style="background-color: #25D366 !important; color: white !important; border-radius: 4px; box-shadow: none !important; white-space: nowrap; padding: 0 2em;">
-                        Contactar por WhatsApp
-                    </a>
-                    
-                </div>
-            </li>
-        </ul>
+    <li style="background: transparent !important; border: none !important; margin: 0 auto; max-width: 800px; float: none !important; display: block; text-align: center; padding: 0 !important;">
+        
+        <!-- EL LOGO QUE ESTABA ACÁ YA NO ESTÁ -->
+        
+        <div style="display: flex; gap: 1em; justify-content: center; margin-top: 1em; flex-wrap: wrap;">
+            
+            <a href="elcamino.html" 
+   class="button primary icon fa-paper-plane" 
+   style="background-color: #5D9B6E !important; 
+          color: white !important; 
+          border-radius: 4px; 
+          padding: 0 2em; 
+          box-shadow: 0 4px 15px rgba(0,0,0,0.3) !important; 
+          border: 1px solid #ffffff33 !important;">
+    Más Información
+</a>
+            
+            <a href="https://wa.me/XXXXXXXXXXX?text=Hola,%20quisiera%20consultar%20por%20asesoramiento%20profesional" 
+               target="_blank" 
+               class="button icon fa-whatsapp" 
+               style="background-color: #25D366 !important; color: white !important; border-radius: 4px; box-shadow: none !important; white-space: nowrap; padding: 0 2em;">
+                Contactar por WhatsApp
+            </a>
+            
+        </div>
+    </li>
+</ul>
     </div>
 </section>
 
@@ -422,10 +551,9 @@ section.wrapper .inner {
         <header class="major">
             <h2>¿Quienes Somos?<br />
             </h2>
-            <p>Dueñovende.com es una plataforma independiente,<br/>
-				que cuenta con el Asesoramiento de Profesionales Matriculados,<br/>
-				CPI - Colegio Profesional de Corredores Públicos Inmobiliarios<br />
-            	MP: 7384 - 8134 - 7419 - 7458</p>
+            <p>QuieroInmuebles.ar es una plataforma independiente,<br/>
+				que cuenta con el Asesoramiento de Profesionales Matriculados CPI<br/>
+				</p>
         </header>
 <!-- 
         <ul class="icons major">
@@ -448,15 +576,16 @@ section.wrapper .inner {
     </div>
 </section>
 				<!-- Footer -->
-					<footer id="footer" style="background-color: #212534 !important; padding: 4em 0 !important; border-top: 1px solid rgba(255, 255, 255, 0.05);">
-    <ul class="icons">
+					<!-- Footer Compacto Verticalmente -->
+<footer id="footer" style="background-color: #212534 !important; padding: 1.5em 0 1em 0 !important; border-top: 1px solid rgba(255, 255, 255, 0.05);">
+    <ul class="icons" style="margin-bottom: 0.8em !important; padding: 0 !important;">
         <li><a href="#" class="icon brands fa-twitter" style="color: rgba(255,255,255,0.5) !important;"><span class="label">Twitter</span></a></li>
         <li><a href="#" class="icon brands fa-facebook-f" style="color: rgba(255,255,255,0.5) !important;"><span class="label">Facebook</span></a></li>
         <li><a href="#" class="icon brands fa-instagram" style="color: rgba(255,255,255,0.5) !important;"><span class="label">Instagram</span></a></li>
         <li><a href="#" class="icon brands fa-dribbble" style="color: rgba(255,255,255,0.5) !important;"><span class="label">Dribbble</span></a></li>
         <li><a href="#" class="icon solid fa-envelope" style="color: rgba(255,255,255,0.5) !important;"><span class="label">Email</span></a></li>
     </ul>
-    <ul class="copyright" style="color: rgba(255,255,255,0.3) !important; font-size: 0.8em; letter-spacing: 1px;">
+    <ul class="copyright" style="color: rgba(255,255,255,0.3) !important; font-size: 0.8em; letter-spacing: 1px; margin: 0 !important; padding: 0 !important;">
         <li>&copy; dueñovende.com</li>
         <li>Design: <a href="http://html5up.net" style="color: rgba(255,255,255,0.4) !important; border-bottom: none !important;">SF</a></li>
     </ul>
