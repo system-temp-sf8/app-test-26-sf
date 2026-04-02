@@ -29,31 +29,48 @@
         width: 55px;
     }
 }
-
-        .link-login {
+.link-login {
     /* --- UBICACIÓN --- */
-    position: fixed !important;
-    top: 15px !important; 
-    right: 20px !important; 
+    position: absolute !important; 
+    left: 2.5em !important; 
+    top: 1.2em !important; 
     z-index: 10001 !important; 
 
-    /* --- LIMPIEZA TOTAL DE LÍNEAS --- */
+    /* --- LIMPIEZA DE DESTELLOS DEL TEMPLATE --- */
     display: inline-block !important;
-    width: auto !important;
-    text-decoration: none !important; /* Quita subrayado estándar */
-    border: none !important;          /* Quita cualquier borde manual */
-    outline: none !important;         /* Quita el recuadro de selección */
+    text-decoration: none !important;
+    border: none !important;
+    outline: none !important;
     background: transparent !important;
+    
+    /* Matamos animaciones de carga del template */
+    transition: color 0.2s ease !important; 
+    animation: none !important;
 
     /* --- ESTÉTICA --- */
-    font-weight: 800 !important;      /* Más grosor para compensar la falta de línea */
+    font-weight: 800 !important;
     color: #f1c40f !important;
-    font-size: 0.75em !important; 
+    font-size: 0.7em !important; 
     letter-spacing: 1.5px !important;
-    transition: all 0.3s ease;
     line-height: 1 !important;
-    cursor: pointer !important;
+    border-bottom: 1px solid #f1c40f !important; /* Tu línea amarilla */
 }
+
+/* ESTO ES LA CLAVE: Mata las líneas animadas que Spectral pone a los links */
+.link-login::before, 
+.link-login::after {
+    display: none !important;
+    content: none !important;
+    background: none !important;
+}
+
+/* Hover limpio */
+.link-login:hover {
+    color: #ffffff !important;
+    border-bottom-color: #ffffff !important;
+    text-shadow: none !important;
+}
+        
 
 /* --- MATAMOS EL "DESTELLO" O LÍNEA FANTASMA --- */
 .link-login::before, 
@@ -62,18 +79,9 @@
     content: none !important;
 }
 
-.link-login:hover {
-    color: #ffffff !important;
-    text-shadow: 0 0 10px #f1c40f;
-    cursor: pointer;
-    border-bottom-color: #ffffff !important;
-}
 
-.link-login:active {
-    color: #f1c40f;
-    background-color: rgba(241, 196, 15, 0.2);
-    border-radius: 4px;
-}
+
+
 
 /* --- ASEGURAMOS QUE EL MENÚ TENGA PRIORIDAD DE CLIC --- */
 .menuToggle {
@@ -375,14 +383,7 @@ section.wrapper .inner {
 				<!-- Header -->
 					<header id="header" class="alt">
 						<h1><a href="index.html">QuieroInmuebles</a></h1>
-						<a href="#" 
- 						class="link-login" 
- 						style="position: absolute; 
- 						left: 2.5em !important; 
- 						top: 1.2em !important; 
- 						font-size: 0.7em !important; 
- 						line-height:1!important; 
- 						border-bottom: 1px solid #f1c40f;">INICIAR SESIÓN</a></p>
+						<a href="#" class="link-login">INICIAR SESIÓN</a>
 						<nav id="nav">
 							<ul>
 								<li class="special">
@@ -393,8 +394,8 @@ section.wrapper .inner {
 											<li><a href="vender.html?modo=venta">Vender</a></li>
 											<li><a href="comprar.html">Comprar</a></li>
 											<li><a href="vender.html?modo=alquiler">Alquilar</a></li>
-											<li><a href="#">Asesoramiento</a></li>
-											<li><a href="#">Iniciar Sesión</a></li>
+											<li><a href="elcamino.html">Asesoramiento</a></li>
+											<!--<li><a href="#">Iniciar Sesión</a></li> -->
 										</ul>
 									</div>
 								</li>
@@ -518,7 +519,7 @@ section.wrapper .inner {
     Más Información
 </a>
             
-            <a href="https://wa.me/XXXXXXXXXXX?text=Hola,%20quisiera%20consultar%20por%20asesoramiento%20profesional" 
+            <a href="https://wa.me/5493534789810?text=Hola,%20quisiera%20consultar%20por%20asesoramiento%20profesional" 
                target="_blank" 
                class="button icon fa-whatsapp" 
                style="background-color: #25D366 !important; color: white !important; border-radius: 4px; box-shadow: none !important; white-space: nowrap; padding: 0 2em;">
