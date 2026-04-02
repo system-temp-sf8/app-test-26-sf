@@ -4,41 +4,83 @@
 -->
 <html>
 	<head>
-		<title>inmoelcamino.com by SF</title>
+		<title>elcamino.com by SF</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 		<style>
-        .link-login {
-    /* --- UBICACIÓN FIJA --- */
-    position: fixed !important;
-    top: 10px !important;       /* Usamos px para más precisión */
-    right: 20px !important;     /* Lo alejamos del borde derecho */
-    z-index: 10001 !important;  /* Al frente de todo */
-    
-    /* --- EVITAR QUE SE ESTIRE O SE SUBRAYE --- */
+        
+/* --- BOTÓN LOGIN OPTIMIZADO --- */
+.link-login {
+    position: absolute !important; 
+    left: 1.5em !important; 
+    top: 1.1em !important; /* Posición estable arriba */
+    z-index: 10001 !important; 
     display: inline-block !important;
-    width: auto !important;
-    text-decoration: none !important; /* Quita la línea de abajo */
-    border-bottom: none !important;   /* Quita bordes que pone la plantilla */
-
-    /* --- ESTÉTICA --- */
-    font-weight: bold !important;
+    text-decoration: none !important;
+    border: none !important;
+    background: transparent !important;
+    
+    font-weight: 800 !important;
     color: #f1c40f !important;
-    transition: all 0.3s ease;
-    line-height: 1 !important;   /* Para que no ocupe espacio extra arriba/abajo */
+    font-size: 0.65em !important; 
+    letter-spacing: 1px !important;
+    line-height: 1 !important;
+    border-bottom: 1px solid #f1c40f !important;
+    transition: color 0.2s ease !important;
 }
 
-        .link-login:hover {
-            color: #ffffff!important;
-            text-shadow: 0 0 10px #f1c40f;
-            cursor: pointer;
-        }
-		.link-login:active {
-    		color: #f1c40f;
-    		background-color: rgba(241, 196, 15, 0.2); /* Se pone un fondo suave al tocarlo */
-    		border-radius: 4px;}
+/* Matar animaciones fantasma del template Spectral */
+.link-login::before, .link-login::after { display: none !important; content: none !important; }
+.link-login:hover { color: #ffffff !important; border-bottom-color: #ffffff !important; }
+
+.link-login:hover {
+    color: #ffffff !important;
+    border-bottom-color: #ffffff !important;
+    text-shadow: none !important;
+}
+
+#header {
+    display: flex !important;
+    align-items: center !important;
+    background-color: #212534 !important;
+    background-image: none !important;
+}
+
+#header h1 {
+    margin: 0 !important;
+    padding-left: 11em !important; /* Espacio de seguridad para que no pise al login */
+    text-align: left !important;
+    line-height: 3.5em !important; 
+    font-size: 1em !important;
+    position: relative !important;
+    top: 0 !important;
+}
+    #header h1 a {
+    border: none !important;
+}
+/* --- AJUSTE ANTI-CHOQUE PARA MÓVILES --- */
+@media screen and (max-width: 736px) {
+    .link-login {
+        top: 1.2em !important;
+        left: 1em !important;
+        font-size: 0.55em !important;
+    }
+    #header h1 {
+        padding-left: 8.5em !important; /* Menos espacio en celu */
+        font-size: 0.85em !important;
+    }
+}
+
+/* Mantiene el botón de menú en su lugar original */
+#header nav {
+    position: absolute !important;
+    right: 0 !important;
+    top: 0 !important;
+}
+        
+		
 
 /* --- BAJAR 'DUEÑO VENDE' SIN TOCAR EL TAMAÑO DEL HEADER --- */
 #header h1 {
@@ -373,16 +415,9 @@ section.wrapper .inner {
 
 				<!-- Header -->
 					<header id="header" class="alt">
-						<h1><a href="index.html">ElCamino</a></h1>
-						<a href="#" 
- 						class="link-login" 
- 						style="position: absolute; 
- 						left: 2.5em !important; 
- 						top: 1.2em !important; 
- 						font-size: 0.7em !important; 
- 						line-height:1!important; 
- 						border-bottom: 1px solid #f1c40f;">INICIAR SESIÓN</a></p>
-						<nav id="nav">
+    <h1><a href="index.html">ElCamino</a></h1> <!-- O ElCamino -->
+    <a href="#" class="link-login">INICIAR SESIÓN</a>
+    <nav id="nav">
 							<ul>
 								<li class="special">
 									<a href="#menu" class="menuToggle"><span>Menu</span></a>
@@ -392,15 +427,7 @@ section.wrapper .inner {
 											<li><a href="comprar.html">Ver Propiedades</a></li>
 											<li><a href="#">Ver Alquileres</a></li>
 											<li><a href="index.html">Publicar</a></li>
-
-											<li>
-        <a href="https://api.whatsapp.com/send?phone=549353XXXXXXX&text=Hola%20busco%20asesoramiento%20profesional" 
-           target="_blank" 
-           rel="noopener noreferrer">
-           Asesoramiento
-        </a>
-    </li>
-											<li><a href="#">Iniciar Sesión</a></li>
+											<li><a href="https://wa.me/5493534789810?text=Hola,%20quisiera%20consultar%20por%20asesoramiento%20profesional" target="_blank"rel="noopener noreferrer">Asesoramiento</a></li>   <!--	 <li><a href="#">Iniciar Sesión</a></li> -->
 										</ul>
 									</div>
 								</li>
@@ -419,7 +446,7 @@ section.wrapper .inner {
 
         <ul class="actions special" style="margin-top: 1em !important; margin-bottom: 1em !important;">
     <li>
-        <a href="https://api.whatsapp.com/send?phone=549353XXXXXXX" 
+        <a href="https://wa.me/5493534789810?text=Hola,%20quisiera%20consultar%20por%20asesoramiento%20profesional" 
            target="_blank" 
            class="button icon brands fa-whatsapp" 
            style="background-color: #25D366 !important; color: white !important;">
@@ -661,7 +688,15 @@ section.wrapper .inner {
     <ul class="icons" style="margin-bottom: 0.8em !important; padding: 0 !important;">
         <li><a href="#" class="icon brands fa-facebook-f" style="color: rgba(255,255,255,0.5) !important;"><span class="label">Facebook</span></a></li>
         <li><a href="#" class="icon brands fa-instagram" style="color: rgba(255,255,255,0.5) !important;"><span class="label">Instagram</span></a></li>
-        <li><a href="https://api.whatsapp.com/send?phone=549353XXXXXXX" class="icon brands fa-whatsapp" style="color: rgba(255,255,255,0.5) !important;"><span class="label">WhatsApp</span></a></li>
+        <li>
+    <a href="https://wa.me/5493534789810?text=Hola,%20quisiera%20consultar%20por%20asesoramiento%20profesional" 
+       class="icon brands fa-whatsapp" 
+       target="_blank" 
+       rel="noopener noreferrer" 
+       style="color: rgba(255,255,255,0.5) !important;">
+        <span class="label">WhatsApp</span>
+    </a>
+</li>
         <li><a href="mailto:tuemail@ejemplo.com" class="icon solid fa-envelope" style="color: rgba(255,255,255,0.5) !important;"><span class="label">Email</span></a></li>
     </ul>
     
