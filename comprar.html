@@ -434,22 +434,25 @@
     }
 
     function filtrarPropiedades(tipo, btn) {
-        filtroActual = tipo;
-        paginaActual = 1;
+    filtroActual = tipo;
+    paginaActual = 1;
 
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        if(btn) btn.classList.add('active');
+    // Manejo visual de los botones
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    if(btn) btn.classList.add('active');
 
-        if (tipo === 'Todos' || tipo === '') {
-            propiedadesFiltradas = todasLasPropiedades;
-        } else {
-            propiedadesFiltradas = todasLasPropiedades.filter(prop => {
-                const tipoProp = String(prop[13] || "");
-                return tipoProp.toLowerCase().includes(tipo.toLowerCase());
-            });
-        }
-        renderizar();
+    // Filtrado manteniendo el orden inverso (las últimas cargadas primero)
+    if (tipo === 'Todos' || tipo === '') {
+        propiedadesFiltradas = [...todasLasPropiedades]; 
+    } else {
+        propiedadesFiltradas = todasLasPropiedades.filter(prop => {
+            const tipoProp = String(prop[13] || "");
+            return tipoProp.toLowerCase().includes(tipo.toLowerCase());
+        });
     }
+    
+    renderizar();
+}
 
     function renderizar() {
         const contenedor = document.getElementById('contenedor-propiedades');
