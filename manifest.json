@@ -1,0 +1,20 @@
+{
+  "short_name": "QuieroInmueble",
+  "name": "Quiero Inmueble - Buscador",
+  "icons": [
+    {
+      "src": "assets/images/quiero192c-fondo.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "assets/images/quiero512c-fondo.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "index.html",
+  "background_color": "#212534",
+  "display": "standalone",
+  "theme_color": "#315674"
+}

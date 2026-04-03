@@ -4,11 +4,29 @@
 -->
 <html>
 	<head>
+
+
+        
+       
+
 		<title>quieroinmuebles.ar by SF</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+
+
+ <!-- Configuración para WhatsApp - Quiero Inmuebles -->
+<meta property="og:title" content="QuieroInmuebles.ar - Búsqueda Activa" />
+<meta property="og:description" content="Encontrá tu lugar ideal de forma fácil y rápida." />
+<meta property="og:image" content="https://quieroinmuebles.ar/assets/images/quiero600c-fondo.png" />
+<meta property="og:url" content="https://quieroinmuebles.ar/index.html" />
+<meta property="og:type" content="website" />
+
+<!-- Enlace a la App (Manifest) -->
+<link rel="manifest" href="manifest.json">
+
+
 		<style>
 
             .logo-banner {
@@ -602,5 +620,20 @@ section.wrapper .inner {
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
 
+<!-- Script para que la App sea instalable -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('sw.js').then(function(reg) {
+            console.log('Service Worker registrado con éxito');
+          }).catch(function(err) {
+            console.log('Error al registrar el Service Worker', err);
+          });
+        });
+      }
+    </script>
+
+
+            
 	</body>
 </html>
