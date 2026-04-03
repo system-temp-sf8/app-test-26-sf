@@ -1,0 +1,262 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Búsqueda Activa - Quiero Inmuebles</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <style>
+        /* 1. FONDO Y BASE */
+        body, #page-wrapper { background-color: #212534 !important; }
+
+        /* 2. HEADER FIJO */
+        header#header {
+            background-color: #212534 !important;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 10000;
+        }
+
+        /* 3. BANNER DINÁMICO (Súper Compacto) */
+        #banner-dinamico {
+            background-color: #1c202b;
+            /* Reducción drástica del padding vertical para achicar el banner */
+            padding: 1.5em 0 1em 0; 
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            margin-top: 0; 
+        }
+
+        #banner-dinamico h2 {
+            color: white; 
+            margin: 0; 
+            /* Letra más chica y elegante (de 1.8em a 1.2em) */
+            font-size: 1.2em !important; 
+            text-transform: uppercase; 
+            letter-spacing: 2px;
+            font-weight: 400; /* Menos gruesa para que ocupe menos visualmente */
+        }
+
+        #banner-dinamico p {
+            color: rgba(255,255,255,0.5); 
+            margin-top: 0.2em; /* Pegado al título */
+            font-size: 0.7em; /* Subtítulo minúsculo */
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* 4. AJUSTE DEL FORMULARIO (para que no se pegue tanto arriba) */
+        .wrapper.style5 { 
+            background-color: #212534 !important; 
+            /* Volvemos a un padding normal para que el form respire */
+            padding: 2em 0 !important; 
+        }
+
+        /* 5. DISEÑO DEL FORMULARIO */
+        form {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 40px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            border-bottom: 2px solid #315674;
+            margin: 1.5em 0 1em 0;
+            padding-bottom: 0.5em;
+            color: #315674 !important;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+
+        label { color: rgba(255, 255, 255, 0.7) !important; font-weight: 600; font-size: 0.9em; }
+
+        input, select, textarea {
+            background: rgba(255, 255, 255, 0.05) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            color: #ffffff !important;
+        }
+
+        /* 6. BOTÓN */
+        .button.primary {
+            background-color: #315674 !important;
+            transition: all 0.3s ease;
+        }
+
+        .button.primary:hover {
+            background-color: #4da3ff !important;
+            transform: translateY(-2px);
+        }
+        /* 7. AJUSTE DE INPUTS DE NÚMERO (Dormitorios y Baños) */
+        input[name="Dormitorios"], 
+        input[name="Baños"] {
+            width: 60px !important; /* Ancho justo para 1 o 2 números */
+            text-align: center;    /* Centra el número */
+            margin: 0 auto;        /* Lo centra en su columna */
+            padding: 0 !important; /* Quita padding que lo ensancha */
+            height: 3em !important; 
+        }
+    </style>
+</head>
+<body class="is-preload">
+    <div id="page-wrapper">
+        <!-- Header Principal -->
+        <header id="header">
+            <h1><a href="index.html">Quieroinmuebles</a></h1>
+            <nav id="nav">
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Banner Dinámico -->
+        <section id="banner-dinamico">
+            <div class="inner">
+                <h2>Búsqueda Activa</h2>
+                <p>Tu Alquiler ideal en Villa María</p>
+            </div>
+        </section>
+
+        <!-- Contenido del Formulario -->
+        <article id="main">
+            <section class="wrapper style5">
+                <div class="inner">
+                    <form id="form-busqueda">
+                        <div class="section-title">Datos Personales</div>
+                        <div class="row gtr-uniform">
+                            <div class="col-6 col-12-xsmall">
+                                <label>Nombre</label>
+                                <input type="text" name="Nombre" placeholder="Tu nombre" required />
+                            </div>
+                            <div class="col-6 col-12-xsmall">
+                                <label>Apellido</label>
+                                <input type="text" name="Apellido" placeholder="Tu apellido" required />
+                            </div>
+                            <div class="col-6 col-12-xsmall">
+                                <label>Email</label>
+                                <input type="email" name="Email" placeholder="correo@ejemplo.com" required />
+                            </div>
+                            <div class="col-6 col-12-xsmall">
+                                <label>Teléfono (WhatsApp)</label>
+                                <input type="text" name="Telefono" placeholder="Ej: 3534123456" required />
+                            </div>
+
+                            <div class="section-title">¿Qué estás buscando?</div>
+                            <div class="col-6 col-12-xsmall">
+                                <label>Tipo de Propiedad</label>
+                                <select name="Tipo Propiedad a Buscar">
+                                    <option value="Casa">Casa</option>
+                                    <option value="Departamento">Departamento</option>
+                                    <option value="Duplex">Duplex</option>
+                                    <option value="Local Comercial">Local Comercial</option>
+                                    <option value="Terreno">Otro</option>
+                                </select>
+                            </div>
+                            <div class="col-6 col-12-xsmall">
+                                <label>Fecha aproximada de ingreso</label>
+                                <input type="date" name="Fecha de Ingreso" required />
+                            </div>
+                            <div class="col-4 col-12-xsmall">
+                                <label>Provincia</label>
+                                <input type="text" name="Provincia" value="Córdoba" required />
+                            </div>
+                            <div class="col-4 col-12-xsmall">
+                                <label>Localidad</label>
+                                <input type="text" name="Localidad" placeholder="Ej: Villa María" required />
+                            </div>
+                            <div class="col-4 col-12-xsmall">
+                                <label>Barrio de preferencia</label>
+                                <input type="text" name="Barrio" placeholder="Ej: Centro / Rivadavia" />
+                            </div>
+                            <div class="col-12">
+                                <label>Presupuesto Máximo Mensual ($)</label>
+                                <input type="number" name="Presupuesto" placeholder="Monto en pesos" required />
+                            </div>
+
+                            <div class="section-title">Requisitos y Comodidades</div>
+                            <div class="col-6 col-12-xsmall">
+                                <label>¿Posee recibo de sueldo/certificación?</label>
+                                <select name="Titular con Recibo o Certificación de Ingresos">
+                                    <option value="Si">Si</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                            <div class="col-6 col-12-xsmall">
+                                <label>Garantías disponibles</label>
+                                <input type="text" name="Garantias" placeholder="Ej: 3 recibos / Propiedad" required />
+                            </div>
+                            
+                            <div class="col-2 col-6-small" style="text-align: center;">
+    <label>Dormitorios</label>
+    <input type="number" name="Dormitorios" value="1" min="1" />
+</div>
+<div class="col-2 col-6-small" style="text-align: center;">
+    <label>Baños</label>
+    <input type="number" name="Baños" value="1" min="1" />
+</div>
+                            <div class="col-2 col-6-small">
+                                <label>Garaje</label>
+                                <select name="Garaje"><option value="No">No</option><option value="Si">Si</option></select>
+                            </div>
+                            <div class="col-2 col-6-small">
+                                <label>Asador</label>
+                                <select name="Asador"><option value="No">No</option><option value="Si">Si</option></select>
+                            </div>
+                            <div class="col-2 col-6-small">
+                                <label>Piscina</label>
+                                <select name="Piscina"><option value="No">No</option><option value="Si">Si</option></select>
+                            </div>
+                            <div class="col-2 col-6-small">
+                                <label>Balcón</label>
+                                <select name="Balcón"><option value="No">No</option><option value="Si">Si</option></select>
+                            </div>
+
+                            <div class="col-12" style="margin-top: 2em;">
+                                <ul class="actions stacked">
+                                    <li><button type="submit" class="button primary fit">Enviar mi Búsqueda</button></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </article>
+    </div>
+
+    <script>
+        const NUEVA_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwdbemxXTtrUNCLcUGOMKsfg_C5tY4A5-edIeSf1qpYTcttA_YQ1RdHc-qqlZXFfd8rzw/exec';
+
+        document.getElementById('form-busqueda').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const form = this;
+            btn.disabled = true;
+            btn.innerText = 'Enviando...';
+            const data = new URLSearchParams(new FormData(form));
+
+            fetch(NUEVA_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: data
+            })
+            .then(() => {
+                alert('¡Búsqueda enviada con éxito! Nos contactaremos pronto.');
+                form.reset();
+            })
+            .catch(err => {
+                alert('Hubo un problema al enviar.');
+            })
+            .finally(() => {
+                btn.disabled = false;
+                btn.innerText = 'Enviar mi Búsqueda';
+            });
+        });
+    </script>
+</body>
+</html>

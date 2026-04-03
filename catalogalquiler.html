@@ -1,0 +1,426 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Alquileres - Quiero Inmuebles</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <style>
+        /* 1. Sincronización de fondo total */
+        body, #page-wrapper, .wrapper.style5, #main { 
+            background-color: #212534 !important; 
+        }
+
+        /* 2. ENCABEZADO ULTRA-COMPACTO */
+        #main > header {
+            padding: 0 !important; 
+            margin: 0 !important;
+            min-height: 2.2em !important; 
+            height: 2.2em !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            background-color: #212534 !important; 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+            background-image: none !important;
+        }
+
+        #main > header:before { display: none !important; }
+
+        #main > header h2 {
+            font-size: 0.85em !important; 
+            font-weight: 400 !important;
+            margin: 0 !important;
+            color: rgba(255, 255, 255, 0.7) !important;
+            text-transform: uppercase !important;
+            letter-spacing: 3px !important;
+        }
+
+        .wrapper.style5 { padding-top: 1.5em !important; }
+
+        /* 3. RESALTADO AL PASAR EL CURSOR */
+        .property-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 6px;
+            margin-bottom: 1.2em; 
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .property-card:hover { 
+            transform: translateY(-5px) !important; 
+            background: rgba(255, 255, 255, 0.08) !important;
+            border-color: #315674 !important; /* Azul para alquileres */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4) !important;
+        }
+
+        .property-info { padding: 0.8em 1em 0.4em 1em !important; }
+
+        #contenedor-propiedades .property-card .property-info h3 { 
+            color: #ffffff !important; 
+            opacity: 1 !important;
+            font-size: 1.1em !important; 
+            margin-bottom: 0.3em !important; 
+            line-height: 1.2 !important;
+            font-weight: 700 !important; 
+            text-transform: none !important;
+            letter-spacing: 0.5px !important;
+        }
+
+        .property-details {
+            font-size: 0.85em !important; 
+            margin-bottom: 0.8em !important; 
+            color: #f0f0f0 !important; 
+        }
+
+        .property-details strong { color: #315674 !important; }
+        .price-tag { font-size: 1.3em; color: #2ecc71 !important; font-weight: 700; margin: 0.2em 0; }
+
+        .image.fit { position: relative; margin: 0 !important; }
+        .image.fit img { height: 160px; object-fit: cover; width: 100%; display: block; filter: brightness(0.85); }
+        
+        /* Badge Azul para Alquiler */
+        .badge-tipo { position: absolute; top: 10px; left: 10px; background: rgba(49, 86, 116, 0.9); color: white !important; padding: 2px 8px; border-radius: 3px; font-size: 0.65em; text-transform: uppercase; font-weight: 700; z-index: 10; }
+        
+        .button.primary.fit { height: 2.5em !important; line-height: 2.5em !important; font-size: 0.7em !important; }
+    
+        .filter-bar {
+            background-color: #212534;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            padding: 25px 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            flex-wrap: wrap; 
+        }
+
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.05) !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+            color: rgba(255, 255, 255, 0.8) !important;
+            padding: 0 25px !important; 
+            height: 3.2em !important;
+            line-height: 3.2em !important;
+            font-size: 0.85em !important; 
+            text-transform: uppercase !important;
+            letter-spacing: 2px !important;
+            font-weight: 600 !important;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+        }
+
+        .filter-btn:hover {
+            background: rgba(49, 86, 116, 0.1) !important;
+            color: #4da3ff !important;
+            border-color: #315674 !important;
+        }
+
+        .filter-btn.active {
+            background: #315674 !important; 
+            color: #ffffff !important;
+            border-color: #315674 !important;
+            font-weight: 700 !important;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4) !important;
+        }
+
+        /* Modal y otros estilos se mantienen igual */
+        .modal-custom { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); overflow: hidden; }
+        .modal-content { background-color: #212534; margin: 5vh auto; padding: 25px; width: 90%; max-width: 800px; border-radius: 8px; position: relative; max-height: 85vh; overflow-y: auto; }
+        .info-section h4 { color: #315674; text-transform: uppercase; font-size: 0.95em; letter-spacing: 1.5px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 12px; padding-bottom: 8px; }
+        .info-list { list-style: none; padding: 0; font-size: 1.05em; }
+        .modal-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 300px)); gap: 15px; margin-top: 20px; justify-content: center; }
+        .modal-gallery img { width: 100%; height: 220px; object-fit: cover; border-radius: 4px; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); }
+        .close-modal { position: absolute; right: 20px; top: 10px; color: #aaa; font-size: 28px; font-weight: bold; cursor: pointer; z-index: 10; }
+        .btn-detalles { height: 2.2em !important; line-height: 2.2em !important; padding: 0 1em !important; font-size: 0.65em !important; text-transform: uppercase !important; letter-spacing: 2px !important; background-color: transparent !important; border: 1px solid rgba(255, 255, 255, 0.3) !important; color: #ffffff !important; margin-bottom: 8px !important; transition: all 0.3s ease; }
+        .btn-detalles:hover { border-color: #315674 !important; color: #315674 !important; }
+        .pagination-container { display: flex; justify-content: center; align-items: center; gap: 10px; margin: 4em 0; width: 100%; }
+        .page-btn { height: 2.5em !important; line-height: 2.5em !important; padding: 0 1em !important; font-size: 0.65em !important; text-transform: uppercase; background-color: transparent !important; border: 1px solid rgba(255, 255, 255, 0.15) !important; color: #ffffff !important; }
+    </style>
+</head>
+<body class="is-preload">
+    <div id="page-wrapper">
+        <header id="header">
+            <h1><a href="index.html">QuieroInmuebles.ar</a></h1>
+            <nav id="nav">
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="vender.html">Publicar</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <article id="main">
+            <header>
+                <h2>Catálogo de Alquileres</h2>
+            </header>
+
+            <div class="filter-bar">
+                <button class="filter-btn active" onclick="filtrarPropiedades('Todos', this)">Todos</button>
+                <button class="filter-btn" onclick="filtrarPropiedades('Casa', this)">Casas</button>
+                <button class="filter-btn" onclick="filtrarPropiedades('Depto', this)">Deptos</button>
+                <button class="filter-btn" onclick="filtrarPropiedades('Terreno', this)">Terrenos</button>
+                <button class="filter-btn" onclick="filtrarPropiedades('Comercial', this)">Propiedad Comercial</button>
+            </div>
+
+            <section class="wrapper style5">
+                <div class="inner">
+                    <div class="row" id="contenedor-propiedades">
+                        <div class="col-12"><p style="text-align: center;">Buscando alquileres...</p></div>
+                    </div>
+                </div>
+            </section>
+        </article>
+
+        <div id="modal-propiedad" class="modal-custom">
+            <div class="modal-content">
+                <span class="close-modal" onclick="cerrarModal()">&times;</span>
+                <div id="modal-detalle-body"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/main.js"></script>
+
+    <script>
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwklod03hncuhwPqNTRywST272_e60xe3Ear9QShDvAn0JM8Y8Xz9dQ23w2WQwtOCMn/exec'; 
+    
+    let todasLasPropiedades = []; 
+    let propiedadesFiltradas = [];
+    let paginaActual = 1;
+    const porPagina = 6;
+    let filtroActual = 'Todos';
+
+    async function cargarPropiedades() {
+        const contenedor = document.getElementById('contenedor-propiedades');
+        try {
+            const response = await fetch(SCRIPT_URL + '?read=true');
+            const data = await response.json();
+            
+            // FILTRO: Aprobado + Alquiler
+            todasLasPropiedades = data.filter(prop => {
+                if (!prop || prop.length < 13) return false;
+                const estado = String(prop[3] || "");
+                const operacion = String(prop[12] || "");
+                return estado.includes("Aprobado") && operacion.includes("Alquiler");
+            }).reverse();
+
+            const btnTodos = Array.from(document.querySelectorAll('.filter-btn'))
+                                  .find(el => el.textContent.trim() === 'Todos');
+            
+            filtrarPropiedades('Todos', btnTodos);
+        } catch (error) {
+            contenedor.innerHTML = '<div class="col-12"><p style="text-align:center;">Error al conectar con la base de datos.</p></div>';
+        }
+    }
+
+    function filtrarPropiedades(tipo, btn) {
+        filtroActual = tipo;
+        paginaActual = 1;
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        if(btn) btn.classList.add('active');
+
+        if (tipo === 'Todos' || tipo === '') {
+            propiedadesFiltradas = [...todasLasPropiedades];
+        } else {
+            propiedadesFiltradas = todasLasPropiedades.filter(prop => {
+                const tipoProp = String(prop[13] || "");
+                return tipoProp.toLowerCase().includes(tipo.toLowerCase());
+            });
+        }
+        renderizar();
+    }
+
+    function renderizar() {
+        const contenedor = document.getElementById('contenedor-propiedades');
+        contenedor.innerHTML = '';
+        const inicio = (paginaActual - 1) * porPagina;
+        const fin = inicio + porPagina;
+        const loteActual = propiedadesFiltradas.slice(inicio, fin);
+
+        loteActual.forEach((prop) => {
+            const idProp = String(prop[1] || "0");
+            const barrio = String(prop[20] || "").trim();
+            const localidad = String(prop[19] || "").trim();
+            const tipoInmueble = String(prop[13] || "");
+            const precioPesos = String(prop[15] || "Consultar"); // COLUMNA P (Precio Pesos)
+            const plazoContrato = String(prop[33] || "-"); // COLUMNA AH (Plazo)
+            
+            const ubicacionHTML = (barrio && barrio !== "-") 
+                ? `<span style="color: #ffffff !important;">${barrio}</span>, ${localidad}` 
+                : `${localidad}`;
+
+            const superficie = (prop[16] && prop[16] !== "-" && prop[16] !== "0") ? `<strong>${prop[16]} m²</strong>` : "";
+            const detallesHTML = `
+                <p class="property-details">
+                    ${superficie} ${superficie ? '|' : ''} 
+                    <strong>Plazo: ${plazoContrato} meses</strong>
+                </p>`;
+
+            const card = `
+                <div class="col-4 col-12-medium">
+                    <article class="property-card">
+                        <span class="image fit" style="cursor: pointer;" onclick="abrirModal('${idProp}')">
+                            <span class="badge-tipo">Alquiler | ${tipoInmueble}</span>
+                            <img src="${prop[4]}" alt="Propiedad" onerror="this.src='images/placeholder.jpg'">
+                        </span>
+                        <div class="property-info">
+                            <h3 style="color: #ffffff !important;">${ubicacionHTML}</h3>
+                            <p class="price-tag">$ ${precioPesos}</p>
+                            ${detallesHTML} 
+                            <ul class="actions stacked" style="margin-top: auto; margin-bottom: 0;">
+                                <li>
+                                    <button class="button small fit btn-detalles" onclick="abrirModal('${idProp}')">Ver Detalles</button>
+                                </li>
+                                <li>
+                                    <a href="https://wa.me/5493534789810?text=Hola! Me interesa el ALQUILER ID: ${idProp}" 
+                                       target="_blank" class="button primary fit" style="background-color: #25D366 !important; border: none;">
+                                        WhatsApp
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </article>
+                </div>`;
+            contenedor.innerHTML += card;
+        });
+        renderizarPaginacion();
+    }
+
+    function abrirModal(id) {
+    const prop = todasLasPropiedades.find(p => p[1] == id);
+    if (!prop) return;
+
+    const body = document.getElementById('modal-detalle-body');
+    
+    // Función para validar si un campo tiene contenido real
+    const tieneDato = (val) => {
+        if (!val) return false;
+        const v = String(val).trim().toLowerCase();
+        return v !== "" && v !== "-" && v !== "0" && v !== "no" && v !== "n/a";
+    };
+
+    // --- PROCESAR COMODIDADES (Ajustado a Columnas Reales del Sheet) ---
+    const listaComodidades = [];
+    if (tieneDato(prop[21])) listaComodidades.push(`<li><strong>Dormitorios:</strong> ${prop[21]}</li>`);
+    if (tieneDato(prop[22])) listaComodidades.push(`<li><strong>Baños:</strong> ${prop[22]}</li>`);
+    
+    // Columna X = Índice 23 (Garaje)
+    if (tieneDato(prop[23])) listaComodidades.push(`<li><strong>Garaje:</strong> Si</li>`); 
+    
+    // Columna Y = Índice 24 (Asador)
+    if (tieneDato(prop[24])) listaComodidades.push(`<li><strong>Asador:</strong> Si</li>`); 
+    
+    // Columna Z = Índice 25 (Piscina)
+    if (tieneDato(prop[25])) listaComodidades.push(`<li><strong>Piscina:</strong> Si</li>`);
+    
+    // Columna AA = Índice 26 (Balcón)
+    if (tieneDato(prop[26])) listaComodidades.push(`<li><strong>Balcón:</strong> Si</li>`);
+
+    // --- PROCESAR SERVICIOS (Columnas AB a AF -> Índices 27 a 31) ---
+    const serviciosActivos = [];
+    if (tieneDato(prop[27])) serviciosActivos.push("Electricidad");
+    if (tieneDato(prop[28])) serviciosActivos.push("Gas Natural");
+    if (tieneDato(prop[29])) serviciosActivos.push("Agua Corriente");
+    if (tieneDato(prop[30])) serviciosActivos.push("Cloacas");
+    if (tieneDato(prop[31])) serviciosActivos.push("Pavimento");
+
+    // --- PROCESAR FOTOS ---
+    let fotosHTML = '';
+    [4, 5, 6, 7].forEach(idx => {
+        if (prop[idx] && String(prop[idx]).includes('http')) {
+            fotosHTML += `<img src="${prop[idx]}" alt="Foto" onclick="window.open(this.src, '_blank')">`;
+        }
+    });
+
+    body.innerHTML = `
+        <h2 style="margin-bottom:5px; color:#fff;">${prop[13]} en Alquiler</h2>
+        <p style="color:#2ecc71; font-size: 1.8em; font-weight: bold; margin-bottom:20px;">$ ${prop[15]}</p>
+
+        <div class="modal-data-grid">
+            <div class="info-section">
+                <h4>Ubicación y Medidas</h4>
+                <ul class="info-list">
+                    <li><strong>Barrio:</strong> ${prop[20] || '-'}</li>
+                    <li><strong>Localidad:</strong> ${prop[19]}</li>
+                    <li><strong>Provincia:</strong> ${prop[18]}</li>
+                    ${tieneDato(prop[16]) ? `<li><strong>Sup. Total:</strong> ${prop[16]} m²</li>` : ''}
+                    ${tieneDato(prop[17]) ? `<li><strong>Sup. Cubierta:</strong> ${prop[17]} m²</li>` : ''}
+                    <li><strong>Duración del contrato:</strong> ${prop[33] || '-'} meses</li>
+                </ul>
+            </div>
+
+            <div class="info-section">
+                ${listaComodidades.length > 0 ? `
+                    <h4>Comodidades</h4>
+                    <ul class="info-list">${listaComodidades.join('')}</ul>
+                ` : ''}
+            </div>
+        </div>
+
+        ${serviciosActivos.length > 0 ? `
+            <div class="info-section">
+                <h4>Servicios</h4>
+                <p style="font-size: 0.9em; color: rgba(255,255,255,0.8); letter-spacing: 0.5px;">
+                    ${serviciosActivos.join(' • ')}
+                </p>
+            </div>
+        ` : ''}
+
+        <div class="info-section" style="margin-top:20px;">
+            <h4>Descripción</h4>
+            <p style="font-size: 0.95em; line-height:1.6; white-space: pre-line;">${prop[34] || 'Consulte para más detalles.'}</p>
+        </div>
+
+        <div class="info-section">
+            <h4>Galería de Fotos</h4>
+            <div class="modal-gallery">
+                ${fotosHTML}
+            </div>
+        </div>
+    `;
+    
+    document.getElementById('modal-propiedad').style.display = "block";
+    document.body.style.overflow = "hidden";
+}
+
+    // El resto de funciones (paginación, cerrar modal) son idénticas...
+    function renderizarPaginacion() {
+        const totalPaginas = Math.ceil(propiedadesFiltradas.length / porPagina);
+        const contenedor = document.getElementById('contenedor-propiedades');
+        if (totalPaginas <= 1) return; 
+        const navHTML = `
+            <div class="col-12 pagination-container">
+                <button class="button small page-btn" ${paginaActual === 1 ? 'disabled' : ''} onclick="cambiarPagina(-1)">‹ Ant.</button>
+                <span class="page-info">${paginaActual} / ${totalPaginas}</span>
+                <button class="button small page-btn" ${paginaActual === totalPaginas ? 'disabled' : ''} onclick="cambiarPagina(1)">Sig. ›</button>
+            </div>`;
+        contenedor.insertAdjacentHTML('beforeend', navHTML);
+    }
+
+    function cambiarPagina(paso) {
+        paginaActual += paso;
+        window.scrollTo({ top: document.getElementById('main').offsetTop - 50, behavior: 'smooth' });
+        renderizar();
+    }
+
+    function cerrarModal() {
+        document.getElementById('modal-propiedad').style.display = "none";
+        document.body.style.overflow = "visible";
+    }
+
+    window.onclick = function(event) {
+        const modal = document.getElementById('modal-propiedad');
+        if (event.target == modal) cerrarModal();
+    }
+
+    document.addEventListener('DOMContentLoaded', cargarPropiedades);
+</script>
+</body>
+</html>
