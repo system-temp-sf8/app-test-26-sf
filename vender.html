@@ -6,173 +6,118 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="assets/css/main.css" />
     <style>
-        /* --- CONFIGURACIÓN GENERAL --- */
-        .seccion-titulo { 
-    margin-top: 2em; 
-    border-bottom: 2px solid rgba(255,255,255,0.2); 
-    padding-bottom: 0.5em; 
-    
-    /* SOLUCIÓN DE VISIBILIDAD */
-    font-weight: 900 !important; /* Máximo grosor para que la letra tenga "carne" */
-    color: #ffffff !important;   /* Blanco puro e intenso */
-    text-shadow: 0px 0px 8px rgba(255,255,255,0.3); /* Un sutil resplandor que ensancha la letra */
-    letter-spacing: 1px;         /* Espaciado para que no se peguen las letras */
-    filter: brightness(1.2);     /* Fuerza un poco más de luz en el texto */
+       /* --- Estilos de diseño y colores dinámicos --- */
+
+#banner-dinamico {
+    padding: 1.2em 0; /* Bien fino para que no ocupe espacio innecesario */
+    text-align: center;
+    color: #fff;
+    background-color: #D4A261; /* Dorado por defecto */
+    margin-bottom: 0; /* Pegado a la sección de abajo */
 }
 
-.campo-opcional { 
-    color: #cccccc !important;   /* Un gris mucho más claro que el #888 para que se lea */
+#banner-dinamico h2 {
+    font-size: 1.5em; 
+    margin-bottom: 0.2em;
+    color: #fff;
+}
+
+#banner-dinamico p {
     font-size: 0.9em; 
-    font-weight: 400;
+    margin: 0;
+    opacity: 0.9;
 }
 
-        /* --- FONDO DE LA PÁGINA --- */
-        body, #page-wrapper, #main, .wrapper.style5 {
-            background-color: #212534 !important;
-            color: #ffffff;
-        }
-
-        /* --- BANNER: ELIMINAR GRIS Y BORROSO --- */
-        #main > header#banner-dinamico {
-            padding: 1.5em 0 !important; 
-            margin: 0 !important;
-            min-height: 0 !important;
-            background-image: none !important; 
-        }
-
-        /* Mata los efectos del template que lo ponen gris/borroso */
-        #main > header#banner-dinamico:before,
-        #main > header#banner-dinamico:after {
-            display: none !important;
-            content: none !important;
-            background: none !important;
-        }
-
-        /* --- COLORES DINÁMICOS (ESPECIFICIDAD MÁXIMA) --- */
-        header#banner-dinamico.modo-venta { 
-            background-color: #D4A261 !important; 
-            background: #D4A261 !important;
-        }
-        
-        header#banner-dinamico.modo-alquiler { 
-            background-color: #315674 !important; 
-            background: #315674 !important;
-        }
-
-        /* Asegura que el texto no tenga fondo propio */
-        header#banner-dinamico * {
-            background: transparent !important;
-        }
-
-        /* --- TEXTOS DEL BANNER --- */
-        #main > header h2 { font-size: 1.2em !important; margin: 0 !important; color: #fff !important; }
-        #main > header p { font-size: 0.8em !important; margin: 0 !important; opacity: 0.9; color: #fff !important; }
-
-        /* --- ESTILO DE INPUTS --- */
-        input, select, textarea { 
-            background: rgba(255,255,255,0.05) !important; 
-            color: white !important; 
-            border: 1px solid rgba(255,255,255,0.1) !important;
-        }
-/* --- ELIMINAR ESPACIO ENTRE BANNER Y FORMULARIO --- */
-        .wrapper.style5 {
-            padding-top: 1.5em !important; /* Bajamos el espacio de 4em o 5em a solo 1.5em */
-        }
-
-        .inner {
-            padding-top: 0 !important;
-        }
-
-        /* Ajuste opcional: si el primer título sigue viéndose lejos */
-        .seccion-titulo:first-of-type {
-            margin-top: 0 !important;
-        }
-
-/* --- MEJORA DE CONTRASTE GENERAL --- */
-        label, p, b, strong {
-            color: #ffffff !important; /* Texto principal en blanco puro */
-        }
-
-        .campo-opcional {
-            color: #aaaaaa !important; /* Gris claro para lo opcional */
-        }
-
-        /* --- ESTILO DE LOS INPUTS DE ARCHIVO (FILE) --- */
-        input[type="file"] {
-            background: rgba(255, 255, 255, 0.1); /* Fondo levemente blanco */
-            padding: 10px;
-            border-radius: 4px;
-            width: 100%;
-            color: #ffffff !important; /* Color del texto "Ningún archivo..." */
-        }
-
-        /* Cambiar el color del botón interno de "Seleccionar archivo" */
-        input[type="file"]::-webkit-file-upload-button {
-            background: #444;
-            color: #fff;
-            border: none;
-            padding: 5px 15px;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-right: 10px;
-        }
-
-        input[type="file"]::-webkit-file-upload-button:hover {
-            background: #666;
-        }
-
-        /* --- INPUTS DE TEXTO Y SELECTS --- */
-        input[type="text"], 
-        input[type="email"], 
-        select, 
-        textarea {
-            color: #ffffff !important; /* Texto que escribe el usuario en blanco */
-            background-color: rgba(255, 255, 255, 0.07) !important; /* Fondo oscuro traslúcido */
-            border: 1px solid rgba(255, 255, 255, 0.2) !important;
-        }
-
-        /* Color del Placeholder (el texto de ejemplo) */
-        ::placeholder {
-            color: #888888 !important;
-            opacity: 1;
-        }
-.contenedor-fotos-destacado {
-    background: rgba(255, 255, 255, 0.03) !important;
-    padding: 25px !important;
-    border-radius: 8px !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    margin-top: 2em !important;
-    margin-bottom: 2em !important;
+/* --- Ajuste para subir el formulario --- */
+#main {
+    padding-top: 0 !important; 
 }
 
+.wrapper.style5 {
+    padding-top: 1.5em; /* Espacio mínimo para que no quede pegado al texto del banner */
+}
+
+/* --- Títulos de secciones --- */
+.seccion-titulo { 
+    margin-top: 0.5em; 
+    border-bottom: 2px solid #efefef; 
+    padding-bottom: 0.5em; 
+    font-weight: 700; 
+}
+
+/* --- Utilidades --- */
+.obligatorio { 
+    color: #e74c3c; 
+    font-weight: bold; 
+}
+
+.hidden { 
+    display: none; 
+}
+
+/* --- Vista previa de imágenes --- */
+.preview-img { 
+    display: none; 
+    width: 100%; 
+    max-width: 200px; 
+    margin-top: 10px; 
+    border-radius: 6px; 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+}
     </style>
 </head>
 <body class="is-preload">
     <div id="page-wrapper">
         <header id="header">
-            <h1><a href="index.html">QuieroInmuebles</a></h1>
+            <h1><a href="index.html">Quieroinmuebles</a></h1>
         </header>
 
+        <!-- Banner Dinámico -->
+        <section id="banner-dinamico">
+            <div class="inner">
+                <h2 id="titulo-pagina" style="color: white; margin: 0;">Publicar Propiedad</h2>
+                <p style="color: white; opacity: 0.9;">Completá los datos para que tu propiedad entre en revisión.</p>
+            </div>
+        </section>
+
         <article id="main">
-            <header id="banner-dinamico"> <!-- Agregamos el ID aquí -->
-    <h2 id="titulo-pagina">Publicar Propiedad</h2>
-                <p>Completá los datos para publicar tu propiedad tras la revisión.</p>
-            </header>
             <section class="wrapper style5">
                 <div class="inner">
                     <form id="formulario-vender" method="post" action="#">
                         <div class="row gtr-uniform">
                             
-                            
+                            <!-- SECCIÓN FOTOS -->
+                            <div class="col-12"><h3 class="seccion-titulo">1. Fotos de la Propiedad</h3></div>
+                            <div class="col-12">
+                                <label for="foto"><span class="obligatorio">*</span> Foto Principal (Obligatoria):</label>
+                                <input type="file" id="foto" accept="image/*" required>
+                                <img id="vista-previa" class="preview-img" src="#">
+                                
+                                <p style="margin-top: 20px; margin-bottom: 5px;"><strong>Fotos adicionales (Opcionales):</strong></p>
+                                <div class="row">
+                                    <div class="col-4 col-12-xsmall">
+                                        <input type="file" id="foto2" accept="image/*">
+                                        <img id="prev2" class="preview-img" src="#">
+                                    </div>
+                                    <div class="col-4 col-12-xsmall">
+                                        <input type="file" id="foto3" accept="image/*">
+                                        <img id="prev3" class="preview-img" src="#">
+                                    </div>
+                                    <div class="col-4 col-12-xsmall">
+                                        <input type="file" id="foto4" accept="image/*">
+                                        <img id="prev4" class="preview-img" src="#">
+                                    </div>
+                                </div>
+                            </div>
 
-
-
+                            <!-- DATOS VENDEDOR -->
                             <div class="col-12"><h3 class="seccion-titulo">Datos del Vendedor</h3></div>
                             <div class="col-6 col-12-xsmall"><label><span class="obligatorio">*</span> Nombre</label><input type="text" id="nombre" required /></div>
                             <div class="col-6 col-12-xsmall"><label><span class="obligatorio">*</span> Apellido</label><input type="text" id="apellido" required /></div>
                             <div class="col-6 col-12-xsmall"><label><span class="obligatorio">*</span> Email</label><input type="email" id="email" required /></div>
                             <div class="col-6 col-12-xsmall"><label><span class="obligatorio">*</span> Teléfono / WhatsApp</label><input type="text" id="telefono" required /></div>
 
+                            <!-- DETALLES PROPIEDAD -->
                             <div class="col-12"><h3 class="seccion-titulo">Detalles de la Propiedad</h3></div>
                             <div class="col-12">
                                 <label><span class="obligatorio">*</span> Tipo de Propiedad</label>
@@ -185,12 +130,11 @@
                                 </select>
                             </div>
 
+                            <!-- PRECIOS DINÁMICOS -->
                             <div class="col-6 col-12-xsmall seccion-venta">
                                 <label><span class="obligatorio">*</span> Precio USD</label>
                                 <input type="text" id="precio" placeholder="Ej: 85000" />
                             </div>
-                            
-
                             <div class="col-6 col-12-xsmall seccion-alquiler hidden">
                                 <label><span class="obligatorio">*</span> Precio Inicial Pesos ($)</label>
                                 <input type="text" id="precio_pesos" placeholder="Ej: 250000" />
@@ -200,16 +144,19 @@
                                 <input type="text" id="contrato" placeholder="Ej: 24" />
                             </div>
 
+                            <!-- UBICACIÓN -->
                             <div class="col-4 col-12-xsmall"><label><span class="obligatorio">*</span> Provincia</label><input type="text" id="provincia" value="Córdoba" required /></div>
                             <div class="col-4 col-12-xsmall"><label><span class="obligatorio">*</span> Localidad</label><input type="text" id="localidad" value="Villa María" required /></div>
                             <div class="col-4 col-12-xsmall"><label>Barrio</label><input type="text" id="barrio" placeholder="Opcional" /></div>
 
+                            <!-- MEDIDAS -->
                             <div class="col-3 col-6-xsmall"><label>Sup. Total m2</label><input type="text" id="sup_total" /></div>
                             <div class="col-3 col-6-xsmall"><label>Sup. Cubierta m2</label><input type="text" id="sup_cubierta" /></div>
                             <div class="col-3 col-6-xsmall"><label>Dormitorios</label><input type="text" id="dormitorios" /></div>
                             <div class="col-3 col-6-xsmall"><label>Baños</label><input type="text" id="baños" /></div>
 
-                            <div class="col-12"><h3 class="seccion-titulo">Servicios y Comodidades <span class="campo-opcional">(Opcionales)</span></h3></div>
+                            <!-- COMODIDADES -->
+                            <div class="col-12"><h3 class="seccion-titulo">Servicios y Comodidades</h3></div>
                             <div class="col-3 col-6-small"><label>Garaje</label><select id="garaje"><option value="No">No</option><option value="Si">Si</option></select></div>
                             <div class="col-3 col-6-small"><label>Asador</label><select id="asador"><option value="No">No</option><option value="Si">Si</option></select></div>
                             <div class="col-3 col-6-small"><label>Piscina</label><select id="piscina"><option value="No">No</option><option value="Si">Si</option></select></div>
@@ -218,11 +165,11 @@
                             <div class="col-2 col-4-small"><label>Luz</label><select id="electricidad"><option value="No">No</option><option value="Si">Si</option></select></div>
                             <div class="col-2 col-4-small"><label>Gas</label><select id="gas"><option value="No">No</option><option value="Si">Si</option></select></div>
                             <div class="col-2 col-4-small"><label>Agua</label><select id="agua"><option value="No">No</option><option value="Si">Si</option></select></div>
-                            <div class="col-2 col-4-small"><label>Sanitarios</label><select id="sanitarios"><option value="No">No</option><option value="Si">Si</option></select></div>
+                            <div class="col-2 col-4-small"><label>Cloacas</label><select id="sanitarios"><option value="No">No</option><option value="Si">Si</option></select></div>
                             <div class="col-4 col-12-small"><label>Pavimento</label><select id="pavimento"><option value="No">No</option><option value="Si">Si</option></select></div>
 
                             <div class="col-6 col-12-xsmall seccion-venta">
-                                <label><span class="campo-opcional">Estado Legal</span></label>
+                                <label>Estado Legal</label>
                                 <select id="estado_legal">
                                     <option value="-">Seleccione...</option>
                                     <option value="Escritura">Escritura</option>
@@ -236,45 +183,9 @@
                                 <textarea id="descripcion" placeholder="Contanos más detalles..." rows="4"></textarea>
                             </div>
 
-
-<div class="col-12 contenedor-fotos-destacado">
-    <h3 class="seccion-titulo" style="margin-top: 0;">Fotos de la Propiedad</h3>
-    
-    <!-- FOTO PRINCIPAL -->
-    <div class="col-12" style="margin-bottom: 20px;">
-        <label><span class="obligatorio">*</span> Foto Principal (Obligatoria):</label>
-        <input type="file" id="foto" accept="image/*" style="display: none;" onchange="previsualizar(this, 'vista-previa')">
-        <label for="foto" class="button primary fit">Seleccionar Foto Principal</label>
-        <center><img id="vista-previa" src="#" alt="Vista previa" style="display:none; width: 250px; margin-top: 15px; border-radius: 8px; border: 2px solid #D4A261;"></center>
-    </div>
-    
-    <p style="margin-top: 20px; margin-bottom: 10px;"><strong>Fotos adicionales (Opcionales - Máximo 3):</strong></p>
-    <div class="row">
-        <!-- FOTO 2 -->
-        <div class="col-4 col-12-xsmall">
-            <input type="file" id="foto2" accept="image/*" style="display: none;" onchange="previsualizar(this, 'prev2')">
-            <label for="foto2" class="button fit small">Foto 2</label>
-            <img id="prev2" src="#" style="display:none; width: 100%; margin-top:10px; border-radius:4px; border: 1px solid rgba(255,255,255,0.2);">
-        </div>
-        <!-- FOTO 3 -->
-        <div class="col-4 col-12-xsmall">
-            <input type="file" id="foto3" accept="image/*" style="display: none;" onchange="previsualizar(this, 'prev3')">
-            <label for="foto3" class="button fit small">Foto 3</label>
-            <img id="prev3" src="#" style="display:none; width: 100%; margin-top:10px; border-radius:4px; border: 1px solid rgba(255,255,255,0.2);">
-        </div>
-        <!-- FOTO 4 -->
-        <div class="col-4 col-12-xsmall">
-            <input type="file" id="foto4" accept="image/*" style="display: none;" onchange="previsualizar(this, 'prev4')">
-            <label for="foto4" class="button fit small">Foto 4</label>
-            <img id="prev4" src="#" style="display:none; width: 100%; margin-top:10px; border-radius:4px; border: 1px solid rgba(255,255,255,0.2);">
-        </div>
-    </div>
-</div>
-
-
                             <div class="col-12">
                                 <ul class="actions">
-                                    <li><button type="submit" class="primary" id="btn-enviar">Publicar</button></li>
+                                    <li><button type="submit" class="primary" id="btn-enviar">Publicar Propiedad</button></li>
                                 </ul>
                             </div>
                         </div>
@@ -284,6 +195,7 @@
         </article>
     </div>
 
+    <!-- Scripts -->
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/browser.min.js"></script>
     <script src="assets/js/main.js"></script>
@@ -293,29 +205,28 @@
         const UPLOAD_PRESET = 'web_inmobiliaria'; 
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwklod03hncuhwPqNTRywST272_e60xe3Ear9QShDvAn0JM8Y8Xz9dQ23w2WQwtOCMn/exec'; 
 
-        // 1. DETECTAR SI ES VENTA O ALQUILER AL CARGAR
-        // 1. DETECTAR MODO Y CAMBIAR COLORES DEL BANNER
+        let tipoOperacionActual = "Venta";
+
         document.addEventListener('DOMContentLoaded', () => {
-        const params = new URLSearchParams(window.location.search);
-        const modo = params.get('modo'); 
-        const banner = document.getElementById('banner-dinamico');
-        const titulo = document.getElementById('titulo-pagina');
+            const params = new URLSearchParams(window.location.search);
+            const modo = params.get('modo'); 
+            const banner = document.getElementById('banner-dinamico');
+            const titulo = document.getElementById('titulo-pagina');
 
-        if (modo === 'alquiler') {
-            titulo.innerText = "Publicar Alquiler";
-            banner.style.setProperty('background-color', '#315674', 'important'); // Fuerza azul
-            banner.classList.add('modo-alquiler');
-            
-            document.querySelectorAll('.seccion-venta').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.seccion-alquiler').forEach(el => el.classList.remove('hidden'));
-        } else {
-            titulo.innerText = "Publicar Venta";
-            banner.style.setProperty('background-color', '#D4A261', 'important'); // Fuerza dorado
-            banner.classList.add('modo-venta');
-        }
-    });
+            if (modo === 'alquiler') {
+                tipoOperacionActual = "Alquiler";
+                titulo.innerText = "Publicar Alquiler";
+                banner.style.backgroundColor = '#315674'; // Azul
+                document.querySelectorAll('.seccion-venta').forEach(el => el.classList.add('hidden'));
+                document.querySelectorAll('.seccion-alquiler').forEach(el => el.classList.remove('hidden'));
+            } else {
+                tipoOperacionActual = "Venta";
+                titulo.innerText = "Publicar Venta";
+                banner.style.backgroundColor = '#D4A261'; // Dorado
+            }
+        });
 
-        // 2. LÓGICA DE VISTA PREVIA PARA LAS 4 FOTOS
+        // Configuración de vista previa
         function configurarVistaPrevia(inputId, imgId) {
             const el = document.getElementById(inputId);
             if (el) {
@@ -335,7 +246,7 @@
         configurarVistaPrevia('foto3', 'prev3');
         configurarVistaPrevia('foto4', 'prev4');
 
-        // 3. FUNCIÓN DE ENVÍO REFORMADA PARA 4 FOTOS
+        // Envío del Formulario
         document.getElementById('formulario-vender').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('btn-enviar');
@@ -343,15 +254,12 @@
             btn.disabled = true;
 
             try {
-                // Función interna para subir a Cloudinary
                 const subirFoto = async (idInput) => {
                     const file = document.getElementById(idInput).files[0];
                     if (!file) return "-"; 
-                    
                     const formData = new FormData();
                     formData.append('file', file);
                     formData.append('upload_preset', UPLOAD_PRESET);
-                    
                     const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
                         method: 'POST',
                         body: formData
@@ -360,7 +268,6 @@
                     return data.secure_url;
                 };
 
-                // Subimos las 4 fotos en paralelo
                 const [url1, url2, url3, url4] = await Promise.all([
                     subirFoto('foto'),
                     subirFoto('foto2'),
@@ -370,22 +277,26 @@
 
                 btn.innerText = "Guardando datos...";
 
-                const getVal = (id) => document.getElementById(id) ? document.getElementById(id).value : "-";
+                const getVal = (id) => {
+                    const el = document.getElementById(id);
+                    return el ? el.value : "-";
+                };
 
+                // MAPEO EXACTO DE TU CÓDIGO ANTERIOR
                 const datos = {
                     fecha: new Date().toLocaleDateString('es-AR'),
                     id: "DV-" + Math.floor(1000 + Math.random() * 9000),
                     rol: "cliente",
                     estado_pub: "Revision",
-                    fotoUrl: url1,  // Columna E
-                    foto2: url2,    // Columna F
-                    foto3: url3,    // Columna G
-                    foto4: url4,    // Columna H
+                    fotoUrl: url1,
+                    foto2: url2,
+                    foto3: url3,
+                    foto4: url4,
                     nombre: getVal('nombre'),
                     apellido: getVal('apellido'),
                     email: getVal('email'),
                     telefono: getVal('telefono'),
-                    operacion: window.tipoOperacion,
+                    operacion: tipoOperacionActual,
                     tipo: getVal('tipo'),
                     precio: getVal('precio'),
                     precio_pesos: getVal('precio_pesos'),
@@ -423,25 +334,9 @@
             } catch (err) {
                 alert("Error al publicar: " + err.message);
                 btn.disabled = false;
-                btn.innerText = "Publicar";
+                btn.innerText = "Publicar Propiedad";
             }
         });
-
-        
-function previsualizar(input, idDestino) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        
-        reader.onload = function(e) {
-            var img = document.getElementById(idDestino);
-            img.src = e.target.result;
-            img.style.display = 'block'; // Mostramos la imagen
-        }
-        
-        reader.readAsDataURL(input.files[0]);
-    }
-}
-
     </script>
 </body>
 </html>
