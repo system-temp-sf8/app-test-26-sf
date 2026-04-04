@@ -1,16 +1,18 @@
 {
-  "short_name": "QuieroInmueble",
+  "short_name": "Quiero Inm.",
   "name": "Quiero Inmueble - Buscador",
   "icons": [
     {
-      "src": "assets/images/quiero192c-fondo.png",
+      "src": "assets/images/quiero512c-fondo.png",
+      "sizes": "192x192",
       "type": "image/png",
-      "sizes": "192x192"
+      "purpose": "any"
     },
     {
       "src": "assets/images/quiero512c-fondo.png",
+      "sizes": "512x512",
       "type": "image/png",
-      "sizes": "512x512"
+      "purpose": "any maskable"
     }
   ],
   "start_url": "index.html",
