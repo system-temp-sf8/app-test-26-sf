@@ -5,13 +5,13 @@
         <!-- Configuración para WhatsApp - Quiero Inmuebles -->
 <meta property="og:title" content="QuieroInmuebles.ar - Búsqueda Activa" />
 <meta property="og:description" content="Encontrá tu lugar ideal de forma fácil y rápida." />
-<meta property="og:image" content="https://quieroinmuebles.ar/assets/images/quiero600c-fondo.png" />
+<meta property="og:image" content="https://quieroinmuebles.ar/assets/images/quiero600c-fondo.webp" />
 <meta property="og:url" content="https://quieroinmuebles.ar/index.html" />
 <meta property="og:type" content="website" />
 
 <!-- Enlace a la App (Manifest) -->
 <link rel="manifest" href="manifest.json">
-
+<link rel="icon" href="assets/images/quiero192c-fondo.webp" type="image/webp">
         <title>Alquileres - QuieroInmuebles.ar</title>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
@@ -41,15 +41,27 @@
     top: 0 !important;
     opacity: 1 !important;
     transition: none !important;
+    background-color: #212534 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important; /* Línea sutil del index */
+}
+#header h1 {
+    position: relative !important;
+    margin-top: 12px !important; /* El margen exacto que usás en el index */
+    padding-left: 0.8em !important;
+    display: inline-block !important;
+}
+
+#header nav {
+    top: 0 !important; /* Alineación del menú lateral */
 }
 
             /* --- COLOR TEMÁTICO SELECCIONADO --- */
             #banner.style-alquiler {
-                background-color: #264054 !important; 
+                background-color: #31364a !important; 
             }
 
             .wrapper.style1.alquiler-info {
-                background-color: #264054 !important;
+                background-color: #31364a !important;
             }
 
             /* --- HEADER Y FONDO --- */
@@ -85,15 +97,16 @@
             }
 
             .firma-santi {
-                text-align: left;
-                max-width: 25em; 
-                margin: 0 auto 0.1em auto !important;
-                color: #dfdfdf !important;
-                font-weight: 800;
-                text-transform: uppercase;
-                letter-spacing: 3px;
-                font-size: 0.8em;
-            }
+    text-align: left;
+    max-width: 25em; 
+    margin: 0 auto 0.1em auto !important; /* Pega la firma a los botones */
+    color: #dfdfdf !important;
+    font-weight: 800 !important;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 0.9em !important;         /* Subimos de 0.8 a 0.9 para igualar */
+    opacity: 0.9 !important;
+}
 
 /* --- COLOR DE FONDO DEL MENÚ LATERAL --- */
 #menu {
@@ -108,20 +121,46 @@
 
 
             /* --- BOTONES --- */
-            #banner .actions.special .button {
-                font-size: 1.1em !important; 
-                font-weight: 800 !important;
-                letter-spacing: 2px !important;
-                padding: 0 2em !important;
-                height: auto !important;
-                line-height: 2.8em !important;
-                margin-bottom: 10px;
-            }
+            /* --- BOTONES: CLONES DEL INDEX --- */
+#banner .actions.special .button {
+    font-size: 1.15em !important;      /* Igual al index */
+    font-weight: 800 !important;
+    letter-spacing: 3px !important;    /* Esto es clave para el ancho visual */
+    text-transform: uppercase !important;
+    padding: 0 2.5em !important;       /* El aire lateral exacto */
+    height: auto !important;
+    line-height: 2.8em !important;     /* Define el alto exacto del botón */
+    margin-bottom: 10px !important;
+    transition: all 0.2s ease-in-out !important;
 
-            @media screen and (max-width: 736px) {
-                .logo-banner { width: 55px; }
-                #banner .actions.special .button { width: 100% !important; }
-            }
+
+    
+}
+
+/* Ajuste para que en el celular no se deformen por ser grandes */
+@media screen and (max-width: 736px) {
+    /* 1. Logo clavado en 55px (como en el index) */
+    .logo-banner { 
+        width: 55px !important; 
+    }
+
+    /* 2. Botones: Ocupan todo el ancho y tienen el alto del index */
+    #banner .actions.special .button { 
+        width: 100% !important; 
+        font-size: 0.9em !important;    
+        line-height: 3em !important;    
+        margin-bottom: 10px !important;
+        display: block !important; /* Asegura que se comporten como bloques */
+    }
+
+    /* 3. Firma: Alineación y tamaño para el celu */
+    .firma-santi {
+        font-size: 0.8em !important;
+        margin-left: 5% !important;
+        max-width: 90% !important;
+        text-align: left !important;
+    }
+}
         </style>
     </head>
     <body class="">
@@ -129,7 +168,7 @@
         <div id="page-wrapper">
 
                 <header id="header">
-                        <h1><a href="index.html">QuieroInmuebles</a></h1>
+                        <h1><a href="index.html">QuieroInmuebles.ar</a></h1>
                         <nav id="nav">
                             <ul>
                                 <li class="special">
@@ -151,11 +190,11 @@
                 <section id="banner" class="style-alquiler">
                         <div class="inner">
                             <div style="display: flex; justify-content: center; margin-bottom: 10px; margin-top: -60px;">
-                                <img src="images/logo.png" alt="Logo" class="logo-banner">
+                                <img src="assets/images/logo.webp" alt="Logo" class="logo-banner">
                             </div>
                             
                             <h2>Alquileres</h2>
-                            <p>Encontrá tu lugar o poné tu propiedad en las mejores manos.</p>
+                            <p>Encontrá tu lugar o poné tu propiedad en Alquiler</p>
 
                             <p class="firma-santi">QUIERO..!</p>
 
@@ -173,7 +212,7 @@
                             <header class="major">
                                 <h2>¿Cómo funciona?</h2>
                                 <p>Explorá las opciones disponibles, publicá tu propiedad <br />
-                                o solicitá una Búsqueda Activa personalizada.</p>
+                                o solicitá una Búsqueda Activa para Encontrar Tu Alquiler.</p>
                             </header>
                             <ul class="icons major">
                                 <li><span class="icon solid fa-key major style1"><span class="label">Alquiler</span></span></li>
