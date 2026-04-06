@@ -19,13 +19,14 @@
  <!-- Configuración para WhatsApp - Quiero Inmuebles -->
 <meta property="og:title" content="QuieroInmuebles.ar - Búsqueda Activa" />
 <meta property="og:description" content="Encontrá tu lugar ideal de forma fácil y rápida." />
-<meta property="og:image" content="https://quieroinmuebles.ar/assets/images/quiero600c-fondo.png" />
-<meta property="og:url" content="https://quieroinmuebles.ar/index.html" />
+<meta property="og:image" content="https://quieroinmuebles.ar/assets/images/quiero600c-fondo.webp" />
+<meta property="og:url" content="https://quieroinmuebles.ar/" />
 <meta property="og:type" content="website" />
-
+<!-- Color de la barra de estado en el celular -->
+<meta name="theme-color" content="#212534">
 <!-- Enlace a la App (Manifest) -->
 <link rel="manifest" href="manifest.json">
-
+<link rel="icon" href="assets/images/quiero192c-fondo.webp" type="image/webp">
 
 		<style>
 
@@ -400,7 +401,7 @@ section.wrapper .inner {
 
 				<!-- Header -->
 					<header id="header" class="alt">
-						<h1><a href="index.html">QuieroInmuebles</a></h1>
+						<h1><a href="/">QuieroInmuebles.ar</a></h1>
 						<a href="#" class="link-login">INICIAR SESIÓN</a>
 						<nav id="nav">
 							<ul>
@@ -408,7 +409,7 @@ section.wrapper .inner {
 									<a href="#menu" class="menuToggle"><span>Menu</span></a>
 									<div id="menu">
 										<ul>
-											<li><a href="index.html">Inicio</a></li>
+											<li><a href="/">Inicio</a></li>
 											<li><a href="vender.html?modo=venta">Vender</a></li>
 											<li><a href="comprar.html">Comprar</a></li>
 											<li><a href="alquilar.html">Alquilar</a></li>
@@ -425,7 +426,7 @@ section.wrapper .inner {
 					<section id="banner" style="background-image: none !important; background-color:#212534 !important;">
     <div class="inner">
         <div style="display: flex; justify-content: center; margin-bottom: 10px; margin-top: -60px;">
-    <img src="images/logo.png" alt="Logo Dueño Vende" class="logo-banner">
+    <img src="assets/images/logo.webp" alt="Logo Dueño Vende" class="logo-banner">
 </div>
         
 
@@ -525,26 +526,42 @@ section.wrapper .inner {
         <!-- EL LOGO QUE ESTABA ACÁ YA NO ESTÁ -->
         
         <div style="display: flex; gap: 1em; justify-content: center; margin-top: 1em; flex-wrap: wrap;">
-            
-            <a href="elcamino.html" 
-   class="button primary icon fa-paper-plane" 
-   style="background-color: #5D9B6E !important; 
-          color: white !important; 
-          border-radius: 4px; 
-          padding: 0 2em; 
-          box-shadow: 0 4px 15px rgba(0,0,0,0.3) !important; 
-          border: 1px solid #ffffff33 !important;">
-    Más Información
-</a>
-            
-            <a href="https://wa.me/5493534789810?text=Hola,%20quisiera%20consultar%20por%20asesoramiento%20profesional" 
-               target="_blank" 
-               class="button icon fa-whatsapp" 
-               style="background-color: #25D366 !important; color: white !important; border-radius: 4px; box-shadow: none !important; white-space: nowrap; padding: 0 2em;">
-                Contactar por WhatsApp
-            </a>
-            
-        </div>
+    
+    <!-- BOTÓN MÁS INFORMACIÓN (RESALTADO) -->
+    <a href="elcamino.html" 
+       class="button primary icon fa-paper-plane" 
+       style="background-color: #5D9B6E !important; 
+              color: white !important; 
+              border-radius: 4px; 
+              width: 300px; /* Ancho fijo para simetría */
+              text-align: center;
+              display: inline-block;
+              box-shadow: 0 8px 20px rgba(0,0,0,0.4) !important; 
+              border: 2px solid #ffffff !important; 
+              font-weight: 800 !important;
+              letter-spacing: 1px;
+              padding: 0 1.5em !important;">
+        Más Información
+    </a>
+    
+    <!-- BOTÓN WHATSAPP (IGUALADO) -->
+    <a href="https://wa.me/5493534789810?text=Hola,%20quisiera%20consultar%20por%20asesoramiento%20profesional" 
+       target="_blank" 
+       class="button icon brands fa-whatsapp" 
+       style="background-color: #25D366 !important; 
+              color: white !important; 
+              border-radius: 4px; 
+              width: 300px; /* Exactamente el mismo ancho */
+              text-align: center;
+              display: inline-block;
+              box-shadow: none !important; 
+              border: 1px solid rgba(255,255,255,0.2) !important;
+              font-weight: 600;
+              padding: 0 1.5em !important;">
+        WhatsApp
+    </a>
+    
+</div>
     </li>
 </ul>
     </div>

@@ -1,6 +1,6 @@
 {
-  "short_name": "Quiero Inm.",
-  "name": "Quiero Inmueble - Buscador",
+  "short_name": "Quiero Inm",
+  "name": "Quiero Inmuebles - Buscador",
   "icons": [
     {
       "src": "assets/images/quiero512c-fondo.png",
@@ -15,8 +15,8 @@
       "purpose": "any maskable"
     }
   ],
-  "start_url": "index.html",
+  "start_url": "/",
   "background_color": "#212534",
   "display": "standalone",
-  "theme_color": "#315674"
+  "theme_color": "#212534"
 }
