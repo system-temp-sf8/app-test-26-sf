@@ -391,7 +391,58 @@ section.wrapper .inner {
         margin-bottom: 2em !important;
     }
 }
+/* Botón Flotante para Compartir Web */
+/* Botón Flotante Minimalista */
+/* Botón Flotante Redondo */
+.boton-compartir-flotante {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 99999;
+}
 
+.boton-compartir-flotante button {
+    background-color: #212534 !important;
+    border-radius: 50% !important;
+    
+    /* Dimensiones fijas para que sea círculo */
+    width: 55px !important;
+    height: 55px !important;
+    padding: 0 !important;      /* Mata el ovalado */
+    min-width: 0 !important;   /* Mata el ovalado de la plantilla */
+    
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.boton-compartir-flotante button i {
+    color: rgba(255, 255, 255, 0.7) !important;
+    font-size: 1.2em !important;
+    margin: 0 !important; /* Quita márgenes internos del icono */
+}
+
+.boton-compartir-flotante button:hover {
+    border-color: #f1c40f !important;
+    transform: translateY(-3px);
+}
+
+/* Ajuste para que en el móvil no estorbe tanto */
+@media screen and (max-width: 736px) {
+    .boton-compartir-flotante {
+        bottom: 15px;
+        right: 15px;
+    }
+    .boton-compartir-flotante button {
+        width: 48px !important;
+        height: 48px !important;
+    }
+}
     	</style>
 	</head>
 	<body>
@@ -627,7 +678,12 @@ section.wrapper .inner {
         <li>Design: <a href="http://html5up.net" style="color: rgba(255,255,255,0.4) !important; border-bottom: none !important;">SF</a></li>
     </ul>
 </footer>
-
+<!-- Botón Flotante para Compartir Web -->
+<div class="boton-compartir-flotante">
+    <button onclick="compartirWeb()">
+        <i class="icon solid fa-share-alt"></i>
+    </button>
+</div>
 		<!-- Scripts -->
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/jquery.scrollex.min.js"></script>
@@ -639,6 +695,7 @@ section.wrapper .inner {
 
 <!-- Script para que la App sea instalable -->
     <script>
+        
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function() {
           navigator.serviceWorker.register('sw.js').then(function(reg) {
@@ -648,6 +705,27 @@ section.wrapper .inner {
           });
         });
       }
+function compartirWeb() {
+    const titulo = 'Quiero Inmuebles';
+    const texto = 'Mirá esta web para encontrar propiedades en Villa María:';
+    const url = 'https://quieroinmuebles.ar';
+
+    // Intenta usar el menú compartir del celular (Nativo)
+    if (navigator.share && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        navigator.share({
+            title: titulo,
+            text: texto,
+            url: url
+        }).catch(() => {
+            // Si el usuario cancela o hay error, no hace nada
+        });
+    } else {
+        // Si es PC o no hay Share API, va directo a WhatsApp
+        const mensajeWA = encodeURIComponent(texto + " " + url);
+        window.open(`https://wa.me/?text=${mensajeWA}`, '_blank');
+    }
+}
+
     </script>
 
 

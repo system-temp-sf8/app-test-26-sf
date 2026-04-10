@@ -152,7 +152,58 @@
         .btn-detalles:hover { border-color: #315674 !important; color: #315674 !important; }
         .pagination-container { display: flex; justify-content: center; align-items: center; gap: 10px; margin: 4em 0; width: 100%; }
         .page-btn { height: 2.5em !important; line-height: 2.5em !important; padding: 0 1em !important; font-size: 0.65em !important; text-transform: uppercase; background-color: transparent !important; border: 1px solid rgba(255, 255, 255, 0.15) !important; color: #ffffff !important; }
-    </style>
+
+.close-modal {
+    position: absolute;
+    right: 20px; 
+    top: 20px; 
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 32px;
+    font-weight: 300;
+    cursor: pointer;
+    z-index: 100;
+    line-height: 1;
+    transition: color 0.3s ease;
+}
+
+
+   
+   /* Botón Compartir Estilo Premium */
+.btn-compartir-icono {
+    background-color: #212534 !important;
+    border-radius: 50% !important;
+    width: 42px !important;
+    height: 42px !important;
+    padding: 0 !important;
+    min-width: 0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important; 
+    cursor: pointer;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2); 
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.btn-compartir-icono:hover {
+    border-color: #D4A261 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+.btn-compartir-icono i {
+    color: rgba(255, 255, 255, 0.5) !important;
+    font-size: 0.9em !important;
+}
+
+.btn-compartir-icono:hover i {
+    color: #D4A261 !important;
+}
+   
+   
+   </style>
 </head>
 <body class="is-preload">
     <div id="page-wrapper">
@@ -175,7 +226,7 @@
                 <button class="filter-btn active" onclick="filtrarPropiedades('Todos', this)">Todos</button>
                 <button class="filter-btn" onclick="filtrarPropiedades('Casa', this)">Casas</button>
                 <button class="filter-btn" onclick="filtrarPropiedades('Depto', this)">Deptos</button>
-                <button class="filter-btn" onclick="filtrarPropiedades('Terreno', this)">Terrenos</button>
+              <!--  <button class="filter-btn" onclick="filtrarPropiedades('Terreno', this)">Terrenos</button> -->
                 <button class="filter-btn" onclick="filtrarPropiedades('Comercial', this)">Propiedad Comercial</button>
             </div>
 
@@ -251,6 +302,7 @@
     function renderizar() {
         const contenedor = document.getElementById('contenedor-propiedades');
         contenedor.innerHTML = '';
+
         const inicio = (paginaActual - 1) * porPagina;
         const fin = inicio + porPagina;
         const loteActual = propiedadesFiltradas.slice(inicio, fin);
@@ -260,47 +312,53 @@
             const barrio = String(prop[20] || "").trim();
             const localidad = String(prop[19] || "").trim();
             const tipoInmueble = String(prop[13] || "");
-            const precioPesos = String(prop[15] || "Consultar"); // COLUMNA P (Precio Pesos)
-            const plazoContrato = String(prop[33] || "-"); // COLUMNA AH (Plazo)
+            const precio = String(prop[14] || "Consultar");
             
             const ubicacionHTML = (barrio && barrio !== "-") 
                 ? `<span style="color: #ffffff !important;">${barrio}</span>, ${localidad}` 
                 : `${localidad}`;
 
-            const superficie = (prop[16] && prop[16] !== "-" && prop[16] !== "0") ? `<strong>${prop[16]} m²</strong>` : "";
-            const detallesHTML = `
-                <p class="property-details">
-                    ${superficie} ${superficie ? '|' : ''} 
-                    <strong>Plazo: ${plazoContrato} meses</strong>
-                </p>`;
-
+            // ESTA ES LA VARIABLE "CARD" QUE CONSTRUYE LA TARJETA
             const card = `
                 <div class="col-4 col-12-medium">
                     <article class="property-card">
                         <span class="image fit" style="cursor: pointer;" onclick="abrirModal('${idProp}')">
                             <span class="badge-tipo">Alquiler | ${tipoInmueble}</span>
-                            <img src="${prop[4]}" alt="Propiedad" onerror="this.src='aseets/images/quiero600c-fondo.webp'">
+                            <img src="${prop[4]}" alt="Propiedad" onerror="this.src='assets/images/quiero600c-fondo.webp'">
                         </span>
                         <div class="property-info">
                             <h3 style="color: #ffffff !important;">${ubicacionHTML}</h3>
-                            <p class="price-tag">$ ${precioPesos}</p>
-                            ${detallesHTML} 
-                            <ul class="actions stacked" style="margin-top: auto; margin-bottom: 0;">
-                                <li>
-                                    <button class="button small fit btn-detalles" onclick="abrirModal('${idProp}')">Ver Detalles</button>
-                                </li>
-                                <li>
-                                    <a href="https://wa.me/5493534789810?text=Hola! Me interesa el ALQUILER ID: ${idProp}" 
-                                       target="_blank" class="button primary fit" style="background-color: #25D366 !important; border: none;">
-                                        WhatsApp
-                                    </a>
-                                </li>
-                            </ul>
+                            
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                                <p class="price-tag" style="margin: 0;">$ ${precio}</p>
+                                <!-- BOTÓN COMPARTIR PEQUEÑO Y SUTIL -->
+                                <button class="btn-compartir-icono" 
+                                        style="width: 32px !important; height: 32px !important; min-width: 32px !important; background: transparent !important; border: 1px solid rgba(255,255,255,0.1) !important;"
+                                        onclick="event.stopPropagation(); compartirPropiedad('${idProp}', '${tipoInmueble}', '${barrio || localidad}', '${precio}', 'Alquiler')">
+                                    <i class="icon solid fa-share-alt" style="font-size: 0.7em !important;"></i>
+                                </button>
+                            </div>
+
+                            <!-- BOTONES PRINCIPALES: UNO SOBRE OTRO -->
+                            <div style="display: flex; flex-direction: column; gap: 8px; margin-top: auto;">
+                                <button class="btn-detalles" 
+                                        onclick="abrirModal('${idProp}')" 
+                                        style="width: 100% !important; height: 38px !important; line-height: 36px !important; margin: 0 !important; font-size: 0.75em !important; text-transform: uppercase;">
+                                    Ver Detalles
+                                </button>
+                                
+                                <a href="https://wa.me/5493534789810?text=Hola! Me interesa este Alquiler ID: ${idProp}" 
+                                   target="_blank" class="button primary fit" 
+                                   style="background-color: #25D366 !important; border: none; height: 38px !important; line-height: 38px !important; font-size: 0.75em !important; margin: 0 !important; display: flex; align-items: center; justify-content: center; width: 100% !important;">
+                                    WhatsApp
+                                </a>
+                            </div>
                         </div>
                     </article>
                 </div>`;
             contenedor.innerHTML += card;
         });
+
         renderizarPaginacion();
     }
 
@@ -351,9 +409,17 @@
     });
 
     body.innerHTML = `
-        <h2 style="margin-bottom:5px; color:#fff;">${prop[13]} en Alquiler</h2>
-        <p style="color:#2ecc71; font-size: 1.8em; font-weight: bold; margin-bottom:20px;">$ ${prop[15]}</p>
-
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px; padding-right: 40px;">
+        <div>
+            <h2 style="margin: 0; color:#fff; font-size: 1.4em; line-height: 1.2;">${prop[13]} en ${prop[12]}</h2>
+            <p style="color:#D4A261; font-size: 1.6em; font-weight: bold; margin: 8px 0 0 0;">$ ${prop[14]}</p>
+        </div>
+        <button class="btn-compartir-icono" 
+                style="width: 48px !important; height: 48px !important; margin-top: 5px;" 
+                onclick="compartirPropiedad('${prop[1]}', '${prop[13]}', '${prop[20] || prop[19]}', '${prop[14]}', 'Alquiler')">
+            <i class="icon solid fa-share-alt" style="font-size: 1.1em !important;"></i>
+        </button>
+    </div>
         <div class="modal-data-grid">
             <div class="info-section">
                 <h4>Ubicación y Medidas</h4>
@@ -432,6 +498,26 @@
     }
 
     document.addEventListener('DOMContentLoaded', cargarPropiedades);
+
+
+function compartirPropiedad(id, tipo, zona, precio, operacion) {
+    const titulo = 'Quiero Inmuebles';
+    // Mensaje adaptado para Alquiler
+    const texto = `🏠 *${tipo} en ${operacion}*\n📍 ${zona}\n💰 *Precio: $ ${precio}*\n\nMirá las fotos acá:`;
+    const url = `https://quieroinmuebles.ar/alquilar.html`; 
+
+    if (navigator.share && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        navigator.share({
+            title: titulo,
+            text: texto,
+            url: url
+        }).catch(() => {});
+    } else {
+        const mensajeWA = encodeURIComponent(`${texto} ${url}`);
+        window.open(`https://wa.me/?text=${mensajeWA}`, '_blank');
+    }
+}
+
 </script>
 </body>
 </html>
