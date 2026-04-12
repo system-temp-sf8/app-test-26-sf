@@ -260,27 +260,43 @@
     let filtroActual = 'Todos';
 
     async function cargarPropiedades() {
-        const contenedor = document.getElementById('contenedor-propiedades');
-        try {
-            const response = await fetch(SCRIPT_URL + '?read=true');
-            const data = await response.json();
-            
-            // FILTRO: Aprobado + Alquiler
-            todasLasPropiedades = data.filter(prop => {
-                if (!prop || prop.length < 13) return false;
-                const estado = String(prop[3] || "");
-                const operacion = String(prop[12] || "");
-                return estado.includes("Aprobado") && operacion.includes("Alquiler");
-            }).reverse();
+    const contenedor = document.getElementById('contenedor-propiedades');
+    try {
+        const response = await fetch(SCRIPT_URL + '?read=true');
+        const data = await response.json();
+        
+        // 1. Filtramos aprobadas y alquileres
+        let filtradas = data.filter(prop => {
+            if (!prop || prop.length < 13) return false;
+            const estado = String(prop[3] || "");
+            const operacion = String(prop[12] || "");
+            return estado.includes("Aprobado") && operacion.includes("Alquiler");
+        });
 
-            const btnTodos = Array.from(document.querySelectorAll('.filter-btn'))
-                                  .find(el => el.textContent.trim() === 'Todos');
-            
-            filtrarPropiedades('Todos', btnTodos);
-        } catch (error) {
-            contenedor.innerHTML = '<div class="col-12"><p style="text-align:center;">Error al conectar con la base de datos.</p></div>';
-        }
+        // 2. Ordenar por Jerarquía (AJ/35) + Aleatoriedad
+        todasLasPropiedades = filtradas.sort((a, b) => {
+            // Prioridad en columna AJ (índice 35)
+            const pA = parseInt(a[35]) || 0;
+            const pB = parseInt(b[35]) || 0;
+
+            // Si las prioridades son distintas, respetamos el ranking (Mayor a menor)
+            if (pB !== pA) {
+                return pB - pA;
+            }
+
+            // Si tienen la misma prioridad, rotan aleatoriamente
+            return 0.5 - Math.random();
+        });
+
+        const btnTodos = Array.from(document.querySelectorAll('.filter-btn'))
+                              .find(el => el.textContent.trim() === 'Todos');
+        
+        filtrarPropiedades('Todos', btnTodos);
+
+    } catch (error) {
+        contenedor.innerHTML = '<div class="col-12"><p style="text-align:center;">Error al conectar con la base de datos.</p></div>';
     }
+}
 
     function filtrarPropiedades(tipo, btn) {
         filtroActual = tipo;
@@ -300,67 +316,82 @@
     }
 
     function renderizar() {
-        const contenedor = document.getElementById('contenedor-propiedades');
-        contenedor.innerHTML = '';
+    const contenedor = document.getElementById('contenedor-propiedades');
+    contenedor.innerHTML = '';
 
-        const inicio = (paginaActual - 1) * porPagina;
-        const fin = inicio + porPagina;
-        const loteActual = propiedadesFiltradas.slice(inicio, fin);
+    const inicio = (paginaActual - 1) * porPagina;
+    const fin = inicio + porPagina;
+    const loteActual = propiedadesFiltradas.slice(inicio, fin);
 
-        loteActual.forEach((prop) => {
-            const idProp = String(prop[1] || "0");
-            const barrio = String(prop[20] || "").trim();
-            const localidad = String(prop[19] || "").trim();
-            const tipoInmueble = String(prop[13] || "");
-            const precio = String(prop[14] || "Consultar");
-            
-            const ubicacionHTML = (barrio && barrio !== "-") 
-                ? `<span style="color: #ffffff !important;">${barrio}</span>, ${localidad}` 
-                : `${localidad}`;
+    loteActual.forEach((prop) => {
+        const idProp = String(prop[1] || "0");
+        const barrio = String(prop[20] || "").trim();
+        const localidad = String(prop[19] || "").trim();
+        const tipoInmueble = String(prop[13] || "");
+        const precio = String(prop[14] || "Consultar");
+        
+        const ubicacionHTML = (barrio && barrio !== "-") 
+            ? `<span style="color: #ffffff !important;">${barrio}</span>, ${localidad}` 
+            : `${localidad}`;
 
-            // ESTA ES LA VARIABLE "CARD" QUE CONSTRUYE LA TARJETA
-            const card = `
-                <div class="col-4 col-12-medium">
-                    <article class="property-card">
-                        <span class="image fit" style="cursor: pointer;" onclick="abrirModal('${idProp}')">
-                            <span class="badge-tipo">Alquiler | ${tipoInmueble}</span>
-                            <img src="${prop[4]}" alt="Propiedad" onerror="this.src='assets/images/quiero600c-fondo.webp'">
-                        </span>
-                        <div class="property-info">
-                            <h3 style="color: #ffffff !important;">${ubicacionHTML}</h3>
-                            
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                                <p class="price-tag" style="margin: 0;">$ ${precio}</p>
-                                <!-- BOTÓN COMPARTIR PEQUEÑO Y SUTIL -->
-                                <button class="btn-compartir-icono" 
-                                        style="width: 32px !important; height: 32px !important; min-width: 32px !important; background: transparent !important; border: 1px solid rgba(255,255,255,0.1) !important;"
-                                        onclick="event.stopPropagation(); compartirPropiedad('${idProp}', '${tipoInmueble}', '${barrio || localidad}', '${precio}', 'Alquiler')">
-                                    <i class="icon solid fa-share-alt" style="font-size: 0.7em !important;"></i>
-                                </button>
-                            </div>
+        // Lógica de etiqueta destacada (Columna AJ / Índice 35)
+        // Lógica para ALQUILERES: Oro + Estrella
+const esDestacada = (parseInt(prop[35]) >= 10) 
+    ? `<span class="badge-tipo" style="
+        background: linear-gradient(135deg, #D4A261 0%, #b3864b 100%) !important; 
+        color: #1a1a1a !important; 
+        top: 42px; 
+        font-weight: 800; 
+        border: 1px solid rgba(255,255,255,0.3); 
+        box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        text-shadow: none;
+        letter-spacing: 1px;
+      ">⭐ DESTACADO</span>` 
+    : "";
 
-                            <!-- BOTONES PRINCIPALES: UNO SOBRE OTRO -->
-                            <div style="display: flex; flex-direction: column; gap: 8px; margin-top: auto;">
-                                <button class="btn-detalles" 
-                                        onclick="abrirModal('${idProp}')" 
-                                        style="width: 100% !important; height: 38px !important; line-height: 36px !important; margin: 0 !important; font-size: 0.75em !important; text-transform: uppercase;">
-                                    Ver Detalles
-                                </button>
-                                
-                                <a href="https://wa.me/5493534789810?text=Hola! Me interesa este Alquiler ID: ${idProp}" 
-                                   target="_blank" class="button primary fit" 
-                                   style="background-color: #25D366 !important; border: none; height: 38px !important; line-height: 38px !important; font-size: 0.75em !important; margin: 0 !important; display: flex; align-items: center; justify-content: center; width: 100% !important;">
-                                    WhatsApp
-                                </a>
-                            </div>
+        const card = `
+            <div class="col-4 col-12-medium">
+                <article class="property-card">
+                    <span class="image fit" style="cursor: pointer;" onclick="abrirModal('${idProp}')">
+                        <span class="badge-tipo">Alquiler | ${tipoInmueble}</span>
+                        
+                        ${esDestacada}
+
+                        <img src="${prop[4]}" alt="Propiedad" onerror="this.src='assets/images/quiero600c-fondo.webp'">
+                    </span>
+                    <div class="property-info">
+                        <h3 style="color: #ffffff !important;">${ubicacionHTML}</h3>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <p class="price-tag" style="margin: 0;">$ ${precio}</p>
+                            <button class="btn-compartir-icono" 
+                                    style="width: 32px !important; height: 32px !important; min-width: 32px !important; background: transparent !important; border: 1px solid rgba(255,255,255,0.1) !important;"
+                                    onclick="event.stopPropagation(); compartirPropiedad('${idProp}', '${tipoInmueble}', '${barrio || localidad}', '${precio}', 'Alquiler')">
+                                <i class="icon solid fa-share-alt" style="font-size: 0.7em !important;"></i>
+                            </button>
                         </div>
-                    </article>
-                </div>`;
-            contenedor.innerHTML += card;
-        });
 
-        renderizarPaginacion();
-    }
+                        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: auto;">
+                            <button class="btn-detalles" 
+                                    onclick="abrirModal('${idProp}')" 
+                                    style="width: 100% !important; height: 38px !important; line-height: 36px !important; margin: 0 !important; font-size: 0.75em !important; text-transform: uppercase;">
+                                Ver Detalles
+                            </button>
+                            
+                            <a href="https://wa.me/5493534789810?text=Hola! Me interesa este Alquiler ID: ${idProp}" 
+                               target="_blank" class="button primary fit" 
+                               style="background-color: #25D366 !important; border: none; height: 38px !important; line-height: 38px !important; font-size: 0.75em !important; margin: 0 !important; display: flex; align-items: center; justify-content: center; width: 100% !important;">
+                                WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>`;
+        contenedor.innerHTML += card;
+    });
+
+    renderizarPaginacion();
+}
 
     function abrirModal(id) {
     const prop = todasLasPropiedades.find(p => p[1] == id);

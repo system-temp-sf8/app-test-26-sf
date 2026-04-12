@@ -161,6 +161,59 @@
         text-align: left !important;
     }
 }
+
+/* Botón Flotante para Compartir */
+.boton-compartir-flotante {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 99999;
+}
+
+.boton-compartir-flotante button {
+    background-color: #212534 !important;
+    border-radius: 50% !important;
+    
+    /* Dimensiones fijas para que sea un círculo perfecto */
+    width: 55px !important;
+    height: 55px !important;
+    padding: 0 !important;
+    min-width: 0 !important;
+    
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.boton-compartir-flotante button i {
+    color: rgba(255, 255, 255, 0.7) !important;
+    font-size: 1.2em !important;
+    margin: 0 !important;
+}
+
+.boton-compartir-flotante button:hover {
+    border-color: #f1c40f !important;
+    transform: translateY(-3px);
+}
+
+/* Ajuste para móviles */
+@media screen and (max-width: 736px) {
+    .boton-compartir-flotante {
+        bottom: 15px;
+        right: 15px;
+    }
+    .boton-compartir-flotante button {
+        width: 48px !important;
+        height: 48px !important;
+    }
+}
+
+
         </style>
     </head>
     <body class="">
@@ -238,6 +291,38 @@
             <script src="assets/js/breakpoints.min.js"></script>
             <script src="assets/js/util.js"></script>
             <script src="assets/js/main.js"></script>
+
+
+<div class="boton-compartir-flotante">
+    <button onclick="compartirWeb()">
+        <i class="icon solid fa-share-alt"></i>
+    </button>
+</div>
+
+
+
+
+<script>
+        function compartirWeb() {
+            const titulo = 'Quiero Inmuebles';
+            const texto = 'Mirá esta web para encontrar propiedades en Villa María:';
+            const url = 'https://quieroinmuebles.ar/alquilar.html';
+
+            if (navigator.share && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                navigator.share({
+                    title: titulo,
+                    text: texto,
+                    url: url
+                }).catch(() => {});
+            } else {
+                const mensajeWA = encodeURIComponent(texto + " " + url);
+                window.open(`https://wa.me/?text=${mensajeWA}`, '_blank');
+            }
+        }
+    </script>
+
+
+
 
     </body>
 </html>
