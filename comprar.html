@@ -478,15 +478,30 @@
         const response = await fetch(SCRIPT_URL + '?read=true');
         const data = await response.json();
         
-        // Primero filtramos las aprobadas y ventas, y AL FINAL invertimos todo el array
-        todasLasPropiedades = data.filter(prop => {
+        // 1. Filtramos aprobadas y ventas
+        let filtradas = data.filter(prop => {
             if (!prop || prop.length < 13) return false;
             const estado = String(prop[3] || "");
             const operacion = String(prop[12] || "");
             return estado.includes("Aprobado") && operacion.includes("Venta");
-        }).reverse(); // <--- ESTO DA VUELTA LA LISTA PARA QUE LO NUEVO ESTÉ ARRIBA
+        });
 
-        // Buscamos el botón "Todos" para activarlo por defecto
+        // 2. Lógica de Jerarquización + Fecha + Aleatoriedad
+        todasLasPropiedades = filtradas.sort((a, b) => {
+            // Prioridad en columna AJ (índice 35). Si está vacía, es 0.
+            const pA = parseInt(a[35]) || 0;
+            const pB = parseInt(b[35]) || 0;
+
+            // Si las prioridades son distintas, respetamos el ranking (Mayor a menor)
+            if (pB !== pA) {
+                return pB - pA;
+            }
+
+            // Si tienen la misma prioridad, usamos un pequeño factor aleatorio (0.5 - random)
+            // Esto hace que la "vidriera" rote un poco entre propiedades del mismo nivel.
+            return 0.5 - Math.random();
+        });
+
         const btnTodos = Array.from(document.querySelectorAll('.filter-btn'))
                               .find(el => el.textContent.trim() === 'Todos');
         
@@ -540,14 +555,31 @@
             const dormValue = String(prop[21] || "").trim();
             const dormitorios = (dormValue && dormValue !== "-" && dormValue !== "0") ? `${superficie ? ' | ' : ''}<strong>${dormValue} Dorm.</strong>` : "";
             const detallesHTML = (superficie || dormitorios) ? `<p class="property-details">${superficie}${dormitorios}</p>` : "";
+            // --- 2. ACÁ INSERTAMOS LA NUEVA LÓGICA DE DESTACADOS (AJ = Índice 35) ---
+        // Lógica para VENTAS: Oro + Diamante
+const esDestacada = (parseInt(prop[35]) >= 10) 
+    ? `<span class="badge-tipo" style="
+        background: linear-gradient(135deg, #D4A261 0%, #b3864b 100%) !important; 
+        color: #1a1a1a !important; 
+        top: 42px; 
+        font-weight: 800; 
+        border: 1px solid rgba(255,255,255,0.3); 
+        box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        text-shadow: none;
+        letter-spacing: 1px;
+      ">💎 DESTACADO</span>` 
+    : "";
 
             const card = `
                 <div class="col-4 col-12-medium">
                     <article class="property-card">
                         <span class="image fit" style="cursor: pointer;" onclick="abrirModal('${idProp}')">
-                            <span class="badge-tipo">Venta | ${tipoInmueble}</span>
-                            <img src="${prop[4]}" alt="Propiedad" onerror="this.src='assets/images/quiero600c-fondo.webp'">
-                        </span>
+    <span class="badge-tipo">Venta | ${tipoInmueble}</span>
+
+    ${esDestacada} 
+    
+    <img src="${prop[4]}" alt="Propiedad" onerror="this.src='assets/images/quiero600c-fondo.webp'">
+</span>
                         <div class="property-info" style="display: flex; flex-direction: column; height: 100%;">
                             <h3 style="color: #ffffff !important;">${ubicacionHTML}</h3>
                             
