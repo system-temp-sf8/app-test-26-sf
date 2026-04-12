@@ -1,0 +1,339 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Búsqueda Activa - Quiero Inmuebles</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		<meta property="og:title" content="Búsqueda Activa - Quiero Inmuebles" />
+		<meta property="og:description" content="¿No encontraste lo que buscabas? Activamos nuestra red de búsqueda por vos." />
+		<meta property="og:image" content="https://quieroinmuebles.ar/assets/images/quiero600c-fondo.webp" />
+		<meta property="og:url" content="https://quieroinmuebles.ar/busqueda" />
+		<meta property="og:type" content="website" />
+
+		<link rel="stylesheet" href="assets2/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets2/css/noscript.css" /></noscript>
+		
+		<link rel="icon" href="assets/images/quiero192c-fondo.webp" type="image/webp">
+
+		<style>
+    /* Configuración del Header Superior */
+    #header {
+        background-color: #212534 !important;
+        height: 3.25em;
+        line-height: 3.25em;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 10000;
+        padding: 0 1.25em;
+        display: flex;
+        align-items: center;
+    }
+
+    #header h1 {
+        margin: 0;
+        font-size: 0.9em;
+        font-weight: 800;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+    }
+
+    #header h1 a {
+        border-bottom: none !important;
+        text-decoration: none !important;
+        color: #ffffff !important;
+    }
+
+    /* --- AJUSTES DE ESPACIADO Y CENTRADO --- */
+    body {
+        padding-top: 3.25em;
+        letter-spacing: 0.04em;
+        line-height: 1.5;
+    }
+
+    /* Reducimos el espacio entre el header y el contenido */
+    .wrapper {
+        padding: 2em 0 1em 0 !important; /* Bajamos de 3em a 2em */
+    }
+
+    .wrapper > .inner {
+        padding-top: 0 !important; /* Quitamos cualquier padding extra del contenedor */
+        text-align: center;       /* Centramos el título y el párrafo principal */
+    }
+
+    #three.style1 {
+        background-color: #493382 !important;
+    }
+
+    /* Quitar líneas punteadas de títulos y enlaces */
+    #three.style1 h2, 
+    #three.style1 h3, 
+    #three.style1 a {
+        border-bottom: none !important;
+        text-decoration: none !important;
+    }
+
+    /* Ajuste de las cajas de características (las mantenemos alineadas a la izquierda internamente) */
+    .features {
+        text-align: left; 
+        margin-top: 2em;
+    }
+
+    .features section {
+        display: flex;
+        flex-direction: column;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 1.5em;
+        border-radius: 8px;
+    }
+
+    .features section h3 {
+        margin-bottom: 0.5em;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+    }
+
+    .button {
+        border-bottom: none !important;
+    }
+
+    .inner {
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    ul.actions {
+        margin-top: 1.5em !important;
+        justify-content: center; /* Centra el botón de Volver al Inicio */
+    }
+
+/* --- Alineación Nítida: Icono y Título --- */
+/* --- Alineación Icono y Título --- */
+    /* --- Alineación Icono y Título --- */
+    .features section {
+        padding: 1.5em !important;
+        display: flex !important;
+        flex-direction: column !important;
+        /* El contenedor padre no se centra para no romper el header */
+        align-items: flex-start !important; 
+    }
+
+    /* --- Cabezal: Icono + Título (Alineados a la izquierda) --- */
+    .feature-header {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        margin-bottom: 1em !important;
+        width: 100% !important;
+        position: relative !important;
+    }
+
+    /* --- Icono: Reset para que no flote --- */
+    .feature-header .icon {
+        position: static !important;
+        display: inline-flex !important;
+        margin: 0 0.8em 0 0 !important;
+        padding: 0 !important;
+        width: auto !important;
+        height: auto !important;
+        font-size: 1.25em !important;
+        color: #ffffff !important;
+    }
+
+    .feature-header .icon:before {
+        display: block !important;
+        margin: 0 !important;
+    }
+
+    /* --- Título --- */
+    .feature-header h3 {
+        margin: 0 !important;
+        padding: 0 !important;
+        line-height: 1.2 !important;
+        white-space: nowrap !important;
+        border: none !important;
+    }
+
+    /* --- PÁRRAFO: CENTRADO --- */
+    .features section p {
+        margin-top: 0.5em !important;
+        padding: 0 !important;
+        width: 100% !important; /* Asegura que ocupe todo el ancho para centrar bien */
+        text-align: center !important; /* Aquí aplicamos el centrado */
+        line-height: 1.6 !important;
+    }
+
+    /* Ajuste para móviles */
+    @media screen and (max-width: 736px) {
+        .feature-header h3 {
+            white-space: normal !important;
+        }
+    }
+/* --- AJUSTE FINAL DEL FOOTER --- */
+#footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+    width: 100%;
+}
+
+#footer .copyright {
+    font-size: 0.8em;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+#footer .copyright li {
+    border-left: none !important; /* Quita la línea divisoria si la plantilla la pone */
+    padding-left: 0 !important;
+}
+
+/* Botón Flotante para Compartir Web */
+.boton-compartir-flotante {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 99999;
+}
+
+.boton-compartir-flotante button {
+    background-color: #212534 !important;
+    border-radius: 50% !important;
+    width: 55px !important;
+    height: 55px !important;
+    padding: 0 !important;
+    min-width: 0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.boton-compartir-flotante button i {
+    color: rgba(255, 255, 255, 0.7) !important;
+    font-size: 1.2em !important;
+    margin: 0 !important;
+}
+
+.boton-compartir-flotante button:hover {
+    border-color: #f1c40f !important;
+    transform: translateY(-3px);
+}
+
+@media screen and (max-width: 736px) {
+    .boton-compartir-flotante {
+        bottom: 15px;
+        right: 15px;
+    }
+    .boton-compartir-flotante button {
+        width: 48px !important;
+        height: 48px !important;
+    }
+}
+
+</style>
+	</head>
+	<body class="is-preload">
+
+		<header id="header">
+				<h1><a href="/">QuieroInmuebles.ar</a></h1>
+			</header>
+
+		<div id="wrapper">
+
+				<div id="main">
+
+						<section id="three" class="wrapper style1 fade-up">
+								<div class="inner">
+									<h2>Búsqueda Activa</h2>
+									<p>¿No encontraste lo que buscabas en nuestro catálogo? Dejanos tus preferencias y nuestro equipo se encargará de encontrar la propiedad ideal para vos.</p>
+									<div class="features">
+										
+										<section>
+    <div class="feature-header">
+        <span class="icon solid fa-key"></span>
+        <h3>Busco Alquilar</h3>
+    </div>
+    <p>Completá tus requisitos (preferencias, presupuesto, ..) y te notificaremos apenas ingrese una propiedad.</p>
+    <ul class="actions">
+        <li><a href="buscaalquilar.html"  class="button">Formulario Alquiler</a></li>
+    </ul>
+</section>
+
+<section>
+    <div class="feature-header">
+        <span class="icon solid fa-chart-line"></span> 
+        <h3>Busco Invertir / Comprar</h3>
+    </div>
+    <p>Buscamos oportunidades de inversión para vos, que se ajusten a tu presupuesto y objetivos de rentabilidad.</p>
+    <ul class="actions">
+        <li><a href="buscainvertir.html"  class="button">Formulario Inversión</a></li>
+    </ul>
+</section>
+
+									</div>
+									
+									<ul class="actions" style="margin-top: 3em;">
+    <li>
+        <a href="https://wa.me/5493534789810" class="button small" target="_blank" rel="noopener noreferrer">
+            Contacto
+        </a>
+    </li>
+</ul>
+								</div>
+							</section>
+
+					</div>
+
+				<footer id="footer" style="background-color: #212534 !important; padding: 2em 0 !important; text-align: center;">
+    <div class="inner">
+        <ul class="copyright" style="color: rgba(255,255,255,0.3) !important; list-style: none; padding: 0;">
+            <li style="display: inline; margin: 0 0.5em;">&copy; quieroinmuebles.ar</li>
+            <li style="display: inline; margin: 0 0.5em;">Design: SF</li>
+        </ul>
+    </div>
+</footer>
+
+			</div>
+
+		<script src="assets2/js/jquery.min.js"></script>
+			<script src="assets2/js/jquery.scrollex.min.js"></script>
+			<script src="assets2/js/jquery.scrolly.min.js"></script>
+			<script src="assets2/js/browser.min.js"></script>
+			<script src="assets2/js/breakpoints.min.js"></script>
+			<script src="assets2/js/util.js"></script>
+			<script src="assets2/js/main.js"></script>
+
+
+<div class="boton-compartir-flotante">
+    <button onclick="compartirWeb()">
+        <i class="icon solid fa-share-alt"></i>
+    </button>
+</div>
+
+<script>
+function compartirWeb() {
+    const titulo = 'Quiero Inmuebles';
+    const texto = 'Mirá esta web para encontrar propiedades en Villa María:';
+    // Mantenemos la URL principal para que compartan el sitio completo
+    const url = 'https://quieroinmuebles.ar/buscar'; 
+
+    if (navigator.share && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        navigator.share({
+            title: titulo,
+            text: texto,
+            url: url
+        }).catch(() => {});
+    } else {
+        const mensajeWA = encodeURIComponent(texto + " " + url);
+        window.open(`https://wa.me/?text=${mensajeWA}`, '_blank');
+    }
+}
+</script>
+
+	</body>
+</html>

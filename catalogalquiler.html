@@ -535,7 +535,7 @@ function compartirPropiedad(id, tipo, zona, precio, operacion) {
     const titulo = 'Quiero Inmuebles';
     // Mensaje adaptado para Alquiler
     const texto = `🏠 *${tipo} en ${operacion}*\n📍 ${zona}\n💰 *Precio: $ ${precio}*\n\nMirá las fotos acá:`;
-    const url = `https://quieroinmuebles.ar/alquilar.html`; 
+    const url = `https://quieroinmuebles.ar/catalogalquiler.html`; 
 
     if (navigator.share && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
         navigator.share({
