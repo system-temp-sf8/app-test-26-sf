@@ -22,6 +22,13 @@
             background-color: #212534 !important; 
         }
 
+
+/* Fondo del Header Principal (Logo y Menú) */
+#header {
+    background-color: #31364a !important;
+}
+
+
         /* 2. ENCABEZADO ULTRA-COMPACTO */
         #main > header {
             padding: 0 !important; 
@@ -50,24 +57,26 @@
         .wrapper.style5 { padding-top: 1.5em !important; }
 
         /* 3. RESALTADO AL PASAR EL CURSOR */
-        .property-card {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 6px;
-            margin-bottom: 1.2em; 
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            transition: all 0.3s ease;
-        }
+        /* Fondo de las tarjetas de propiedades */
+.property-card {
+    background: #31364a !important; /* El color que pediste */
+    border-radius: 6px;
+    margin-bottom: 1.2em; 
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transition: all 0.3s ease;
+}
 
-        .property-card:hover { 
-            transform: translateY(-5px) !important; 
-            background: rgba(255, 255, 255, 0.08) !important;
-            border-color: #315674 !important; /* Azul para alquileres */
-            box-shadow: 0 10px 20px rgba(0,0,0,0.4) !important;
-        }
+/* Efecto hover para que resalte un poquito más cuando pasas el mouse */
+.property-card:hover { 
+    transform: translateY(-5px) !important; 
+    background: #3a415a !important; /* Un tono apenas más claro para el feedback visual */
+    border-color: #8ca0b3 !important; 
+    box-shadow: 0 10px 20px rgba(0,0,0,0.4) !important;
+}
 
         .property-info { padding: 0.8em 1em 0.4em 1em !important; }
 
@@ -88,14 +97,27 @@
             color: #f0f0f0 !important; 
         }
 
-        .property-details strong { color: #315674 !important; }
+        .property-details strong { color: #8ca0b3 !important; }
         .price-tag { font-size: 1.3em; color: #2ecc71 !important; font-weight: 700; margin: 0.2em 0; }
 
         .image.fit { position: relative; margin: 0 !important; }
         .image.fit img { height: 160px; object-fit: cover; width: 100%; display: block; filter: brightness(0.85); }
         
-        /* Badge Azul para Alquiler */
-        .badge-tipo { position: absolute; top: 10px; left: 10px; background: rgba(49, 86, 116, 0.9); color: white !important; padding: 2px 8px; border-radius: 3px; font-size: 0.65em; text-transform: uppercase; font-weight: 700; z-index: 10; }
+        /* Badge para Alquiler */
+.badge-tipo { 
+    position: absolute; 
+    top: 10px; 
+    left: 10px; 
+    /* Reemplazamos el viejo azul por el nuevo con 90% de opacidad */
+    background: rgba(140, 160, 179, 0.9) !important; 
+    color: #212534 !important; /* Cambié el texto a oscuro para que resalte sobre el celeste claro */
+    padding: 2px 8px; 
+    border-radius: 3px; 
+    font-size: 0.65em; 
+    text-transform: uppercase; 
+    font-weight: 700; 
+    z-index: 10; 
+}
         
         .button.primary.fit { height: 2.5em !important; line-height: 2.5em !important; font-size: 0.7em !important; }
     
@@ -128,14 +150,14 @@
 
         .filter-btn:hover {
             background: rgba(49, 86, 116, 0.1) !important;
-            color: #4da3ff !important;
-            border-color: #315674 !important;
+            color: #315674 !important;
+            border-color: #8ca0b3 !important;
         }
 
         .filter-btn.active {
-            background: #315674 !important; 
+            background: #8ca0b3 !important; 
             color: #ffffff !important;
-            border-color: #315674 !important;
+            border-color: #8ca0b3 !important;
             font-weight: 700 !important;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4) !important;
         }
@@ -143,13 +165,13 @@
         /* Modal y otros estilos se mantienen igual */
         .modal-custom { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); overflow: hidden; }
         .modal-content { background-color: #212534; margin: 5vh auto; padding: 25px; width: 90%; max-width: 800px; border-radius: 8px; position: relative; max-height: 85vh; overflow-y: auto; }
-        .info-section h4 { color: #315674; text-transform: uppercase; font-size: 0.95em; letter-spacing: 1.5px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 12px; padding-bottom: 8px; }
+        .info-section h4 { color: #8ca0b3; text-transform: uppercase; font-size: 0.95em; letter-spacing: 1.5px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 12px; padding-bottom: 8px; }
         .info-list { list-style: none; padding: 0; font-size: 1.05em; }
         .modal-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 300px)); gap: 15px; margin-top: 20px; justify-content: center; }
         .modal-gallery img { width: 100%; height: 220px; object-fit: cover; border-radius: 4px; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); }
         .close-modal { position: absolute; right: 20px; top: 10px; color: #aaa; font-size: 28px; font-weight: bold; cursor: pointer; z-index: 10; }
         .btn-detalles { height: 2.2em !important; line-height: 2.2em !important; padding: 0 1em !important; font-size: 0.65em !important; text-transform: uppercase !important; letter-spacing: 2px !important; background-color: transparent !important; border: 1px solid rgba(255, 255, 255, 0.3) !important; color: #ffffff !important; margin-bottom: 8px !important; transition: all 0.3s ease; }
-        .btn-detalles:hover { border-color: #315674 !important; color: #315674 !important; }
+        .btn-detalles:hover { border-color: #8ca0b3 !important; color: #8ca0b3 !important; }
         .pagination-container { display: flex; justify-content: center; align-items: center; gap: 10px; margin: 4em 0; width: 100%; }
         .page-btn { height: 2.5em !important; line-height: 2.5em !important; padding: 0 1em !important; font-size: 0.65em !important; text-transform: uppercase; background-color: transparent !important; border: 1px solid rgba(255, 255, 255, 0.15) !important; color: #ffffff !important; }
 
@@ -212,7 +234,7 @@
             <nav id="nav">
                 <ul>
                     <li><a href="index.html">Inicio</a></li>
-                    <li><a href="vender.html">Publicar</a></li>
+                    <li><a href="vender.html?modo=alquiler">Publicar</a></li>
                 </ul>
             </nav>
         </header>

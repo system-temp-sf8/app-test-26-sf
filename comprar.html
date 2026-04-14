@@ -21,7 +21,10 @@
         body, #page-wrapper, .wrapper.style5, #main { 
             background-color: #212534 !important; 
         }
-
+/* Fondo del Header Principal (Logo y Menú) */
+#header {
+    background-color: #31364a !important;
+}
         /* 2. ENCABEZADO ULTRA-COMPACTO (Efecto Cinta) */
         #main > header {
             padding: 0 !important; 
@@ -50,25 +53,26 @@
         .wrapper.style5 { padding-top: 1.5em !important; }
 
         /* 3. RESALTADO AL PASAR EL CURSOR (Hover effect) */
-        .property-card {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 6px;
-            margin-bottom: 1.2em; 
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            transition: all 0.3s ease; /* Transición suave */
-        }
+        /* Fondo de las tarjetas de propiedades */
+.property-card {
+    background: #31364a !important; /* El color que pediste */
+    border-radius: 6px;
+    margin-bottom: 1.2em; 
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transition: all 0.3s ease;
+}
 
-        /* El efecto que mencionaste que se había ido */
-        .property-card:hover { 
-            transform: translateY(-5px) !important; 
-            background: rgba(255, 255, 255, 0.08) !important;
-            border-color: #D4A261 !important; 
-            box-shadow: 0 10px 20px rgba(0,0,0,0.4) !important;
-        }
+/* Efecto hover para que resalte un poquito más cuando pasas el mouse */
+.property-card:hover { 
+    transform: translateY(-5px) !important; 
+    background: #3a415a !important; /* Un tono apenas más claro para el feedback visual */
+    border-color: #D4A261 !important; 
+    box-shadow: 0 10px 20px rgba(0,0,0,0.4) !important;
+}
 
         .property-info { padding: 0.8em 1em 0.4em 1em !important; }
 
