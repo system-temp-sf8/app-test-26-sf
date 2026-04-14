@@ -68,11 +68,11 @@
 
     /* --- ESTÉTICA --- */
     font-weight: 800 !important;
-    color: #f1c40f !important;
+    color: #D4A261 !important;
     font-size: 0.7em !important; 
     letter-spacing: 1.5px !important;
     line-height: 1 !important;
-    border-bottom: 1px solid #f1c40f !important; /* Tu línea amarilla */
+    border-bottom: 1px solid #D4A261 !important; /* Tu línea amarilla */
 }
 
 /* ESTO ES LA CLAVE: Mata las líneas animadas que Spectral pone a los links */
@@ -85,8 +85,8 @@
 
 /* Hover limpio */
 .link-login:hover {
-    color: #ffffff !important;
-    border-bottom-color: #ffffff !important;
+    color: #dfdfdf !important;
+    border-bottom-color: #dfdfdf !important;
     text-shadow: none !important;
 }
         
@@ -298,7 +298,7 @@ section.wrapper .inner {
 /* --- EFECTO AL PASAR EL MOUSE (Hover) --- */
 #menu ul li a:hover {
     background-color: rgba(255, 255, 255, 0.1) !important; /* Un brillo sutil */
-    color: #f1c40f !important; /* El amarillo de tu login para resaltar */
+    color: #D4A261 !important; /* El amarillo de tu login para resaltar */
 }
 
 /* --- EL BOTÓN DE CERRAR (La X) --- */
@@ -324,12 +324,7 @@ section.wrapper .inner {
     transition: all 0.2s ease-in-out !important;
 }
 
-/* Efecto sutil al pasar el mouse */
-#banner .actions.special .button:hover {
-    color: #f1c40f !important; /* El amarillo de tu login */
-    border-color: #f1c40f !important;
-    background-color: rgba(241, 196, 15, 0.05) !important;
-}
+
 
 /* Ajuste para que en móviles no rompa la pantalla */
 @media screen and (max-width: 736px) {
@@ -428,7 +423,7 @@ section.wrapper .inner {
 }
 
 .boton-compartir-flotante button:hover {
-    border-color: #f1c40f !important;
+    border-color: #D4A261 !important;
     transform: translateY(-3px);
 }
 
@@ -453,7 +448,7 @@ section.wrapper .inner {
 				<!-- Header -->
 					<header id="header" class="alt">
 						<h1><a href="/">QuieroInmuebles.ar</a></h1>
-						<a href="#" class="link-login">INICIAR SESIÓN</a>
+						<a href="#" id="loginBtn" class="link-login">INICIAR SESIÓN</a>
 						<nav id="nav">
 							<ul>
 								<li class="special">
@@ -578,7 +573,7 @@ section.wrapper .inner {
                     
                     <a href="buscar.html" 
    class="button primary" 
-   style="background-color: #6256a9 !important; 
+   style="background-color: #493382 !important; 
           color: white !important; 
           border-radius: 4px; 
           width: 280px; 
@@ -697,7 +692,70 @@ section.wrapper .inner {
         <i class="icon solid fa-share-alt"></i>
     </button>
 </div>
+
+
+
+
+
 		<!-- Scripts -->
+
+<!-- Script de inicio con google -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
+  import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-auth.js";
+  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCm4jmwiZIh3Gfakr4gXECH1z-TGArErlU",
+    authDomain: "quieroinmuebles-9770d.firebaseapp.com",
+    projectId: "quieroinmuebles-9770d",
+    storageBucket: "quieroinmuebles-9770d.firebasestorage.app",
+    messagingSenderId: "116535373930",
+    appId: "1:116535373930:web:9181cc81492e0621271a13"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  const provider = new GoogleAuthProvider();
+
+  const loginBtn = document.getElementById('loginBtn');
+  
+  loginBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    signInWithPopup(auth, provider);
+  });
+
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      // 1. Saludamos al usuario
+      loginBtn.innerHTML = `HOLA, ${user.displayName.split(' ')[0].toUpperCase()}`;
+      
+      // 2. Buscamos su ficha en la carpeta "usuarios" de Firestore
+      const userRef = doc(db, "usuarios", user.uid);
+      const userSnap = await getDoc(userRef);
+
+      if (userSnap.exists()) {
+        const userData = userSnap.data();
+        
+        // 3. Si el rol es admin, habilitamos funciones secretas
+        if (userData.rol === "admin") {
+          console.log("Acceso de Administrador confirmado.");
+          // Aquí es donde haremos que aparezca un botón de 'Panel de Control'
+          loginBtn.style.color = "#f1c40f"; // Lo ponemos en dorado para resaltar
+          loginBtn.innerHTML += " (ADMIN)";
+        }
+      } else {
+        console.log("Usuario nuevo: No tiene ficha en Firestore aún.");
+      }
+    }
+  });
+</script>
+
+
+
+
+
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/jquery.scrollex.min.js"></script>
 			<script src="assets/js/jquery.scrolly.min.js"></script>

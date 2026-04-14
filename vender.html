@@ -17,65 +17,98 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="assets/css/main.css" />
     <style>
-       /* --- Estilos de diseño y colores dinámicos --- */
+    /* 1. Fondo general de la página - Azul muy oscuro */
+    body, #page-wrapper, #main, .wrapper.style1, .wrapper.style5 { 
+        background-color: #212534 !important; 
+    }
 
-#banner-dinamico {
-    padding: 1.2em 0; /* Bien fino para que no ocupe espacio innecesario */
-    text-align: center;
-    color: #fff;
-    background-color: #D4A261; /* Dorado por defecto */
-    margin-bottom: 0; /* Pegado a la sección de abajo */
+    /* 2. El header superior */
+    #header {
+        background-color: #31364a !important;
+    }
+
+    /* 3. La "Ficha" del formulario */
+    .wrapper.style5 .inner {
+        background-color: #31364a !important;
+        color: #ffffff !important;
+        padding: 2em;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* 4. Banner Dinámico */
+    #banner-dinamico {
+        padding: 1.2em 0;
+        text-align: center;
+        margin-bottom: 0;
+    }
+    #banner-dinamico h2, #banner-dinamico p { color: #fff !important; margin: 0; }
+
+    /* 5. Subtítulos (El color se maneja por JS) */
+    .seccion-titulo { 
+        margin-top: 0.5em; 
+        border-bottom: 2px solid #D4A261;
+        padding-bottom: 0.5em; 
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    /* 6. Inputs y el truco para ocultar "Ningún archivo seleccionado" */
+    /* Estilo profesional para los botones de carga de fotos */
+/* 1. Ocultar el texto "ningún archivo seleccionado" */
+label {
+    color: #dfdfdf !important;
+    font-weight: 600;
+    margin-bottom: 0.5em;
+    display: block;
+}
+input[type="file"] {
+    color: transparent !important; /* Hace invisible el texto de 'ningún archivo' */
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px dashed rgba(255, 255, 255, 0.2) !important;
+    padding: 8px !important;
+    width: 100% !important;
+    cursor: pointer;
 }
 
-#banner-dinamico h2 {
-    font-size: 1.5em; 
-    margin-bottom: 0.2em;
-    color: #fff;
+/* 2. Estilo al botón "Seleccionar archivo" para que no se corte */
+input[type='file']::file-selector-button {
+    background: var(--accent-color, #D4A261); /* Usa la variable dinámica */
+    border: none;
+    border-radius: 4px;
+    color: #212534; /* Texto oscuro para que contraste */
+    padding: 5px 12px;
+    margin-right: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.75em;
+    cursor: pointer;
+    display: inline-block;
 }
 
-#banner-dinamico p {
-    font-size: 0.9em; 
-    margin: 0;
-    opacity: 0.9;
+/* Ajuste de los otros inputs para que no se muevan */
+input[type="text"], input[type="email"], select, textarea {
+    width: 100% !important;
 }
+    input, select, textarea {
+        background-color: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid rgba(255, 255, 255, 0.15) !important;
+        color: #fff !important;
+    }
 
-/* --- Ajuste para subir el formulario --- */
-#main {
-    padding-top: 0 !important; 
-}
+    /* 7. Asteriscos rojos y utilidades */
+    .obligatorio { color: #e74c3c !important; font-weight: bold; }
+    .hidden { display: none; }
 
-.wrapper.style5 {
-    padding-top: 1.5em; /* Espacio mínimo para que no quede pegado al texto del banner */
-}
-
-/* --- Títulos de secciones --- */
-.seccion-titulo { 
-    margin-top: 0.5em; 
-    border-bottom: 2px solid #efefef; 
-    padding-bottom: 0.5em; 
-    font-weight: 700; 
-}
-
-/* --- Utilidades --- */
-.obligatorio { 
-    color: #e74c3c; 
-    font-weight: bold; 
-}
-
-.hidden { 
-    display: none; 
-}
-
-/* --- Vista previa de imágenes --- */
-.preview-img { 
-    display: none; 
-    width: 100%; 
-    max-width: 200px; 
-    margin-top: 10px; 
-    border-radius: 6px; 
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
-}
-    </style>
+    .preview-img { 
+        display: none; 
+        width: 100%; 
+        max-width: 200px; 
+        margin-top: 10px; 
+        border-radius: 6px;
+        border: 2px solid rgba(255,255,255,0.2);
+    }
+</style>
 </head>
 <body class="is-preload">
     <div id="page-wrapper">
@@ -87,7 +120,7 @@
         <section id="banner-dinamico">
             <div class="inner">
                 <h2 id="titulo-pagina" style="color: white; margin: 0;">Publicar Propiedad</h2>
-                <p style="color: white; opacity: 0.9;">Completá los datos para que tu propiedad entre en revisión.</p>
+                <p style="color: white; opacity: 0.9;">Completá los datos para subir tu propiedad...</p>
             </div>
         </section>
 
@@ -218,24 +251,55 @@
 
         let tipoOperacionActual = "Venta";
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const params = new URLSearchParams(window.location.search);
-            const modo = params.get('modo'); 
-            const banner = document.getElementById('banner-dinamico');
-            const titulo = document.getElementById('titulo-pagina');
+     document.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    const modo = params.get('modo'); 
+    const banner = document.getElementById('banner-dinamico');
+    const titulo = document.getElementById('titulo-pagina');
+    const subtitulos = document.querySelectorAll('.seccion-titulo');
+    
+    const colorDorado = '#D4A261';
+    const colorAzulHielo = '#8ca0b3';
 
-            if (modo === 'alquiler') {
-                tipoOperacionActual = "Alquiler";
-                titulo.innerText = "Publicar Alquiler";
-                banner.style.backgroundColor = '#315674'; // Azul
-                document.querySelectorAll('.seccion-venta').forEach(el => el.classList.add('hidden'));
-                document.querySelectorAll('.seccion-alquiler').forEach(el => el.classList.remove('hidden'));
-            } else {
-                tipoOperacionActual = "Venta";
-                titulo.innerText = "Publicar Venta";
-                banner.style.backgroundColor = '#D4A261'; // Dorado
-            }
+    // Función pequeña para pintar los botones de archivo
+    const pintarBotonesArchivo = (color) => {
+        const styleId = "estilo-dinamico-archivos";
+        let styleTag = document.getElementById(styleId);
+        if (!styleTag) {
+            styleTag = document.createElement("style");
+            styleTag.id = styleId;
+            document.head.appendChild(styleTag);
+        }
+        styleTag.innerText = `input[type='file']::file-selector-button { background: ${color} !important; }`;
+    };
+
+    if (modo === 'alquiler') {
+        tipoOperacionActual = "Alquiler";
+        titulo.innerText = "Publicar Alquiler";
+        banner.style.backgroundColor = colorAzulHielo;
+        
+        subtitulos.forEach(s => {
+            s.style.color = colorAzulHielo;
+            s.style.borderBottomColor = colorAzulHielo;
         });
+
+        pintarBotonesArchivo(colorAzulHielo); // Botones en Azul Hielo
+
+        document.querySelectorAll('.seccion-venta').forEach(el => el.classList.add('hidden'));
+        document.querySelectorAll('.seccion-alquiler').forEach(el => el.classList.remove('hidden'));
+    } else {
+        tipoOperacionActual = "Venta";
+        titulo.innerText = "Publicar Venta";
+        banner.style.backgroundColor = colorDorado;
+
+        subtitulos.forEach(s => {
+            s.style.color = colorDorado;
+            s.style.borderBottomColor = colorDorado;
+        });
+
+        pintarBotonesArchivo(colorDorado); // Botones en Dorado
+    }
+});
 async function procesarImagenParaMovil(file) {
     return new Promise((resolve) => {
         const reader = new FileReader();
