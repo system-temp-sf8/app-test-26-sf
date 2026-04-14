@@ -702,8 +702,8 @@ section.wrapper .inner {
 <!-- Script de inicio con google -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
-  import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-auth.js";
-  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
+  import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-auth.js";
+  import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyCm4jmwiZIh3Gfakr4gXECH1z-TGArErlU",
@@ -719,35 +719,49 @@ section.wrapper .inner {
   const db = getFirestore(app);
   const provider = new GoogleAuthProvider();
 
+  // Forzar que recuerde la sesión (Continuar como...)
+  setPersistence(auth, browserLocalPersistence);
+
   const loginBtn = document.getElementById('loginBtn');
   
-  loginBtn.addEventListener('click', (e) => {
+  // Función de Login / Logout (Botón Inteligente)
+  loginBtn.addEventListener('click', async (e) => {
     e.preventDefault();
-    signInWithPopup(auth, provider);
+    if (!auth.currentUser) {
+        await signInWithPopup(auth, provider);
+    } else {
+        if(confirm("¿Querés cerrar sesión?")) {
+            signOut(auth).then(() => {
+                location.reload();
+            });
+        }
+    }
   });
 
   onAuthStateChanged(auth, async (user) => {
     if (user) {
-      // 1. Saludamos al usuario
-      loginBtn.innerHTML = `HOLA, ${user.displayName.split(' ')[0].toUpperCase()}`;
-      
-      // 2. Buscamos su ficha en la carpeta "usuarios" de Firestore
       const userRef = doc(db, "usuarios", user.uid);
       const userSnap = await getDoc(userRef);
 
       if (userSnap.exists()) {
         const userData = userSnap.data();
-        
-        // 3. Si el rol es admin, habilitamos funciones secretas
-        if (userData.rol === "admin") {
-          console.log("Acceso de Administrador confirmado.");
-          // Aquí es donde haremos que aparezca un botón de 'Panel de Control'
-          loginBtn.style.color = "#f1c40f"; // Lo ponemos en dorado para resaltar
-          loginBtn.innerHTML += " (ADMIN)";
-        }
+        loginBtn.innerHTML = `HOLA, ${user.displayName.split(' ')[0].toUpperCase()}${userData.rol === "admin" ? " (ADMIN)" : ""}`;
+        if (userData.rol === "admin") loginBtn.style.color = "#f1c40f";
       } else {
-        console.log("Usuario nuevo: No tiene ficha en Firestore aún.");
+        // SI NO EXISTE, LO CREAMOS AUTOMÁTICAMENTE
+        const nuevoUsuario = {
+          nombre: user.displayName,
+          email: user.email,
+          rol: "usuario", // Nivel base por defecto
+          fechaRegistro: new Date()
+        };
+        await setDoc(userRef, nuevoUsuario);
+        loginBtn.innerHTML = `HOLA, ${user.displayName.split(' ')[0].toUpperCase()}`;
+        console.log("Nueva ficha de usuario creada con éxito.");
       }
+    } else {
+      loginBtn.innerHTML = "INICIAR SESIÓN";
+      loginBtn.style.color = "";
     }
   });
 </script>
